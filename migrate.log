@@ -1,0 +1,92 @@
+Connected successfully to D6 and D7 DBD7 Bootstrapped
+Found 1 users
+Opened migrate_resumes.txt for logging files that need to be copied over
+Processing user [5126] JayPolatnick
+query: select nid, type, vid, title from node where type = "employee" and uid = "5126" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [11855].. 
+Found 3 terms
+Vocab Clearance has 1 terms to add
+clearance -- TS/SCI 
+Set field_clearance 1 term ids (Array
+(
+    [0] => Array
+        (
+            [tid] => 56
+        )
+
+)
+)
+Array
+(
+    [und] => Array
+        (
+            [0] => Array
+                (
+                    [tid] => 56
+                )
+
+        )
+
+)
+
+Vocab Availability has 1 terms to add
+availability -- Within 3 months 
+Set field_availability 1 term ids (Array
+(
+    [0] => Array
+        (
+            [tid] => 64
+        )
+
+)
+)
+Array
+(
+    [und] => Array
+        (
+            [0] => Array
+                (
+                    [tid] => 64
+                )
+
+        )
+
+)
+
+Vocab Position Type has 1 terms to add
+position_type -- Full-time 
+Set field_position_type 1 term ids (Array
+(
+    [0] => Array
+        (
+            [tid] => 86
+        )
+
+)
+)
+Array
+(
+    [und] => Array
+        (
+            [0] => Array
+                (
+                    [tid] => 86
+                )
+
+        )
+
+)
+
+User employee [11855] JayPolatnick saved as [12144]
+Couldnt find location instance for nid 11855
+Found file that needs to be uploaded: private/resumes/it_resume_jpolatnick.docx
+Saved resume
+Imported Array
+(
+    [users] => 1
+    [jobs] => 0
+    [employee] => 1
+    [employer] => 0
+)
+

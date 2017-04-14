@@ -1,0 +1,234 @@
+/** Custom CSS for TSSkills content **/
+
+.left{
+	  /*max-width:663px;*/
+	  /*float:left;
+	  position:relative;*/
+	}
+.prepand {
+    padding-top: 5px;
+}
+
+.round {
+    width: auto;
+    float: left;
+    position: relative;
+}
+.round img {
+    display: block;
+    vertical-align: bottom;
+}
+.jobseekers-left {
+    /* width: 602px; */
+    padding: 0px 30px 120px 29px;
+    background-color: #f8f8f8;
+    border-left: 1px solid #eeeeee;
+    border-right: 1px solid #eeeeee;
+    /*float: left;*/
+    position: relative;
+}
+
+.jobseekers-left-body {
+    /*width: 602px;*/
+    float: left;
+    position: relative;
+}
+.font8 {
+    font-family: "HelveticaTextbook LT Roman";
+    font-weight: normal;
+    font-size: 14px;
+    color: #3b62b4;
+    line-height: 18px;
+}
+.prepand6 {
+    padding-top: 30px;
+}
+
+.signup-create {
+    width: 187px;
+    float: left;
+    position: relative;
+    margin: 5px;
+    padding: 10px;
+}
+.signup-create-body {
+    width: 187px;
+    padding: 36px 2px 10px 2px;
+    background: #e5e4e4 url(/sites/default/files/tsskills/tsskills-signup-create-bg.gif) repeat-x;
+    height: 191px;
+    border-left: 1px solid #ced1d7;
+    border-right: 1px solid #ced1d7;
+    float: left;
+    position: relative;
+    text-align: center;
+}
+.signup-create-body h2 {
+    font-family: "HelveticaTextbook LT Roman";
+    font-size: 18px;
+    font-weight: normal;
+    color: #3b62b3;
+    line-height: 18px;
+    text-shadow: 0px 1px 1px #fafafa;
+}
+.prepand3 {
+    padding-top: 15px;
+}
+.signup-create-body h2 a {
+    color: #3b62b3;
+}
+#block-system-main {
+	padding-top: 0px;
+}
+
+.find-job {
+    width: 292px;
+    float: left;
+    position: relative;
+}
+
+.find-job-body {
+    width: 292px;
+    padding: 4px 12px 6px 12px;
+    background: #e7e5e5 url(/sites/default/files/tsskills/tsskills-find-job-bg.gif) repeat-x;
+    height: 52px;
+    border-left: 1px solid #ced1d7;
+    border-right: 1px solid #ced1d7;
+    float: left;
+    position: relative;
+}
+
+
+div.password-strength {
+	float: none;
+}
+
+
+/* Dashboard */
+div.profile {
+	/*background-color: #f8f8f8;*/
+}
+
+.bs-callout {
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+
+.bs-callout-info {
+    /*border-left-color: #1b809e;*/
+}
+
+div.dashboard-option {
+	background: #e5e4e4 url(/sites/default/files/tsskills/tsskills-signup-create-bg.gif) repeat-x;
+	border: 1px solid #ced1d7;
+	margin-top:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+div.dashboard-admin-options a.btn {
+	width: 100%;
+}
+
+/* search pages */
+blockquote {
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-size: 17.5px;
+    border-left: 1px solid #ccc;
+
+}
+
+div.field-name-field-employee-skills > div.field-items, div.field-name-field-employee-message > div.field-items, div.cover-letter {
+	border-left: 1px solid #ccc;
+	padding: 10px 20px;
+	font-size: 17.5px;
+
+}
+
+div.job-search-job {
+	margin-top:5px;
+}
+
+/* create job */
+#edit-locations-0-province {
+	background-image: none;
+}
+
+div.location-wrapper {
+	min-height: 25px;
+	margin-bottom: 15px;
+}
+
+#edit-field-job-submission-date-und-0-value-date {
+	
+}
+
+#edit-field-job-submission-date-und-0-value {
+	padding-left: 0px;
+}
+
+.page-job-applications #dt_job_applications thead tr, .page-job-applications .dataTables_length{
+	display:none !important;
+}
+.page-job-applications #dt_job_applications  .thumb{
+	float: left;
+	margin-right: 20px;
+}
+.page-job-applications #dt_job_applications  .thumb img{
+	width:64px;
+}
+.page-job-applications #dt_job_applications  .info{
+	float: left;
+}
+.page-job-applications #dt_job_applications  .ubottom{
+	margin-top:15px;
+}
+.page-job-applications #dt_job_applications  .ubottom label{ display:block; font-size:12px; color:#888;}
+.dataTables_wrapper thead tr{ background: #ddd; }
+.dataTables_wrapper th{border:0;}
+.dataTables_wrapper tbody tr, .dataTables_wrapper tbody tr td{background:#fff !important;}
+
+.dataTables_wrapper td, .dataTables_wrapper th{ font-size:14px; }
+.page-job-applications #dt_job_applications tr td:nth-child(1){
+	width:40%;
+}
+.page-job-applications #dt_job_applications tr td:nth-child(2){
+	width:30%;
+}
+.page-job-applications #dt_job_applications tr td:nth-child(3){
+	width:30%;
+}
+.page-job-applications #dt_job_applications tr td:nth-child(4){
+	width:10%;
+}
+.job_info .h{ width:110px;display:inline-block;font-weight: bold;}
+.job_info .v{display:inline-block;}
+.page-job-applications #dt_job_applications  h1,.page-job-applications #dt_job_applications  h2,.page-job-applications #dt_job_applications  h3,.page-job-applications #dt_job_applications  h4,.page-job-applications #dt_job_applications  h5,.page-job-applications #dt_job_applications  h6{
+	margin:0;
+}
+.page-job-applications .user_info .postion_type{
+	padding-top:5px;
+	font-size:14px;
+}
+.page-job-applications, .page-job-applications h6, .page-job-applications p{
+	color:#777;
+}
+.page-job-applications .user_info .location{
+	padding-top:5px;
+	font-size:14px;
+}
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 3px 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #292b2c;
+    text-align: inherit;
+    white-space: nowrap;
+    background: 0 0;
+    border: 0;
+}

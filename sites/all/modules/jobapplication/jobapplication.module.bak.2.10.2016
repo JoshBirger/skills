@@ -1,0 +1,405 @@
+<?php
+// $Id$
+/**
+* Provides the jobapplication content type.
+* @file
+*/
+/**
+* implementation of hook_help().
+*/
+ 
+function jobapplication_init()
+{
+	
+}
+
+function jobapplication_user($op, &$edit, &$account, $category = NULL)
+{
+	if($op=='after_update')
+	{
+		if($account->uid==1)
+		{
+			variable_set('site_mail',$account->mail);	
+		}
+	}
+}
+
+function jobapplication_help($path, $arg) 
+{
+	if ($path == 'admin/help#jobapplication') 
+	{
+		$txt = 'A jobapplication node is used to keep record of job applications.';
+		$replace = array();
+		return '<p>'. t($txt, $replace) .'</p>';
+	}
+}
+
+/**
+* Implementation of hook_form().
+*/
+function get_job_application_form() 
+{
+	global $user;
+	if(!(arg(0)=='apply' && is_numeric(arg(1))))
+		return false;
+
+	$job_id = arg(1);
+	$cp = content_profile_load('employee',$user->uid);
+	//print_r($cp);
+	$profile = content_profile_show_profiles($user->uid);
+	
+	$form_data = drupal_get_form('job_application_form',$job_id);
+	return drupal_render($profile).$form_data;
+}
+
+function job_application_form($form_state,$job_id)
+{
+	$form_id = 'application_form';
+	$form['#method'] = 'post';
+	$form['#action'] = request_uri();
+	// We need to define form elements for the node's title and body.
+	$form['job_id'] = array('#type' => 'hidden', '#value' => $job_id,'#name'=>'job_id','#id'=>'job_id');
+	$form['job_cover_letter'] = array(
+		'#type' => 'textarea',
+		'#title' => 'Cover Letter',
+		'#required' => TRUE,
+		'#default_value' => '',
+		'#name'=>'job_cover_letter',
+		'#id'=>'job_cover_letter',
+		'#weight' => 1
+	);
+	$form['Apply'] = array('#type' => 'submit', '#value' => t('Apply'),'#name'=>'job_submit','#id'=>'btn_submit','#weight' => 2);
+	$form['#submit'][] = 'job_application_submit_handler';
+	$form['#validate'][] = 'job_application_validate_handler';
+	return $form;
+		
+}
+function check_duplicate_application($uid,$jobid)
+{
+	$r = db_query("SELECT vid FROM jobapplication WHERE uid = %d AND nid = %d",$uid,$jobid);
+	$application = db_fetch_array($r);
+	return $application?true:false;
+}
+function job_application_validate_handler($form, &$form_state)
+{
+	global $user,$base_url;
+	$error = false;
+	if($form_state['values']['job_id'] =="" || $form_state['values']['job_cover_letter']=="")
+	{
+		form_set_error('job_cover_letter', t('Cover letter required.'));	
+		$error = true;
+	}
+	elseif(check_duplicate_application($user->uid,$form_state['values']['job_id']))
+	{
+		form_set_error('job_id', t('You already applied for this job.'));	
+		$error = true;
+	}
+	if($error)
+	{
+		//$path = str_replace(base_path(),'',request_uri());
+		$path = $base_url.'/'.drupal_get_path_alias('node/'.$form_state['values']['job_id']);
+		drupal_goto($path);
+	}
+}
+function job_application_submit_handler($form, &$form_state)
+{
+	save_application($form_state);
+}
+
+function save_application($form)
+{
+	global $user;
+	
+	$application = new stdClass();
+	$application->nid = $form['values']['job_id']; 
+	$application->uid = $user->uid; 
+	$application->cover_letter = $form['values']['job_cover_letter'];
+	$application->created = date('Y-m-d h:i:s');
+
+	drupal_write_record('jobapplication',$application);
+	
+	$message = 'Thank you for submitting your resume.  A representative will contact you with further information on the submittal process. <a href="'.base_path().$_SESSION['job_search_last_page'].'">Click here to return to the job search</a>, or <a href="'.base_path()."user/".'">click here to view you profile.</a>';
+	drupal_set_message($message);
+	
+	send_application_notice($form);
+
+}
+function send_application_notice($form)
+{
+	//$body = drupal_render(content_profile_show_profiles($vars['user']->uid));
+	global $user;
+	$resume = node_load(array("type" => 'employee','uid'=>$user->uid));
+	$job = node_load($form['values']['job_id']);
+	if($job && is_permanent_job($job))
+	{
+		$to = $job->field_job_email[0]['value'];
+		$email_from = $user->email;
+		 
+		//$params['subject'] = "New Job Application";
+		//$params['cover'] = $_POST['job_cover_letter'];
+		 $params = prepare_jobapplication_email($job,$resume,$user,$form['values']['job_cover_letter']);
+		 
+		$sent = drupal_mail('jobapp', 'resume_email', $to, language_default(), $params, $email_from, TRUE);
+		 
+		if(!$sent){
+			//handle send fail, $sent ===false when mail fails, but it won't always recognize a failure
+			
+		}
+
+	}
+	
+}
+function is_permanent_job($node)
+{
+	 foreach($node->taxonomy as $term)
+	  {
+		if($term->vid == 4 && $term->name=='Permanent') 	  
+		{
+			return true;
+		}
+	  }
+}
+function prepare_jobapplication_email($job_node,$resume_node,$resume_user,$cover_letter='')
+{
+	global $base_url;
+ 
+	$site = variable_get('site_name', 'drupal site');
+	$subject = t("[$site] [Job application] for [$job_node->title] by [$resume_user->name]");
+	$body  = t("The following user has applied for the above job.\n");
+	$body .= t("\nJob: @title",                          array('@title'  => $job_node->title));
+	$body .= t("\nJob URL: @url",                        array('@url'    => $base_url .'/'. drupal_get_path_alias("node/$job_node->nid")));
+	$body .= t("\nApplicant name: @name",                array('@name'   => $resume_user->name));
+	$body .= t("\nApplicant email: @email",              array('@email'  => $resume_user->mail));
+	$body .= t("\nApplicant URL: @url",                  array('@url'    => $base_url .'/'. drupal_get_path_alias("user/$resume_user->uid")));
+	$body .= t("\nResume: @title",                       array('@title'  => $resume_node->title));
+	$body .= t("\nResume URL: @url",                     array('@url'    => $base_url .'/'. drupal_get_path_alias("node/$resume_node->nid")));
+	
+	if($cover_letter)
+	{
+		$body .= "\n\n".$cover_letter."\n";	
+	}
+	// send link to files, if attached
+	if (1) {
+	$file_links = array();
+	
+	// first, try to include files from any filefields
+	if (module_exists('filefield') && $fields = filefield_get_field_list($resume_node->type)) {
+	  foreach ($fields as $field) {
+		$files = $resume_node->$field['field_name'];
+		foreach ($files as $file) {
+		  $file_links[] = $base_url .'/'. drupal_get_path_alias($file['filepath']);
+		}
+	  }
+	}
+	
+	// next, check for file attachments from the core upload.module
+	if (is_array($resume_node->files) && count($resume_node->files)) {   
+	  foreach ($resume_node->files as $file_obj) {
+		// if this file is not "listed", skip it
+		if (empty($file_obj->list)) {
+		  continue;
+		}
+		
+		// NOTE: for an HTML email, uncomment the following line and comment out the latter instead
+		//$file_links[] = l($file_obj->description, $base_url . url($file_obj->filepath));
+		$file_links[] = $base_url .'/'. drupal_get_path_alias($file_obj->filepath);
+	  }
+	}
+
+	if (count($file_links)) {
+	  $body .= t("\n\nResume file(s):\n"). implode($file_links, "/n");
+	}
+	}
+	
+	//$body .= t("\n\nManage job applications at @manage", array('@manage' => $base_url . url("job/applications")));
+	
+	return(array(
+	'subject' => $subject,
+	'body'    => $body,
+	));	
+}
+
+function jobapp_mail($key, &$message, $params) {
+	$language = $message['language'];
+	switch($key) {
+		//switching on $key lets you create variations of the email based on the $key parameter
+		case 'resume_email':
+		$message['subject'] = $params['subject'];
+		//the email body is here, inside the $message array
+		$message['body'][] = $params['body'];
+		break;
+	}
+}
+
+function get_applied_job_count_by_id($jobid)
+{
+	if(!is_numeric($jobid))return 0;
+	$r = db_query("SELECT count(vid) as total FROM jobapplication WHERE nid = %d",$jobid);
+	return db_fetch_object($r)->total;
+}
+
+function get_applied_jobs_by_user()
+{
+	global $user;
+	if($user->uid>0)
+	{
+		$rows = array();
+		$sql = "SELECT * FROM {node} as N INNER JOIN jobapplication as J ON(N.nid=J.nid AND J.uid=".$user->uid.")";
+		$result = db_query($sql);
+		while($row=db_fetch_object($result))
+		{
+			$rows[] = node_load($row->nid);
+		}
+		return $rows;
+	}
+	else
+	{
+		return false;	
+	}
+
+}
+
+function get_applied_jobs_by_user_id($uid)
+{
+	if($uid>0)
+	{
+		$rows = array();
+		$sql = "SELECT * FROM {node} as N INNER JOIN jobapplication as J ON(N.nid=J.nid AND J.uid=".$uid.")";
+		$result = db_query($sql);
+		while($row=db_fetch_object($result))
+		{
+			$rows[] = node_load($row->nid);
+		}
+		return $rows;
+	}
+	else
+	{
+		return false;	
+	}
+
+}
+
+function get_applied_jobs_all()
+{
+	global $user;
+	if($user->uid>0)
+	{
+		$rc = 0;
+		$rows = array();
+		$sql = "SELECT N.nid,N.title,N.status,N.uid employer, J.uid applicant,J.created FROM {node} as N INNER JOIN jobapplication as J ON(N.nid=J.nid) ORDER BY J.created desc";
+		$result = db_query($sql);
+		while($row=db_fetch_object($result))
+		{
+			$rows[$rc] = node_load($row->nid);
+			$rows[$rc]->applicant = user_load($row->applicant);
+			$rc++;
+		}
+		return $rows;
+	}
+	else
+	{
+		return false;	
+	}
+
+}
+
+function jobapplication_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL)
+{
+	global $user;
+	$type = '';
+	if($op=='presave' && $node->type =='job')
+	{
+		if($user->uid!=1)
+		{
+			 foreach($node->taxonomy as $key=>$tid)
+			  {
+				if($key == 4) 	  
+				{
+					$term = taxonomy_get_term($tid);
+					$type = $term->name;
+				}
+			  }
+			 if($type=='Permanent')
+			 {
+				$node->status=1;	 
+			 }
+			 else
+			 {
+				$node->status=0; 
+			 }
+			}
+	}
+}
+
+function jobapplication_form_alter(&$form, &$form_state, $form_id) {
+	global $user;
+	if($form_id == 'job_node_form')
+	{
+		if (user_access('administer nodes') || in_array('recruiter',$user->roles)) { // or other permission
+			$form['options']['status']['#default_value'] = TRUE;
+			//$form['buttons']['submit']['#submit'][] = 'jp_message_handler';
+		}
+		elseif(in_array('employer',$user->roles))
+		{
+			$form['buttons']['submit']['#submit'][] = 'jp_message_handler';
+		}
+		//print_r($form);
+	}
+}
+function jp_message_handler($form, &$form_state) {
+  global $user,$base_url;
+  $type = '';
+  if ($form_state['nid']) {
+	  $job =  node_load($form_state['nid']);
+	  foreach($form_state['values']['taxonomy'] as $key=>$tid)
+	  {
+		if($key == 4) 	  
+		{
+			//$term = taxonomy_get_term($tid);
+			$type = $term->name;
+		}
+	  }
+	  //$to = variable_get('site_mail','admin');
+	  $admin = user_load(1);
+	  $to = $admin->mail;
+	  $params['subject'] = 'A job posting request has been made.';
+	  $params['body'] = 'Submitted By: '.$user->name."\n".
+	  					'Link: '.$base_url.'/node/'.$form_state['nid'].'/edit'; 
+	  ;
+	  $sent = drupal_mail('jp', 'jobposting_notify', $to, language_default(), $params, $user->mail, TRUE);
+	  if($type == 'Permanent')
+	  {
+      	drupal_set_message('Thanks for submitting a job to TSSkills.com. You have selected Permanent position. Our team will contact you shortly if we have any questions regarding this job. You can view potential applicants to this post on your user dashboard.');
+	  }
+	  else
+	  {
+		drupal_set_message('Thanks for submitting a job to TSSkills.com. You have selected '.$type.', Our team will contact you shortly if we have any questions regarding this job. You can view potential applicants to this post on your user dashboard.');  
+	  }
+
+  }
+}
+
+function jp_mail($key, &$message, $params) {
+	$language = $message['language'];
+	switch($key) {
+		//switching on $key lets you create variations of the email based on the $key parameter
+		case 'jobposting_notify':
+		$message['subject'] = $params['subject'];
+		//the email body is here, inside the $message array
+		$message['body'][] = $params['body'];
+		break;
+	}
+}
+
+function get_job_applied_users($jobid)
+{
+	$rows = array();
+	if(!is_numeric($jobid))return 0;
+	$r = db_query("SELECT uid FROM jobapplication WHERE nid = %d",$jobid);
+	while($row=db_fetch_object($r))
+	{
+		$user = content_profile_load('employee',$row->uid);
+		if($user)$rows[] = $user;
+	}
+	return $rows;	
+}

@@ -1,0 +1,60 @@
+<?php
+// $Id$
+/**
+* Install the questionnaire module, including it's content (node)
+* type.
+* @file
+*/
+/**
+* Implementation of hook_install().
+*/
+function jobapplication_install() 
+{
+	drupal_install_schema('jobapplication');
+}
+
+/**
+* Implementation of hook_uninstall().
+*/
+function jobapplication_uninstall() {
+	drupal_uninstall_schema('jobapplication');
+}
+
+function jobapplication_schema() {
+	$schema['jobapplication'] = array(
+		'description' => 'Store information tying job applications to employees',
+		'fields' => array(
+			'vid' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+				),
+			'nid' => array(
+				'type' => 'int',
+				'unsigned' => TRUE,
+				'not null' => TRUE,
+				'default' => 0,
+				),
+			'uid' => array(
+				'type' => 'int',
+				'unsigned' => TRUE,
+				'not null' => TRUE,
+				),
+			'cover_letter' => array(
+				'type' => 'text'
+				),
+			'created' => array(
+				'type' => 'int',
+				'not null' => TRUE,
+				'default' => 0
+				),
+			),
+		'indexes' => array(
+			'nid' => array('nid'),
+			'uid' => array('uid')
+			),
+		// Version is primary key. Could do nid, vid.
+		'primary key' => array('vid'),
+		);
+	return $schema;
+}
+

@@ -1,0 +1,872 @@
+Connected successfully to D6 and D7 DBD7 Bootstrapped
+Found 151 users
+Opened migrate_resumes.txt for logging files that need to be copied over
+Processing user [5122] jaclyn.greenwood
+query: select nid, type, vid, title from node where type = "employer" and uid = "5122" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [11841].. 
+User employer [11841] Chenega Professional Services-12.08.16 saved as [12152]
+Couldnt find location instance for nid 11841
+Processing user [5123] james.riddell
+query: select nid, type, vid, title from node where type = "employee" and uid = "5123" LIMIT 1
+Creating new employee record [11847].. 
+Found 3 terms
+User employee [11847] james.riddell saved as [12153]
+Couldnt find location instance for nid 11847
+Processing user [5124] Danielleallen.it
+query: select nid, type, vid, title from node where type = "employee" and uid = "5124" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [11849].. 
+Found 3 terms
+User employee [11849] Danielleallen.it saved as [12154]
+Couldnt find location instance for nid 11849
+Found file that needs to be uploaded: private/resumes/resume_danielle_allen_0416.docx
+Saved resume
+Processing user [5125] Davidlevianderson
+query: select nid, type, vid, title from node where type = "employee" and uid = "5125" LIMIT 1
+Creating new employee record [11852].. 
+Found 2 terms
+User employee [11852] Davidlevianderson saved as [12155]
+Couldnt find location instance for nid 11852
+Processing user [5126] JayPolatnick
+query: select nid, type, vid, title from node where type = "employee" and uid = "5126" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [11855].. 
+Found 3 terms
+User employee [11855] JayPolatnick saved as [12156]
+Couldnt find location instance for nid 11855
+Found file that needs to be uploaded: private/resumes/it_resume_jpolatnick.docx
+Saved resume
+Processing user [5127] djtutolo
+query: select nid, type, vid, title from node where type = "employee" and uid = "5127" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [11856].. 
+Found 3 terms
+User employee [11856] djtutolo saved as [12157]
+Couldnt find location instance for nid 11856
+Found file that needs to be uploaded: private/resumes/dantutolo_resume_dec_2016.pdf
+Saved resume
+Processing user [5128] vnatarajan
+query: select nid, type, vid, title from node where type = "employee" and uid = "5128" LIMIT 1
+Creating new employee record [11857].. 
+Found 3 terms
+User employee [11857] vnatarajan saved as [12158]
+Couldnt find location instance for nid 11857
+Found file that needs to be uploaded: private/resumes/viky_resume.doc
+Saved resume
+Processing user [5129] Danitajl2015
+query: select nid, type, vid, title from node where type = "employee" and uid = "5129" LIMIT 1
+Creating new employee record [11858].. 
+Found 3 terms
+User employee [11858] Danitajl2015 saved as [12159]
+Couldnt find location instance for nid 11858
+Found file that needs to be uploaded: private/resumes/res-danita_lewis.doc
+Saved resume
+Processing user [5130] ken.sevec
+query: select nid, type, vid, title from node where type = "employer" and uid = "5130" LIMIT 1
+Creating new employer record [11862].. 
+User employer [11862] Kaizen Approach, Inc.-12.14.16 saved as [12160]
+Couldnt find location instance for nid 11862
+Processing user [5131] edwardldougherty
+query: select nid, type, vid, title from node where type = "employee" and uid = "5131" LIMIT 1
+Creating new employee record [11863].. 
+Found 3 terms
+User employee [11863] edwardldougherty saved as [12161]
+Couldnt find location instance for nid 11863
+Found file that needs to be uploaded: private/resumes/dougherty_resume_120116.docx
+Saved resume
+Processing user [5132] Donnamlaurino
+query: select nid, type, vid, title from node where type = "employee" and uid = "5132" LIMIT 1
+Creating new employee record [11864].. 
+Found 3 terms
+User employee [11864] Donnamlaurino saved as [12162]
+Couldnt find location instance for nid 11864
+Processing user [5133] crymefighter2000
+query: select nid, type, vid, title from node where type = "employee" and uid = "5133" LIMIT 1
+Creating new employee record [11865].. 
+Found 3 terms
+User employee [11865] crymefighter2000 saved as [12163]
+Couldnt find location instance for nid 11865
+Found file that needs to be uploaded: private/resumes/new_hire_resume.docx
+Saved resume
+Processing user [5134] kswalrath
+query: select nid, type, vid, title from node where type = "employee" and uid = "5134" LIMIT 1
+Creating new employee record [11872].. 
+Found 3 terms
+User employee [11872] kswalrath saved as [12164]
+Couldnt find location instance for nid 11872
+Found file that needs to be uploaded: private/resumes/ksw_resume_wm_1216.docx
+Saved resume
+Processing user [5135] evllewellyn
+query: select nid, type, vid, title from node where type = "employee" and uid = "5135" LIMIT 1
+Creating new employee record [11873].. 
+Found 3 terms
+User employee [11873] evllewellyn saved as [12165]
+Couldnt find location instance for nid 11873
+Found file that needs to be uploaded: private/resumes/llewellyn_resume_2016.12.12.docx
+Saved resume
+Processing user [5136] agresh
+query: select nid, type, vid, title from node where type = "employer" and uid = "5136" LIMIT 1
+Creating new employer record [11874].. 
+User employer [11874] Veteran Staffing Network-12.20.16 saved as [12166]
+Couldnt find location instance for nid 11874
+Processing user [5137] j.bseth
+query: select nid, type, vid, title from node where type = "employee" and uid = "5137" LIMIT 1
+Creating new employee record [11875].. 
+Found 3 terms
+User employee [11875] j.bseth saved as [12167]
+Couldnt find location instance for nid 11875
+Found file that needs to be uploaded: private/resumes/2017_jacquelyn_seth_resume_0.pdf
+Saved resume
+Processing user [5138] sean_20_sjw
+query: select nid, type, vid, title from node where type = "employee" and uid = "5138" LIMIT 1
+Creating new employee record [11878].. 
+Found 2 terms
+User employee [11878] sean_20_sjw saved as [12168]
+Couldnt find location instance for nid 11878
+Found file that needs to be uploaded: private/resumes/seanwaliszewski_resume1.pdf
+Saved resume
+Processing user [5139] jacquelinerodriguez622
+query: select nid, type, vid, title from node where type = "employee" and uid = "5139" LIMIT 1
+Creating new employee record [11885].. 
+Found 3 terms
+User employee [11885] jacquelinerodriguez622 saved as [12169]
+Couldnt find location instance for nid 11885
+Found file that needs to be uploaded: private/resumes/jrodriguezresumeva-_pm.docx
+Saved resume
+Processing user [5140] dale.norbeck.ctr
+query: select nid, type, vid, title from node where type = "employee" and uid = "5140" LIMIT 1
+Creating new employee record [11886].. 
+Found 3 terms
+User employee [11886] dale.norbeck.ctr saved as [12170]
+Couldnt find location instance for nid 11886
+Found file that needs to be uploaded: private/resumes/dale_norbeck_-_nov_2016_resume.doc
+Saved resume
+Processing user [5141] rello713
+query: select nid, type, vid, title from node where type = "employee" and uid = "5141" LIMIT 1
+Creating new employee record [11887].. 
+Found 3 terms
+User employee [11887] rello713 saved as [12171]
+Couldnt find location instance for nid 11887
+Found file that needs to be uploaded: private/resumes/terrell_hunt_resume.doc
+Saved resume
+Processing user [5142] karen.soranno
+query: select nid, type, vid, title from node where type = "employer" and uid = "5142" LIMIT 1
+Creating new employer record [11888].. 
+User employer [11888] ASRC Federal -12.29.16 saved as [12172]
+Couldnt find location instance for nid 11888
+Processing user [5143] kim.williams
+query: select nid, type, vid, title from node where type = "employer" and uid = "5143" LIMIT 1
+Creating new employer record [11889].. 
+User employer [11889] Federal Data Systems, Llc-12.30.16 saved as [12173]
+Couldnt find location instance for nid 11889
+Processing user [5144] femi.linux
+query: select nid, type, vid, title from node where type = "employee" and uid = "5144" LIMIT 1
+Creating new employee record [11892].. 
+Found 3 terms
+User employee [11892] femi.linux saved as [12174]
+Couldnt find location instance for nid 11892
+Found file that needs to be uploaded: private/resumes/femi-adebiyi_linux_resume.pdf
+Saved resume
+Processing user [5145] rachel.keedy
+query: select nid, type, vid, title from node where type = "employer" and uid = "5145" LIMIT 1
+Creating new employer record [11895].. 
+User employer [11895] Randstad Sourceright-01.05.17 saved as [12175]
+Couldnt find location instance for nid 11895
+Processing user [5146] skarafin
+query: select nid, type, vid, title from node where type = "employer" and uid = "5146" LIMIT 1
+Creating new employer record [11900].. 
+User employer [11900] Brett LLC-01.06.17 saved as [12176]
+Couldnt find location instance for nid 11900
+Processing user [5147] dchambliss7
+query: select nid, type, vid, title from node where type = "employee" and uid = "5147" LIMIT 1
+Creating new employee record [11901].. 
+Found 3 terms
+User employee [11901] dchambliss saved as [12177]
+Couldnt find location instance for nid 11901
+Found file that needs to be uploaded: private/resumes/dominique_chambliss_resume_jan_17.docx
+Saved resume
+Processing user [5148] charles.pollok
+query: select nid, type, vid, title from node where type = "employee" and uid = "5148" LIMIT 1
+Creating new employee record [11902].. 
+Found 3 terms
+User employee [11902] charles.pollok saved as [12178]
+Couldnt find location instance for nid 11902
+Processing user [5149] briankey78
+query: select nid, type, vid, title from node where type = "employee" and uid = "5149" LIMIT 1
+Creating new employee record [11903].. 
+Found 3 terms
+User employee [11903] briankey78 saved as [12179]
+Couldnt find location instance for nid 11903
+Found file that needs to be uploaded: private/resumes/brian_thompson_government_finance_resume.docx_.pdf
+Saved resume
+Processing user [5150] fkpolk
+query: select nid, type, vid, title from node where type = "employee" and uid = "5150" LIMIT 1
+Creating new employee record [11904].. 
+Found 3 terms
+User employee [11904] fkpolk saved as [12180]
+Couldnt find location instance for nid 11904
+Found file that needs to be uploaded: private/resumes/my_resume1.docx
+Saved resume
+Processing user [5151] dominique.manuel
+query: select nid, type, vid, title from node where type = "employer" and uid = "5151" LIMIT 1
+Creating new employer record [11913].. 
+User employer [11913] JRC Integrated Systems, Inc.-01.12.17 saved as [12181]
+Couldnt find location instance for nid 11913
+Processing user [5152] jasmine.yom
+query: select nid, type, vid, title from node where type = "employer" and uid = "5152" LIMIT 1
+Creating new employer record [11918].. 
+User employer [11918] Mondo-01.13.17 saved as [12182]
+Couldnt find location instance for nid 11918
+Processing user [5153] superoakie
+query: select nid, type, vid, title from node where type = "employee" and uid = "5153" LIMIT 1
+Creating new employee record [11919].. 
+Found 3 terms
+User employee [11919] superoakie saved as [12183]
+Couldnt find location instance for nid 11919
+Found file that needs to be uploaded: private/resumes/dale_dewolfe_resume_3.rtf
+Saved resume
+Processing user [5154] don81998
+query: select nid, type, vid, title from node where type = "employee" and uid = "5154" LIMIT 1
+Creating new employee record [11920].. 
+Found 3 terms
+User employee [11920] don81998 saved as [12184]
+Couldnt find location instance for nid 11920
+Processing user [5155] pwhite
+query: select nid, type, vid, title from node where type = "employer" and uid = "5155" LIMIT 1
+Creating new employer record [11922].. 
+User employer [11922] Johnson, Mirmiran &amp; Thompson -01.17.17 saved as [12185]
+Couldnt find location instance for nid 11922
+Processing user [5156] torri_w06
+query: select nid, type, vid, title from node where type = "employee" and uid = "5156" LIMIT 1
+Creating new employee record [11940].. 
+Found 3 terms
+User employee [11940] torri_w06 saved as [12186]
+Couldnt find location instance for nid 11940
+Processing user [5157] jehlers
+query: select nid, type, vid, title from node where type = "employee" and uid = "5157" LIMIT 1
+Creating new employee record [11941].. 
+Found 2 terms
+User employee [11941] jehlers saved as [12187]
+Couldnt find location instance for nid 11941
+Found file that needs to be uploaded: private/resumes/ehlersresume_update_0.doc
+Saved resume
+Processing user [5158] maria.mitchell02
+query: select nid, type, vid, title from node where type = "employee" and uid = "5158" LIMIT 1
+Creating new employee record [11942].. 
+Found 3 terms
+User employee [11942] maria.mitchell02 saved as [12188]
+Couldnt find location instance for nid 11942
+Processing user [5159] aheller755
+query: select nid, type, vid, title from node where type = "employee" and uid = "5159" LIMIT 1
+Creating new employee record [11944].. 
+Found 3 terms
+User employee [11944] aheller755 saved as [12189]
+Couldnt find location instance for nid 11944
+Found file that needs to be uploaded: private/resumes/a_r_heller_resume.docx
+Saved resume
+Processing user [5160] Amirejennings
+query: select nid, type, vid, title from node where type = "employee" and uid = "5160" LIMIT 1
+Creating new employee record [11945].. 
+Found 3 terms
+User employee [11945] Amirejennings saved as [12190]
+Couldnt find location instance for nid 11945
+Processing user [5161] evcjobs
+query: select nid, type, vid, title from node where type = "employer" and uid = "5161" LIMIT 1
+Creating new employer record [11946].. 
+User employer [11946] Enterprise Ventures Corporation-01.23.17 saved as [12191]
+Couldnt find location instance for nid 11946
+Processing user [5162] hausfeld09
+query: select nid, type, vid, title from node where type = "employee" and uid = "5162" LIMIT 1
+Creating new employee record [11947].. 
+Found 2 terms
+User employee [11947] hausfeld09 saved as [12192]
+Couldnt find location instance for nid 11947
+Processing user [5163] ciscoschroeder
+query: select nid, type, vid, title from node where type = "employee" and uid = "5163" LIMIT 1
+Creating new employee record [11948].. 
+Found 2 terms
+User employee [11948] ciscoschroeder saved as [12193]
+Couldnt find location instance for nid 11948
+Found file that needs to be uploaded: private/resumes/resume1_0.doc
+Saved resume
+Processing user [5164] steve.brown14
+query: select nid, type, vid, title from node where type = "employee" and uid = "5164" LIMIT 1
+Creating new employee record [11950].. 
+Found 3 terms
+User employee [11950] steve.brown14 saved as [12194]
+Couldnt find location instance for nid 11950
+Processing user [5165] DSNEENEE
+query: select nid, type, vid, title from node where type = "employee" and uid = "5165" LIMIT 1
+Creating new employee record [11951].. 
+Found 3 terms
+User employee [11951] DSNEENEE saved as [12195]
+Couldnt find location instance for nid 11951
+Found file that needs to be uploaded: private/resumes/denisecarrollresumemd.docx
+Saved resume
+Processing user [5166] narazulf
+query: select nid, type, vid, title from node where type = "employee" and uid = "5166" LIMIT 1
+Creating new employee record [11952].. 
+Found 3 terms
+User employee [11952] narazulf saved as [12196]
+Couldnt find location instance for nid 11952
+Found file that needs to be uploaded: private/resumes/nara_zulf_sysadmin_syseng-jan2017.doc
+Saved resume
+Processing user [5167] josephwhaley95
+query: select nid, type, vid, title from node where type = "employee" and uid = "5167" LIMIT 1
+Creating new employee record [11953].. 
+Found 3 terms
+User employee [11953] josephwhaley95 saved as [12197]
+Couldnt find location instance for nid 11953
+Found file that needs to be uploaded: private/resumes/joseph_resume.pdf
+Saved resume
+Processing user [5168] careers_2
+query: select nid, type, vid, title from node where type = "employer" and uid = "5168" LIMIT 1
+Creating new employer record [11960].. 
+User employer [11960] President saved as [12198]
+Couldnt find location instance for nid 11960
+Processing user [5169] jcoffee11211
+query: select nid, type, vid, title from node where type = "employee" and uid = "5169" LIMIT 1
+Creating new employee record [11961].. 
+Found 3 terms
+User employee [11961] jcoffee11211 saved as [12199]
+Couldnt find location instance for nid 11961
+Found file that needs to be uploaded: private/resumes/jcoffee_212017.docx
+Saved resume
+Processing user [5170] jhernandezjr
+query: select nid, type, vid, title from node where type = "employee" and uid = "5170" LIMIT 1
+Creating new employee record [11962].. 
+Found 3 terms
+User employee [11962] jhernandezjr saved as [12200]
+Couldnt find location instance for nid 11962
+Found file that needs to be uploaded: private/resumes/hernandez_resume.doc
+Saved resume
+Processing user [5171] miss_s.andrews
+query: select nid, type, vid, title from node where type = "employee" and uid = "5171" LIMIT 1
+Creating new employee record [11963].. 
+Found 3 terms
+User employee [11963] miss_s.andrews saved as [12201]
+Couldnt find location instance for nid 11963
+Found file that needs to be uploaded: private/resumes/stephanie_s_resume.docx
+Saved resume
+Processing user [5172] mumThync
+query: select nid, type, vid, title from node where type = "employee" and uid = "5172" LIMIT 1
+Creating new employee record [11964].. 
+Found 3 terms
+User employee [11964] mumThync saved as [12202]
+Couldnt find location instance for nid 11964
+Processing user [5173] towntalk42
+query: select nid, type, vid, title from node where type = "employee" and uid = "5173" LIMIT 1
+Creating new employee record [11965].. 
+Found 3 terms
+User employee [11965] towntalk42 saved as [12203]
+Couldnt find location instance for nid 11965
+Found file that needs to be uploaded: private/resumes/lynn_noudeworesume.pdf
+Saved resume
+Processing user [5174] VjacheslavKopylov
+query: select nid, type, vid, title from node where type = "employee" and uid = "5174" LIMIT 1
+Creating new employee record [11966].. 
+Found 3 terms
+User employee [11966] VjacheslavKopylov saved as [12204]
+Couldnt find location instance for nid 11966
+Processing user [5175] efunches7
+query: select nid, type, vid, title from node where type = "employee" and uid = "5175" LIMIT 1
+Creating new employee record [11970].. 
+Found 3 terms
+User employee [11970] efunches7 saved as [12205]
+Couldnt find location instance for nid 11970
+Found file that needs to be uploaded: private/resumes/resume_apo_cw3r_920a.docx
+Saved resume
+Processing user [5176] mbritt
+query: select nid, type, vid, title from node where type = "employer" and uid = "5176" LIMIT 1
+Creating new employer record [11974].. 
+User employer [11974] North Wind Solutions-01.31.17 saved as [12206]
+Couldnt find location instance for nid 11974
+Processing user [5177] R.Ashleym21
+query: select nid, type, vid, title from node where type = "employee" and uid = "5177" LIMIT 1
+Creating new employee record [11975].. 
+Found 3 terms
+User employee [11975] R.Ashleym21 saved as [12207]
+Couldnt find location instance for nid 11975
+Found file that needs to be uploaded: private/resumes/rebeccas_resume_2017-no_reference.doc
+Saved resume
+Processing user [5178] vince
+query: select nid, type, vid, title from node where type = "employer" and uid = "5178" LIMIT 1
+Creating new employer record [11976].. 
+User employer [11976] All Pro Placement-02.02.17 saved as [12208]
+Couldnt find location instance for nid 11976
+Processing user [5179] agostosurv
+query: select nid, type, vid, title from node where type = "employee" and uid = "5179" LIMIT 1
+Creating new employee record [11984].. 
+Found 2 terms
+User employee [11984] agostosurv saved as [12209]
+Couldnt find location instance for nid 11984
+Found file that needs to be uploaded: private/resumes/secret_clearance_-_sr._cisco_network_engineer.doc
+Saved resume
+Processing user [5180] xtreemvelocity
+query: select nid, type, vid, title from node where type = "employee" and uid = "5180" LIMIT 1
+Creating new employee record [11985].. 
+Found 3 terms
+User employee [11985] xtreemvelocity saved as [12210]
+Couldnt find location instance for nid 11985
+Processing user [5181] raure109
+query: select nid, type, vid, title from node where type = "employee" and uid = "5181" LIMIT 1
+Creating new employee record [11986].. 
+Found 3 terms
+User employee [11986] raure109 saved as [12211]
+Couldnt find location instance for nid 11986
+Found file that needs to be uploaded: private/resumes/resume_24.docx
+Saved resume
+Processing user [5182] dereckglover
+query: select nid, type, vid, title from node where type = "employee" and uid = "5182" LIMIT 1
+Creating new employee record [11988].. 
+Found 2 terms
+User employee [11988] dereckglover saved as [12212]
+Couldnt find location instance for nid 11988
+Found file that needs to be uploaded: private/resumes/dereck_glover_resume_1.docx
+Saved resume
+Processing user [5183] jud.kinnucan
+query: select nid, type, vid, title from node where type = "employer" and uid = "5183" LIMIT 1
+Creating new employer record [11989].. 
+User employer [11989] Talent Orchard-02.03.17 saved as [12213]
+Couldnt find location instance for nid 11989
+Processing user [5184] lorraine.delucia
+query: select nid, type, vid, title from node where type = "employee" and uid = "5184" LIMIT 1
+Creating new employee record [11990].. 
+Found 2 terms
+User employee [11990] lorraine.delucia saved as [12214]
+Couldnt find location instance for nid 11990
+Processing user [5185] MOG.Humanresources
+query: select nid, type, vid, title from node where type = "employer" and uid = "5185" LIMIT 1
+Creating new employer record [11991].. 
+User employer [11991] Jacobs Technology-02.06.17 saved as [12215]
+Couldnt find location instance for nid 11991
+Processing user [5186] jimmies10_78
+query: select nid, type, vid, title from node where type = "employee" and uid = "5186" LIMIT 1
+Creating new employee record [11992].. 
+Found 3 terms
+User employee [11992] jimmies10_78 saved as [12216]
+Couldnt find location instance for nid 11992
+Found file that needs to be uploaded: private/resumes/hawkins_kareem_2017.docx
+Saved resume
+Processing user [5187] alexander.pennant
+query: select nid, type, vid, title from node where type = "employer" and uid = "5187" LIMIT 1
+Creating new employer record [11998].. 
+User employer [11998] General Dynamics Information Technology-02.08.17 saved as [12217]
+Couldnt find location instance for nid 11998
+Processing user [5188] eh.gdr.us
+query: select nid, type, vid, title from node where type = "employee" and uid = "5188" LIMIT 1
+Creating new employee record [11999].. 
+Found 3 terms
+User employee [11999] eh.gdr.us saved as [12218]
+Couldnt find location instance for nid 11999
+Processing user [5189] george.pojani
+query: select nid, type, vid, title from node where type = "employer" and uid = "5189" LIMIT 1
+Creating new employer record [12000].. 
+User employer [12000] Absolute Buiseness Solutions Corp-02.08.17 saved as [12219]
+Couldnt find location instance for nid 12000
+Processing user [5190] Tokusosuate
+query: select nid, type, vid, title from node where type = "employee" and uid = "5190" LIMIT 1
+Creating new employee record [12001].. 
+Found 3 terms
+User employee [12001] Tokusosuate saved as [12220]
+Couldnt find location instance for nid 12001
+Processing user [5191] ryan.bromwell
+query: select nid, type, vid, title from node where type = "employee" and uid = "5191" LIMIT 1
+Creating new employee record [12002].. 
+Found 3 terms
+User employee [12002] ryan.bromwell saved as [12221]
+Couldnt find location instance for nid 12002
+Processing user [5192] awmarkley
+query: select nid, type, vid, title from node where type = "employee" and uid = "5192" LIMIT 1
+Creating new employee record [12003].. 
+Found 3 terms
+User employee [12003] awmarkley saved as [12222]
+Couldnt find location instance for nid 12003
+Found file that needs to be uploaded: private/resumes/awm_resume_2017.pdf
+Saved resume
+Processing user [5193] mrajashekhar007
+query: select nid, type, vid, title from node where type = "employee" and uid = "5193" LIMIT 1
+Creating new employee record [12005].. 
+Found 2 terms
+User employee [12005] mrajashekhar007 saved as [12223]
+Couldnt find location instance for nid 12005
+Found file that needs to be uploaded: private/resumes/2016.doc
+Saved resume
+Processing user [5194] woongdre85
+query: select nid, type, vid, title from node where type = "employee" and uid = "5194" LIMIT 1
+Creating new employee record [12006].. 
+Found 3 terms
+User employee [12006] woongdre85 saved as [12224]
+Couldnt find location instance for nid 12006
+Processing user [5195] ebucey
+query: select nid, type, vid, title from node where type = "employer" and uid = "5195" LIMIT 1
+Creating new employer record [12007].. 
+User employer [12007] Frontier Technology, Inc.-02.13.17 saved as [12225]
+Couldnt find location instance for nid 12007
+Processing user [5196] dannydow
+query: select nid, type, vid, title from node where type = "employee" and uid = "5196" LIMIT 1
+Creating new employee record [12009].. 
+Found 3 terms
+User employee [12009] 1 saved as [12226]
+Couldnt find location instance for nid 12009
+Found file that needs to be uploaded: private/resumes/daniel_dow_2017v1.doc
+Saved resume
+Processing user [5197] twizted08tc
+query: select nid, type, vid, title from node where type = "employee" and uid = "5197" LIMIT 1
+Creating new employee record [12011].. 
+Found 3 terms
+User employee [12011] twizted08tc saved as [12227]
+Couldnt find location instance for nid 12011
+Processing user [5198] jlawson
+query: select nid, type, vid, title from node where type = "employer" and uid = "5198" LIMIT 1
+Creating new employer record [12012].. 
+User employer [12012] Azimuth Corporation-02.14.17 saved as [12228]
+Couldnt find location instance for nid 12012
+Processing user [5199] Cdesir.77
+query: select nid, type, vid, title from node where type = "employee" and uid = "5199" LIMIT 1
+Creating new employee record [12013].. 
+Found 3 terms
+User employee [12013] Cdesir.77 saved as [12229]
+Couldnt find location instance for nid 12013
+Found file that needs to be uploaded: private/resumes/desir_resume_2017.docx
+Saved resume
+Processing user [5200] justin.cunningham0004
+query: select nid, type, vid, title from node where type = "employee" and uid = "5200" LIMIT 1
+Creating new employee record [12020].. 
+Found 3 terms
+User employee [12020] justin.cunningham0004 saved as [12230]
+Couldnt find location instance for nid 12020
+Found file that needs to be uploaded: private/resumes/justin_cunningham_resume.docx
+Saved resume
+Processing user [5201] rena.barner
+query: select nid, type, vid, title from node where type = "employer" and uid = "5201" LIMIT 1
+Creating new employer record [12023].. 
+User employer [12023] ANAVATION, LLC-02.15.17 saved as [12231]
+Couldnt find location instance for nid 12023
+Processing user [5202] rbrock
+query: select nid, type, vid, title from node where type = "employer" and uid = "5202" LIMIT 1
+Creating new employer record [12030].. 
+User employer [12030] Director of Talent Acquisition saved as [12232]
+Couldnt find location instance for nid 12030
+Processing user [5203] dnixon
+query: select nid, type, vid, title from node where type = "employer" and uid = "5203" LIMIT 1
+Creating new employer record [12032].. 
+User employer [12032] Binary Group, Inc-02.21.17 saved as [12233]
+Couldnt find location instance for nid 12032
+Processing user [5204] ttufano
+query: select nid, type, vid, title from node where type = "employer" and uid = "5204" LIMIT 1
+Creating new employer record [12051].. 
+User employer [12051] Group SSI-02.24.17 saved as [12234]
+Couldnt find location instance for nid 12051
+Processing user [5205] Recruiting_2
+query: select nid, type, vid, title from node where type = "employer" and uid = "5205" LIMIT 1
+Creating new employer record [12052].. 
+User employer [12052] New Paradigm Consulting Incorporated-02.25.17 saved as [12235]
+Couldnt find location instance for nid 12052
+Processing user [5206] richarddickharmer
+query: select nid, type, vid, title from node where type = "employee" and uid = "5206" LIMIT 1
+Creating new employee record [12053].. 
+Found 3 terms
+User employee [12053] richarddickharmer saved as [12236]
+Couldnt find location instance for nid 12053
+Processing user [5207] paventurajr
+query: select nid, type, vid, title from node where type = "employee" and uid = "5207" LIMIT 1
+Creating new employee record [12054].. 
+Found 3 terms
+User employee [12054] paventurajr saved as [12237]
+Couldnt find location instance for nid 12054
+Found file that needs to be uploaded: private/resumes/ventura-1_resume_1.doc
+Saved resume
+Processing user [5208] ksantiago
+query: select nid, type, vid, title from node where type = "employer" and uid = "5208" LIMIT 1
+Creating new employer record [12055].. 
+User employer [12055] Mission1st-02.27.17 saved as [12238]
+Couldnt find location instance for nid 12055
+Processing user [5209] timw
+query: select nid, type, vid, title from node where type = "employer" and uid = "5209" LIMIT 1
+Creating new employer record [12061].. 
+User employer [12061] Mission Solutions Group-02.28.17 saved as [12239]
+Couldnt find location instance for nid 12061
+Processing user [5210] psberry67
+query: select nid, type, vid, title from node where type = "employee" and uid = "5210" LIMIT 1
+Creating new employee record [12062].. 
+Found 3 terms
+User employee [12062] psberry67 saved as [12240]
+Couldnt find location instance for nid 12062
+Found file that needs to be uploaded: private/resumes/pamberry.doc
+Saved resume
+Processing user [5211] jrjtl95
+query: select nid, type, vid, title from node where type = "employee" and uid = "5211" LIMIT 1
+Creating new employee record [12063].. 
+Found 3 terms
+User employee [12063] jrjtl95 saved as [12241]
+Couldnt find location instance for nid 12063
+Found file that needs to be uploaded: private/resumes/jay_lundy_2-21-17.docx
+Saved resume
+Processing user [5212] Levin.Custis
+query: select nid, type, vid, title from node where type = "employee" and uid = "5212" LIMIT 1
+Creating new employee record [12064].. 
+Found 3 terms
+User employee [12064] Levin.Custis saved as [12242]
+Couldnt find location instance for nid 12064
+Processing user [5213] cooljunk3
+query: select nid, type, vid, title from node where type = "employer" and uid = "5213" LIMIT 1
+Creating new employer record [12065].. 
+User employer [12065] custis communications-03.02.17 saved as [12243]
+Couldnt find location instance for nid 12065
+Processing user [5214] srmelone
+query: select nid, type, vid, title from node where type = "employee" and uid = "5214" LIMIT 1
+Creating new employee record [12068].. 
+Found 3 terms
+User employee [12068] srmelone saved as [12244]
+Couldnt find location instance for nid 12068
+Found file that needs to be uploaded: private/resumes/srm.pdf
+Saved resume
+Processing user [5215] kmichiels
+query: select nid, type, vid, title from node where type = "employee" and uid = "5215" LIMIT 1
+Creating new employee record [12069].. 
+Found 3 terms
+User employee [12069] kmichiels saved as [12245]
+Couldnt find location instance for nid 12069
+Found file that needs to be uploaded: private/resumes/ken_michiels_-_resume_-_03-01-2017.docx
+Saved resume
+Processing user [5216] jitesh.amin
+query: select nid, type, vid, title from node where type = "employee" and uid = "5216" LIMIT 1
+Creating new employee record [12070].. 
+Found 3 terms
+User employee [12070] jitesh.amin saved as [12246]
+Couldnt find location instance for nid 12070
+Found file that needs to be uploaded: private/resumes/resumeja.doc
+Saved resume
+Processing user [5217] Althea_Beverly
+query: select nid, type, vid, title from node where type = "employee" and uid = "5217" LIMIT 1
+Creating new employee record [12077].. 
+Found 2 terms
+User employee [12077] Althea_Beverly saved as [12247]
+Couldnt find location instance for nid 12077
+Found file that needs to be uploaded: private/resumes/resume_beverly_it-draft_speedy3.docx
+Saved resume
+Processing user [5218] leele1978
+query: select nid, type, vid, title from node where type = "employee" and uid = "5218" LIMIT 1
+Creating new employee record [12078].. 
+Found 3 terms
+User employee [12078] leele1978 saved as [12248]
+Couldnt find location instance for nid 12078
+Found file that needs to be uploaded: private/resumes/ailiyea_j._blackman_resume_2017.docx
+Saved resume
+Processing user [5219] kenny.alicea1
+query: select nid, type, vid, title from node where type = "employee" and uid = "5219" LIMIT 1
+Creating new employee record [12079].. 
+Found 3 terms
+User employee [12079] kenny.alicea1 saved as [12249]
+Couldnt find location instance for nid 12079
+Found file that needs to be uploaded: private/resumes/alicea_kenny_resume_03mar2017.docx
+Saved resume
+Processing user [5222] Somesh.dhamodar
+query: select nid, type, vid, title from node where type = "employer" and uid = "5222" LIMIT 1
+Creating new employer record [12082].. 
+User employer [12082] leneer.net-03.07.17 saved as [12250]
+Couldnt find location instance for nid 12082
+Processing user [5223] vinod.ma
+query: select nid, type, vid, title from node where type = "employee" and uid = "5223" LIMIT 1
+Creating new employee record [12084].. 
+Found 2 terms
+User employee [12084] vinod.ma saved as [12251]
+Couldnt find location instance for nid 12084
+Found file that needs to be uploaded: private/resumes/vinodmangipudi_ds.docx
+Saved resume
+Processing user [5224] hunter.cole
+query: select nid, type, vid, title from node where type = "employee" and uid = "5224" LIMIT 1
+Creating new employee record [12085].. 
+Found 3 terms
+User employee [12085] hunter.cole saved as [12252]
+Couldnt find location instance for nid 12085
+Found file that needs to be uploaded: private/resumes/resume_13.pdf
+Saved resume
+Processing user [5225] plippold01
+query: select nid, type, vid, title from node where type = "employee" and uid = "5225" LIMIT 1
+Creating new employee record [12087].. 
+Found 3 terms
+User employee [12087] plippold01 saved as [12253]
+Couldnt find location instance for nid 12087
+Found file that needs to be uploaded: private/resumes/lippold_hhusa_resume_002.pdf
+Saved resume
+Processing user [5226] jdoan
+query: select nid, type, vid, title from node where type = "employer" and uid = "5226" LIMIT 1
+Creating new employer record [12089].. 
+User employer [12089] Professional Services of America Inc.-03.14.17 saved as [12254]
+Couldnt find location instance for nid 12089
+Processing user [5227] rknowl03
+query: select nid, type, vid, title from node where type = "employer" and uid = "5227" LIMIT 1
+Creating new employer record [12090].. 
+User employer [12090] Harris-03.14.17 saved as [12255]
+Couldnt find location instance for nid 12090
+Processing user [5228] Kchoi
+query: select nid, type, vid, title from node where type = "employer" and uid = "5228" LIMIT 1
+Creating new employer record [12091].. 
+User employer [12091] PlanIT Group-03.14.17 saved as [12256]
+Couldnt find location instance for nid 12091
+Processing user [5229] zzoccoli
+query: select nid, type, vid, title from node where type = "employer" and uid = "5229" LIMIT 1
+Creating new employer record [12092].. 
+User employer [12092] Harris Corporation-03.14.17 saved as [12257]
+Couldnt find location instance for nid 12092
+Processing user [5230] vernholt7
+query: select nid, type, vid, title from node where type = "employee" and uid = "5230" LIMIT 1
+Creating new employee record [12094].. 
+Found 3 terms
+User employee [12094] vernholt7 saved as [12258]
+Couldnt find location instance for nid 12094
+Found file that needs to be uploaded: private/resumes/vernon_holt_resume.doc
+Saved resume
+Processing user [5231] Kcurry
+query: select nid, type, vid, title from node where type = "employer" and uid = "5231" LIMIT 1
+Creating new employer record [12095].. 
+User employer [12095] LSINC Corporation-03.15.17 saved as [12259]
+Couldnt find location instance for nid 12095
+Processing user [5232] acskerven
+query: select nid, type, vid, title from node where type = "employee" and uid = "5232" LIMIT 1
+Creating new employee record [12096].. 
+Found 3 terms
+User employee [12096] acskerven saved as [12260]
+Couldnt find location instance for nid 12096
+Found file that needs to be uploaded: private/resumes/skerven_resume_-_database_developer.doc
+Saved resume
+Processing user [5233] BPeat
+query: select nid, type, vid, title from node where type = "employee" and uid = "5233" LIMIT 1
+Creating new employee record [12097].. 
+Found 3 terms
+User employee [12097] BPeat saved as [12261]
+Couldnt find location instance for nid 12097
+Found file that needs to be uploaded: private/resumes/bruce_thomas_peat.doc
+Saved resume
+Processing user [5234] amykovac
+query: select nid, type, vid, title from node where type = "employer" and uid = "5234" LIMIT 1
+Creating new employer record [12099].. 
+User employer [12099] Amazon Web Services-03.16.17 saved as [12262]
+Couldnt find location instance for nid 12099
+Processing user [5235] sjchansky
+query: select nid, type, vid, title from node where type = "employee" and uid = "5235" LIMIT 1
+Creating new employee record [12100].. 
+Found 2 terms
+User employee [12100] sjchansky saved as [12263]
+Couldnt find location instance for nid 12100
+Found file that needs to be uploaded: private/resumes/steven_chansky_resume_word_22.docx
+Saved resume
+Processing user [5236] arcell_m
+query: select nid, type, vid, title from node where type = "employee" and uid = "5236" LIMIT 1
+Creating new employee record [12101].. 
+Found 3 terms
+User employee [12101] arcell_m saved as [12264]
+Couldnt find location instance for nid 12101
+Found file that needs to be uploaded: private/resumes/resume_up10-servicenow.docx
+Saved resume
+Processing user [5237] karina.robles
+query: select nid, type, vid, title from node where type = "employer" and uid = "5237" LIMIT 1
+Creating new employer record [12103].. 
+User employer [12103] NextLabs-03.20.17 saved as [12265]
+Couldnt find location instance for nid 12103
+Processing user [5238] rpigford13
+query: select nid, type, vid, title from node where type = "employee" and uid = "5238" LIMIT 1
+Creating new employee record [12108].. 
+Found 2 terms
+User employee [12108] rpigford13 saved as [12266]
+Couldnt find location instance for nid 12108
+Processing user [5239] nick.bissell
+query: select nid, type, vid, title from node where type = "employer" and uid = "5239" LIMIT 1
+Creating new employer record [12109].. 
+User employer [12109] OmniPoint Staffing-03.22.17 saved as [12267]
+Couldnt find location instance for nid 12109
+Processing user [5240] steven.west
+query: select nid, type, vid, title from node where type = "employer" and uid = "5240" LIMIT 1
+Creating new employer record [12110].. 
+User employer [12110] OmniPoint Staffing-03.22.17 saved as [12268]
+Couldnt find location instance for nid 12110
+Processing user [5241] Colin.Poe
+query: select nid, type, vid, title from node where type = "employer" and uid = "5241" LIMIT 1
+Creating new employer record [12111].. 
+User employer [12111] OMNIPOINT STAFFING-03.22.17 saved as [12269]
+Couldnt find location instance for nid 12111
+Processing user [5242] heather.moretz
+query: select nid, type, vid, title from node where type = "employer" and uid = "5242" LIMIT 1
+Creating new employer record [12112].. 
+User employer [12112] OmniPoint Staffing-03.22.17 saved as [12270]
+Couldnt find location instance for nid 12112
+Processing user [5243] jessica.wallace
+query: select nid, type, vid, title from node where type = "employer" and uid = "5243" LIMIT 1
+Creating new employer record [12118].. 
+User employer [12118] OmniPoint Staffing-03.23.17 saved as [12271]
+Couldnt find location instance for nid 12118
+Processing user [5244] roberta.fried
+query: select nid, type, vid, title from node where type = "employer" and uid = "5244" LIMIT 1
+Creating new employer record [12119].. 
+User employer [12119] OmniPoint Staffing -03.23.17 saved as [12272]
+Couldnt find location instance for nid 12119
+Processing user [5245] Freddy.H.Fife
+query: select nid, type, vid, title from node where type = "employee" and uid = "5245" LIMIT 1
+Creating new employee record [12123].. 
+Found 3 terms
+User employee [12123] Freddy.H.Fife saved as [12273]
+Couldnt find location instance for nid 12123
+Found file that needs to be uploaded: private/resumes/freddy-fife.pdf
+Saved resume
+Processing user [5246] glozeau22
+query: select nid, type, vid, title from node where type = "employee" and uid = "5246" LIMIT 1
+Creating new employee record [12130].. 
+Found 3 terms
+User employee [12130] glozeau22 saved as [12274]
+Couldnt find location instance for nid 12130
+Found file that needs to be uploaded: private/resumes/lozeau_greg_resume_2017.docx
+Saved resume
+Processing user [5247] jeffro34
+query: select nid, type, vid, title from node where type = "employee" and uid = "5247" LIMIT 1
+Creating new employee record [12132].. 
+Found 2 terms
+User employee [12132] jeffro34 saved as [12275]
+Couldnt find location instance for nid 12132
+Found file that needs to be uploaded: private/resumes/jeff_cook_resume.docx
+Saved resume
+Processing user [5248] morgan.baker88
+query: select nid, type, vid, title from node where type = "employee" and uid = "5248" LIMIT 1
+Creating new employee record [12133].. 
+Found 3 terms
+User employee [12133] morgan.baker88 saved as [12276]
+Couldnt find location instance for nid 12133
+Found file that needs to be uploaded: private/resumes/morgan_baker_2017_resume.docx
+Saved resume
+Processing user [5249] jordanavickers93
+query: select nid, type, vid, title from node where type = "employee" and uid = "5249" LIMIT 1
+Creating new employee record [12134].. 
+Found 2 terms
+User employee [12134] jordanavickers93 saved as [12277]
+Couldnt find location instance for nid 12134
+Processing user [5250] Tonia_Allen
+query: select nid, type, vid, title from node where type = "employer" and uid = "5250" LIMIT 1
+Creating new employer record [12135].. 
+User employer [12135] Kelly Services-03.28.17 saved as [12278]
+Couldnt find location instance for nid 12135
+Processing user [5251] kcrowley
+query: select nid, type, vid, title from node where type = "employer" and uid = "5251" LIMIT 1
+Creating new employer record [12136].. 
+User employer [12136] DeWinter Technology-03.30.17 saved as [12279]
+Couldnt find location instance for nid 12136
+Processing user [5252] Stanleycruz6
+query: select nid, type, vid, title from node where type = "employee" and uid = "5252" LIMIT 1
+Creating new employee record [12137].. 
+Found 3 terms
+User employee [12137] Stanleycruz6 saved as [12280]
+Couldnt find location instance for nid 12137
+Processing user [5253] leslie.wine
+query: select nid, type, vid, title from node where type = "employer" and uid = "5253" LIMIT 1
+Creating new employer record [12138].. 
+User employer [12138] L3 Technologies-03.30.17 saved as [12281]
+Couldnt find location instance for nid 12138
+Imported Array
+(
+    [users] => 130
+    [jobs] => 0
+    [employee] => 85
+    [employer] => 45
+)
+

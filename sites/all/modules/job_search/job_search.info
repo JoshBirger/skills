@@ -1,0 +1,9 @@
+;$Id$
+
+name = Custom Job Search
+description = This is custom module for job search .
+package = Custom
+core = 7.x
+files[] = custom_job_search.module
+ 
+;php = 5.2

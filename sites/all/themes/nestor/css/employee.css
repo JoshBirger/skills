@@ -1,0 +1,86 @@
+#myTab1 {
+	margin-bottom: 0px;
+	margin-top:10px;
+}
+
+#myTab1 li{
+	background: #bbbbbb;
+	color: #777777;
+}
+#myTab1 li a {
+	color: #777777;
+}
+#myTab1 li a:hover {
+	color: #000000;
+}
+#myTab1 li.active a {
+	color: #000000;
+	margin-right: 0px !important;
+}
+#myTab1 li.active {
+	background: #eeeeee;
+	color: #000000;
+}
+
+div.tab-pane {
+	background: #eeeeee;
+	padding: 10px 0px;
+}
+
+
+
+div.panel-item h6 {
+	background: #bbbbbb;
+	padding: 5px 10px 5px 10px;
+	margin: 5px 0px 5px 0px;
+}
+div.panel-item p {
+	background: #eeeeee;
+	padding: 0px 0px 0px 0px;
+}
+
+div.panel-item input.form-autocomplete {
+	background-image: none;
+}
+
+div.form-item label {
+	padding-left: 5px; padding-right: 5px;
+}
+
+#edit-field-employee-resume-upload-button--2 {
+	margin-top: 10px;
+}
+div.form-managed-file input.ajax-processed {
+	margin-top: 10px;
+}
+
+div.captcha img {
+	width: 180px;
+	60px;
+}
+
+@media only screen and (max-width: 768px) {
+	#myTab1 li {
+		float: none;
+		width: 100%;
+		margin: 4px 0;
+	}
+	#myTab li a {
+		width: 100%;
+		display: block;
+	}
+}
+
+@media only screen and (min-width:769px) {
+	#myTab1 {
+		width: 570px;
+		margin-left: 25%;
+	}
+	div.tab-content {
+		width: 570px;
+		margin-left: 25%
+	}
+	div.tab-pane {
+		width: 570px;
+	}
+}

@@ -1,0 +1,81 @@
+name = tsskills Theme
+description = tsskillssheets[all][] = css/mediascreen.css Theme is a premium Drupal 7 theme. Developed by <a href="http://www.devsaran.com">Devsaran.com</a>.
+core = 7.x
+engine = phptemplate
+stylesheets[all][] = assets/fonts/profession/style.css
+stylesheets[all][] = assets/libraries/font-awesome/css/font-awesome.min.css
+stylesheets[all][] = assets/libraries/bootstrap-fileinput/css/fileinput.min.css
+stylesheets[all][] = assets/libraries/bootstrap-select/css/bootstrap-select.min.css
+stylesheets[all][] = assets/libraries/bootstrap-wysiwyg/bootstrap-wysiwyg.min.css
+stylesheets[all][] = assets/css/profession-black-green.css
+stylesheets[all][] = assets/css/custom.css
+
+scripts[] = assets/js/bootstrap.min.js
+
+; Regions
+
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+
+regions[top_header] = Top Header
+regions[top_header_left] = Top Header left
+regions[top_header_right] = Top Header right
+regions[header] = Header
+
+regions[help] = Help
+
+regions[highlighted_1] = Highlighted 1
+regions[highlighted_2] = Highlighted 2
+
+regions[content] = Content
+regions[sidebar_first] = Sidebar first
+regions[sidebar_second] = Sidebar second
+regions[content_1] = Content 1
+regions[content_2] = Content 2
+regions[content_3] = Content 3
+regions[content_4] = Content 4
+regions[content_5] = Content 5
+regions[content_6] = Content 6
+regions[content_7] = Content 7
+regions[content_8] = Content 8
+regions[content_9] = Content 9
+regions[content_10] = Content 10
+regions[content_11] = Content 11
+regions[content_12] = Content 12
+
+regions[map] = Map
+
+regions[footer_first_column] = Footer first column
+regions[footer_second_column] = Footer second column
+regions[footer_third_column] = Footer third column
+regions[footer_fourth_column] = Footer fourth column
+regions[footer_left] = Footer Left
+regions[footer_right] = Footer Right
+
+
+features[] = logo
+features[] = name
+features[] = slogan
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = comment_user_verification
+features[] = favicon
+features[] = main_menu
+features[] = secondary_menu
+settings[slideshow_display]  = 1
+settings[breadcrumbs]  = 1
+settings[slide1_head]  = "Sample product"
+settings[slide2_head]  = "Sample service"
+settings[slide3_head]  = "Contact us"
+settings[slide1_desc]  = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt elit, sed do eiusmod tempor..."
+settings[slide2_desc]  = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do Lorem ipsum dolor sit amet irure dolor in reprehenderit..."
+settings[slide3_desc]  = "Duis aute irure dolor in reprehenderit inLorem ipsum dolor sit amet, consectetur do Lorem ipsum dolor sit amet irure..."
+settings[slide1_url]  = "node/1"
+settings[slide2_url]  = "node/2"
+settings[slide3_url]  = "node/3
+; Information added by Drupal.org packaging script on 2013-12-28
+version = "7.x-1.0"
+core = "7.x"
+project = "tsskills"
+datestamp = "1388219605"
+

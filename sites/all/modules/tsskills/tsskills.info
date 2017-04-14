@@ -1,0 +1,6 @@
+name = tsskills
+description = Handler for custom login functions for TSSkills site
+package = 
+version = 0.1
+core = 7.x
+files[] = tsskills.module

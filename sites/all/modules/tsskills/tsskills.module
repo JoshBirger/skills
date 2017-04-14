@@ -1,0 +1,1264 @@
+<?php
+
+function tsskills_permission(){
+	$items = array();
+	$items['access applied jobs'] = array(
+		'title'=> t('Access listing of applied jobs')
+	);
+	$items['edit tsskills profile'] = array(
+		'title'=> t('Edit own employer/employee profile')
+	);
+	$items['access posted jobs'] = array(
+		'title' => t('View listing of own posted jobs')
+	);
+	return $items;
+}
+
+function tsskills_menu(){
+	$items = array();
+	$items['user/applied-jobs'] = array(
+		'title' => 'Applied Jobs',
+		'page callback' => 'tsskills_applied_jobs',
+		'access arguments' => array('access applied jobs'),
+		'type' => MENU_NORMAL_ITEM
+	);
+	$items['apply/%'] = array(
+		'title' => 'Apply to Job',
+                'page callback' => 'tsskills_apply_job',
+		'page arguments' => array(1),
+		'access arguments' => array('access applied jobs'),
+		'type' => MENU_NORMAL_ITEM
+        );
+	$items['user/%/edit/%'] = array(
+		'title' => 'Edit Profile',
+		'page callback' => 'tsskills_user_edit',
+		'page arguments' => array(1,3),
+		'access arguments' => array('edit tsskills profile'),
+		'type' => MENU_LOCAL_TASK,
+	);
+	$items['user/%/posted-jobs'] = array(
+                'title' => 'Posted Jobs',
+                'page callback' => 'tsskills_posted_jobs_new',//'tsskills_posted_jobs',
+				'page arguments' => array(1),
+                'access arguments' => array('access posted jobs'),
+                'type' => MENU_NORMAL_ITEM
+        );
+	$items['user/%/posted-jobs-new'] = array(
+                'title' => 'Posted Jobs',
+                'page callback' => 'tsskills_posted_jobs_new',
+				'page arguments' => array(1),
+                'access arguments' => array('access posted jobs'),
+                'type' => MENU_NORMAL_ITEM
+        );
+	$items['user/%/posted-jobs-ajax'] = array(
+                'title' => 'Posted Jobs',
+                'page callback' => 'tsskills_posted_jobs_ajax',
+				'page arguments' => array(1),
+                'access arguments' => array('access posted jobs'),
+                'type' => MENU_NORMAL_ITEM
+        );
+	$items['job/%/applications-ajax'] = array(
+                'title' => 'Job Applicants',
+                'page callback' => 'tsskills_job_applications_ajax',
+				'page arguments' => array(1),
+                'access arguments' => array('access posted jobs'),
+                'type' => MENU_NORMAL_ITEM
+        );	
+		
+	$items['job/%/applications'] = array(
+                'title' => 'Job Applicants',
+                'page callback' => 'tsskills_job_applications',
+				'page arguments' => array(1),
+                'access arguments' => array('access posted jobs'),
+                'type' => MENU_NORMAL_ITEM
+        );	
+		
+	$items['tsadmin/employee-search'] = array(
+                'title' => 'Employee Search',
+                'page callback' => 'tsskills_employee_search',
+                'access arguments' => array('administer users'),
+                'type' => MENU_LOCAL_TASK,
+        );
+	$items['user/create-job'] = array(
+                'title' => 'Create Job',
+                'page callback' => 'tsskills_create_job',
+                'access arguments' => array('access posted jobs'),
+                'type' => MENU_NORMAL_ITEM
+        );
+	$items['tsadmin/publish-jobs'] = array(
+                'title' => 'Publish Jobs',
+                'page callback' => 'tsskills_publish_jobs',
+                'access arguments' => array('administer users'),
+                'type' => MENU_LOCAL_TASK,
+        );
+
+	return $items;
+}
+
+function tsskills_menu_local_tasks_alter(&$data, $router_item, $root_path){
+	if('user/%' == substr($root_path,0,6) ){
+		unset($data['tabs']);
+	}
+}
+
+
+function tsskills_theme() {
+	return array(
+		'tsskills_applied' => array(
+			'arguments' => array(),
+			'template' => 'tsskills_applied',
+			'variables' => array('data' => null)
+		),
+		'tsskills_applications' => array(
+                        'arguments' => array(),
+                        'template' => 'tsskills_applied',
+                        'variables' => array('data' => null)
+                ),
+		'tsskills_apply' => array(
+                        'arguments' => array(),
+                        'template' => 'tsskills_apply',
+                        'variables' => array('data' => null)
+                ),
+		'tsskills_editprofile' => array(
+                        'arguments' => array(),
+                        'template' => 'tsskills_editprofile',
+                        'variables' => array('data' => null)
+                ),
+		'tsskills_employeesearch' => array(
+                        'arguments' => array(),
+                        'template' => 'tsskills_employeesearch',
+                        'variables' => array('data' => null)
+                ),
+		'tsskills_publishjobs' => array(
+                        'arguments' => array(),
+                        'template' => 'tsskills_publishjobs',
+                        'variables' => array('data' => null)
+                ),
+		'tsskills_posted' => array(
+                        'arguments' => array(),
+                        'template' => 'tsskills_posted',
+                        'variables' => array('jobs' => null)
+                ),
+		'tsskills_posted_jobs' => array(
+                        'arguments' => array(),
+                        'template' => 'tsskills_posted_jobs',
+                        'variables' => array('jobs' => null)
+                ),
+		'tsskills_job_applications' => array(
+                        'arguments' => array(),
+                        'template' => 'tsskills_job_applications',
+                        'variables' => array('jobs' => null)
+                ),		
+				
+		'tsskills_createjob' => array(
+                        'arguments' => array(),
+                        'template' => 'tsskills_createjob',
+                        'variables' => array('jobform' => null)
+                )
+
+
+
+	);
+}
+
+function _tsskills_employee_by_uid($uid){
+	$query = new EntityFieldQuery();
+	$result = $query->entityCondition('entity_type', 'node')
+  ->propertyCondition('status', 1)
+  ->propertyCondition('type', 'employee')
+  ->propertyCondition('uid', $uid)
+  ->execute();
+	$nids = array_keys($result['node']);
+	$node = node_load($nids[0]);
+	return $node;
+}
+
+function _tsskills_employer_by_uid($uid){
+	$query = new EntityFieldQuery();
+        $result = $query->entityCondition('entity_type', 'node')
+  ->propertyCondition('status', 1)
+  ->propertyCondition('type', 'employer')
+  ->propertyCondition('uid', $uid)
+  ->execute();
+        $nids = array_keys($result['node']);
+        $node = node_load($nids[0]);
+        return $node;
+}
+
+function tsskills_publish_jobs(){
+
+	if(isset($_GET['changepublish']) && strlen($_GET['changepublish']) > 0){
+		$node_change = node_load($_GET['changepublish']);
+		if(!$node_change){
+			drupal_set_message("Could not find a job with node id ".$_GET['changepublish']);
+		} else {
+			$node_change->status = $node_change->status?0:1;
+			node_save($node_change);
+			drupal_set_message("Changed status to ".$node_change->status." for ".$node_change->title);
+		}
+	}
+
+        $query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+                ->propertyCondition('type', 'job');
+        //add more queries here ---
+	if( isset($_GET['keywords']) && strlen($_GET['keywords']) > 1 ){
+		$query->propertyCondition('title', '%'.$_GET['keywords'].'%', 'like');
+	}
+
+        if(isset($_GET['sortby']) && strlen($_GET['sortby']) > 1){
+                if($_GET['sortby']=='created'){
+                        $query->propertyOrderBy($_GET['sortby'],(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
+                } else {
+                        $query->fieldOrderBy($_GET['sortby'],'value',(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
+                }
+        }
+        $query->pager(15);
+
+        $result = $query->execute();
+	$data = array('jobs'=>array());
+        if($result && isset($result['node']) && count($result['node']) > 0){
+                $nids = array_keys($result['node']);
+                $data['jobs'] = entity_load('node',$nids);
+        }
+	foreach( $data['jobs'] as $job){
+		$job->employer = null;
+		$query = new EntityFieldQuery();
+		$result = $query->entityCondition('entity_type','node')->propertyCondition('type','employer')->propertyCondition('uid',$job->uid)->execute();
+		if($result && isset($result['node']) && count($result['node']) > 0){
+                	$nids = array_keys($result['node']);
+                	$job->employer = node_load($nids[0]); //entity_load('node',$nids[0]);
+			//drupal_set_message( print_r($nids,true) );
+        	}
+	}
+
+        $breadcrumbs = array();
+        $breadcrumbs[] = l(t('Home'),'');
+        $breadcrumbs[] = l(t('Admin'),'user');
+        $breadcrumbs[] = l(t('Publish Jobs'),'tsadmin/publish-jobs');
+        drupal_set_breadcrumb($breadcrumbs);
+
+        return theme('tsskills_publishjobs',$data);
+}
+
+
+function tsskills_employee_search(){
+	$query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+  		->propertyCondition('type', 'employee');
+	//add more queries here ---
+	if(isset($_GET['sortby'])){
+		if($_GET['sortby']=='created'){
+			$query->propertyOrderBy($_GET['sortby'],(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
+		} else {
+			$query->fieldOrderBy($_GET['sortby'],'value',(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
+		}
+	}
+	$query->pager(15);
+
+	$result = $query->execute();
+
+	/*
+	$content = node_view_multiple(node_load_multiple(array_keys($result['node'])));
+	$build = array(
+  'content' => $content,
+  'pager' => array(
+    '#markup' => theme('pager'),
+    '#weight' => 10
+  )
+);
+return $build;
+	*/
+
+	$data = array('employees'=>array());
+	if($result && isset($result['node']) && count($result['node']) > 0){
+		$nids = array_keys($result['node']);
+		$data['employees'] = entity_load('node',$nids);
+	}
+	
+	$breadcrumbs = array();
+	$breadcrumbs[] = l(t('Home'),'');
+	$breadcrumbs[] = l(t('Admin'),'user');
+	$breadcrumbs[] = l(t('Employee Search'),'tsadmin/employee-search');
+	drupal_set_breadcrumb($breadcrumbs);
+
+	return theme('tsskills_employeesearch',$data);
+}
+
+function tsskills_create_job(){
+	global $user;
+	$breadcrumbs = array();
+        $breadcrumbs[] = l(t('Home'),'');
+        $breadcrumbs[] = l(t('My Account'),'user');
+        $breadcrumbs[] = l(t('Create Job'),'user/create-job');
+	drupal_set_breadcrumb($breadcrumbs);
+
+	module_load_include('inc', 'node', 'node.pages');
+	$node_form = new stdClass;
+	$node_form->type = 'job';
+	$node_form->language = LANGUAGE_NONE;
+	$node_form->uid = $user->uid;	
+
+	$form = drupal_get_form('job_node_form', $node_form);
+	unset($form['body']);	
+	//drupal_set_message(print_r($form['locations'],true));
+
+	$data = array('jobform'=>$form );
+	drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/tsskills.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+	return theme('tsskills_createjob',$data);
+}
+
+function tsskills_node_presave($node) {
+    global $user;
+    if($node->type === 'job' && $user->uid != 1) 
+        $node->uid = $user->uid;
+}
+
+function tsskills_posted_jobs($userid){
+	//print "posted jobs"; drupal_exit();
+	global $user;
+	$is_admin = 0;
+	if(in_array('administrator',$user->roles)){
+		$is_admin = 1;
+	} 
+	if(!$is_admin && $user->uid != intval($userid)){
+		drupal_access_denied(); drupal_exit(); return;
+	}
+	$query = new EntityFieldQuery();
+		$query->entityCondition('entity_type', 'node')
+		  ->propertyCondition('status', 1)
+		  ->propertyCondition('type', 'job');
+		  //->addTag('tsskillsposted'); //do query per job below instead of attempting to join on drupals entity query
+  	if($userid != 'admin'){
+		$query->propertyCondition('uid', $userid);
+  	} else {
+		$query->propertyOrderBy('uid');
+	}
+	$query->propertyOrderBy('created');
+	
+	$result = $query->execute();
+	$jobs = array();
+	if( isset($result['node']) ){
+        	$nids = array_keys($result['node']);
+        	$jobs = entity_load('node',$nids);
+	}
+	$newjobs = array();
+	foreach($jobs as $job){
+		//drupal_set_message(gettype($job->nid)." ".print_r($job->nid,true)); continue;
+		$q = db_query('SELECT vid,uid,cover_letter FROM jobapplication WHERE nid = :nid',array(':nid'=>$job->nid) );
+		$job->application_count = $q->rowCount();
+		$job->applications = array();
+		while($row = $q->fetchAssoc() ){
+			$applic_user = user_load($row['uid']);
+			$applic_emp = _tsskills_employee_by_uid($row['uid']);
+			array_push($job->applications, array('user'=>$applic_user,'cover'=>$row['cover_letter'], 'employee'=>$applic_emp) );
+		}
+		if($is_admin && 0 < $q->rowCount() ){
+			$eq = db_query('SELECT title, nid FROM node WHERE uid = :uid AND type = :type',array(':uid'=>$job->uid,':type'=>"employer"));
+			$erow = $eq->fetchAssoc();
+			if($erow ){
+				$job->employer = array('title'=>$erow['title'], 'nid'=> $erow['nid'] );
+			}
+		} else {
+			//drupal_set_message("uid: ".print_r($job->uid,true));
+		}
+		if(!$is_admin || $job->application_count > 0){
+			array_push($newjobs, $job);
+		}
+	}	
+	
+	$breadcrumbs = array();
+    $breadcrumbs[] = l(t('Home'),'');
+	$breadcrumbs[] = l(t('My Account'),'user');
+	$breadcrumbs[] = l(t('Posted Jobs'),'user/'.$user->name.'/posted-jobs');
+	drupal_set_breadcrumb($breadcrumbs);	
+	drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/tsskills.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+
+	return theme('tsskills_posted', array('jobs'=>$newjobs,'is_admin'=>$is_admin ) );
+
+}
+
+function tsskills_posted_jobs_new($userid){
+	
+	//print "posted jobs"; drupal_exit();
+	global $user;
+	$is_admin = 0;
+	if(in_array('administrator',$user->roles)){
+		$is_admin = 1;
+	} 
+	if(!$is_admin && $user->uid != intval($userid)){
+		drupal_access_denied(); drupal_exit(); return;
+	}
+	
+	$jobs = array();
+
+	$breadcrumbs = array();
+    $breadcrumbs[] = l(t('Home'),'');
+	$breadcrumbs[] = l(t('My Account'),'user');
+	$breadcrumbs[] = l(t('Posted Jobs'),'user/'.$user->name.'/posted-jobs');
+	drupal_set_breadcrumb($breadcrumbs);	
+	drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/tsskills.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+	drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/dataTables.bootstrap.min.css');
+	drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/responsive-tables.css');
+	
+	drupal_add_js(drupal_get_path('module', 'tsskills') . '/js/jquery.dataTables.min.js');
+	drupal_add_js(drupal_get_path('module', 'tsskills') . '/js/dataTables.bootstrap.min.js');
+	drupal_add_js(drupal_get_path('module', 'tsskills') . '/js/responsive-tables.js');
+	
+	drupal_add_js(drupal_get_path('module', 'tsskills') . '/js/posted_jobs.js');
+	
+	
+	return theme('tsskills_posted_jobs', array('jobs'=>$jobs,'is_admin'=>$is_admin ) );
+	
+}
+function tsskills_posted_jobs_ajax($userid){
+	global $user;
+	$is_admin = 0;
+	if(in_array('administrator',$user->roles)){
+		$is_admin = 1;
+	} 
+	if(!$is_admin && $user->uid != intval($userid)){
+		drupal_access_denied(); drupal_exit(); return;
+	}
+	$filters = $_GET;
+	
+	
+	$query = db_select('node', 'n');
+	$query->distinct();
+	$query->leftJoin('location_instance', 'lin', 'n.nid = lin.nid');
+	$query->leftJoin('location', 'l', 'lin.lid = l.lid');
+	$query->leftJoin('field_data_field_job_expiration', 'expire', 'n.nid = expire.entity_id');
+	
+	//conditions 
+	$query->condition('n.status', 1);
+	$query->condition('n.type', 'job');
+	if($userid != 'admin'){
+		$query->condition('n.uid', $userid);
+  	}
+	
+	//fields
+	$query->fields('n',array('title','nid'));
+	$query->addExpression("CONCAT(l.city, ', ', l.province)", 'location');
+	//$query->addExpression("n.nid", 'code');
+	$query->addExpression("from_unixtime(created, '%m/%d/%Y') ", 'posted');
+	$query->addExpression("expire.field_job_expiration_value", 'expires');
+	
+	
+		$orderable_fields =  array('title','location','posted','expires');
+		$searchable_fields =  array('title','city','province','posted','expires');
+		
+		/*
+		 * Ordering
+		 */
+		if ( isset( $filters['order'] ) ){
+			foreach ( $filters['order'] as $ok => $ov ){
+				if($orderable_fields[$ov['column']] == 'location'){
+					$query->orderBy('l.city', $ov['dir']);
+					$query->orderBy('l.province', $ov['dir']);
+				} else if($orderable_fields[$ov['column']] == 'posted'){
+					$query->orderBy('created', $ov['dir']);
+				} else if($orderable_fields[$ov['column']] == 'expires'){
+					$query->orderBy('expire.field_job_expiration_value', $ov['dir']);
+				}else {
+					$query->orderBy($orderable_fields[$ov['column']], $ov['dir']);
+				}
+					
+			}
+		}
+		/* Individual column filtering */
+		$db_or = '';
+		if($filters['search']['value']){
+			foreach($filters['columns'] as $sk => $sv){
+				if($sv['searchable'] == "true"){
+					//echo $searchable_fields[$sk] . " : " . $filters['search']['value'] . '<br />';
+					if($searchable_fields[$sk] == 'location'){
+						if($db_or){
+							$db_or->condition('l.city', '%' . $filters['search']['value'] . '%', 'LIKE');
+							$db_or->condition('l.province', '%' . $filters['search']['value'] . '%', 'LIKE');
+						} else {
+							$db_or = db_or()->condition('l.city', '%' . $filters['search']['value'] . '%', 'LIKE');
+							$db_or->condition('l.province', '%' . $filters['search']['value'] . '%', 'LIKE');
+						}
+					} else if($searchable_fields[$sk] == 'posted'){
+						if($db_or){
+							$db_or->condition('created', '%' . $filters['search']['value'] . '%', 'LIKE');
+						} else {
+							$db_or = db_or()->condition('created', '%' . $filters['search']['value'] . '%', 'LIKE');
+						}
+					} else if($searchable_fields[$sk] == 'expires'){
+						if($db_or){
+							$db_or->condition('expire.field_job_expiration_value', '%' . $filters['search']['value'] . '%', 'LIKE');
+						} else {
+							$db_or = db_or()->condition('expire.field_job_expiration_value', '%' . $filters['search']['value'] . '%', 'LIKE');
+						}
+					} else  {
+						if($db_or){
+							$db_or->condition($searchable_fields[$sk], '%' . $filters['search']['value'] . '%', 'LIKE');
+						} else {
+							$db_or = db_or()->condition($searchable_fields[$sk], '%' . $filters['search']['value'] . '%', 'LIKE');
+						}
+					}
+					
+				}
+			}
+		}
+		
+		if($db_or){
+			$query->condition($db_or);
+		}
+
+	//echo $query->__toString();die;
+	$query2 = $query;
+	$total_jobs = $query->execute()->fetchAll();
+	$total_jobs_count = count($total_jobs);
+	if($total_jobs_count > 0){
+	
+		/* 
+		 * Paging
+		 */
+		if ( isset( $filters['length'] ) && $filters['length'] ){
+			$query2->range(intval( $filters['start'] ), intval( $filters['length'] ));
+		}
+		$result = $query2->execute()->fetchAll();
+		$jobs = array();
+		$job_ids = array();
+		array_walk($result, function($item) use(&$jobs,&$job_ids,&$apps_count){
+			$tmp_job = array();
+			$tmp_job['DT_RowId'] = $item->nid;
+			$tmp_job['title'] = '<h5><a href="'.url('node/'.$item->nid).'">'.$item->title.'</a></h5>';
+			$tmp_job['location'] = $item->location;
+			//$tmp_job['code'] = "#".$item->code;
+			$tmp_job['posted'] = $item->posted;
+			$tmp_job['expires'] = ($item->expires)?$item->expires:'-';
+			$tmp_job['total_apps'] = 0;
+			//$tmp_job['unread'] = 0;
+			//$tmp_job['active'] = 0;
+			//$tmp_job['archived'] = 0;
+			$tmp_job['action'] = '<div class="dropdown">
+								  <button class="action_icons btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" data-unicode="e019"></span></button>
+								  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="'.url('node/'.$item->nid.'/edit').'"><span class="glyphicon glyphicon-pencil" data-unicode="e019"></span> Edit</a>
+									<a class="dropdown-item" href="'.url('node/'.$item->nid.'/delete').'"><span class="glyphicon glyphicon-remove" data-unicode="e019"></span> Delete</a>
+								  </div>
+								</div>';
+			$jobs[$item->nid] = $tmp_job;
+			$job_ids[] = $item->nid;
+		});
+		//print_r($job_ids);
+		//apps count
+		$query_apps = db_select('jobapplication','app');//SELECT nid,count(nid) FROM jobapplication group by nid
+		$query_apps->condition('app.nid', $job_ids, 'in');
+		$query_apps->fields('app',array('nid'));
+		$query_apps->addExpression("count(app.nid)", 'apps_count');
+		$query_apps->groupBy('app.nid');
+		//echo $query_apps->__toString(); die;
+		$result_apps = $query_apps->execute()->fetchAll();
+
+		array_walk($result_apps, function($item) use(&$jobs){
+			$jobs[$item->nid]['total_apps'] = '<a href="'.$base_url.'/job/'.$item->nid.'/applications"  class="apps_count">'.$item->apps_count.'</a>';
+		});
+	} else {
+		$jobs = array();
+	}
+	
+	$output = array(
+			"draw" => intval($filters['draw']),
+			"recordsTotal" => $total_jobs_count,
+			"recordsFiltered" => $total_jobs_count,
+			"data" => array_values($jobs)
+		);
+	echo json_encode($output);
+	die;
+}
+function tsskills_job_applications($jobid){
+	//print "posted jobs"; drupal_exit();
+	global $user;
+	$is_admin = 0;
+	if(in_array('administrator',$user->roles)){
+		$is_admin = 1;
+	} 
+	$job = node_load($jobid);
+	if(!$is_admin && $user->uid != intval($job->uid)){
+		drupal_access_denied(); drupal_exit(); return;
+	}
+	
+	$apps = array();
+
+	$breadcrumbs = array();
+    $breadcrumbs[] = l(t('Home'),'');
+	$breadcrumbs[] = l(t('My Account'),'user');
+	$breadcrumbs[] = l(t('Job Applicants'),'job/'.$jobid.'/applications');
+	drupal_set_breadcrumb($breadcrumbs);	
+	drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/tsskills.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+	drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/dataTables.bootstrap.min.css');
+	drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/responsive-tables.css');
+	drupal_add_js(drupal_get_path('module', 'tsskills') . '/js/jquery.dataTables.min.js');
+	drupal_add_js(drupal_get_path('module', 'tsskills') . '/js/dataTables.bootstrap.min.js');
+	drupal_add_js(drupal_get_path('module', 'tsskills') . '/js/responsive-tables.js');
+	drupal_add_js(drupal_get_path('module', 'tsskills') . '/js/posted_jobs.js');
+	
+	
+	return theme('tsskills_job_applications', array('apps'=>$apps,'is_admin'=>$is_admin ) );
+}
+function tsskills_job_applications_ajax($jobid){
+	global $user;
+	$is_admin = 0;
+	if(in_array('administrator',$user->roles)){
+		$is_admin = 1;
+	} 
+	$job = node_load($jobid);
+	if(!$is_admin && $user->uid != intval($job->uid)){
+		drupal_access_denied(); drupal_exit(); return;
+	}
+	$filters = $_GET;
+	
+	
+	$query = db_select('jobapplication', 'app');
+	$query->distinct();
+	$query->leftJoin('users', 'u', 'app.uid = u.uid');
+	$query->leftJoin('file_managed', 'file', 'file.fid = u.picture');
+	$query->leftJoin('node', 'n', 'n.uid = u.uid');
+	$query->leftJoin('field_data_field_employee_fname', 'fname', 'n.nid = fname.entity_id');
+	$query->leftJoin('field_data_field_employee_lname', 'lname', 'n.nid = lname.entity_id');
+	$query->leftJoin('location_instance', 'lin', 'n.nid = lin.nid');
+	$query->leftJoin('location', 'l', 'lin.lid = l.lid');
+	$query->leftJoin('field_data_field_clearance', 'clear', 'n.nid = clear.entity_id');
+	$query->leftJoin('taxonomy_term_data', 'clear_term', 'clear.field_clearance_tid = clear_term.tid');
+	
+	$query->leftJoin('field_data_field_availability', 'avail', 'n.nid = avail.entity_id');
+	$query->leftJoin('taxonomy_term_data', 'avail_term', 'avail.field_availability_tid = avail_term.tid');
+	
+	$query->leftJoin('field_data_field_position_type', 'pt', 'n.nid = pt.entity_id');
+	$query->leftJoin('taxonomy_term_data', 'pt_term', 'pt.field_position_type_tid = pt_term.tid');
+	
+	$query->leftJoin('field_data_field_employee_street_add', 'streat_add', 'n.nid = streat_add.entity_id');
+	$query->leftJoin('field_data_field_employee_zip', 'employee_zip', 'n.nid = employee_zip.entity_id');
+	$query->leftJoin('field_data_field_employee_telephone', 'telephone', 'n.nid = telephone.entity_id');
+	$query->leftJoin('field_data_field_employee_skills', 'skills', 'n.nid = skills.entity_id');
+	
+	
+	//conditions 
+	$query->condition('u.status', 1);
+	$query->condition('app.nid', $jobid);
+
+	
+	//fields
+	$query->fields('u',array('uid'));
+	$query->fields('n',array('nid'));
+	$query->addField('fname', 'field_employee_fname_value', 'first_name');
+	$query->addField('lname', 'field_employee_lname_value', 'last_name');
+	$query->fields('file',array('uri'));
+	$query->addField('l', array('streat','city', 'province','postal_code'));
+	$query->addField('clear_term', 'name', 'clearance');
+	$query->addField('avail_term', 'name', 'availability');
+	$query->addField('pt_term', 'name', 'position_type');
+	
+	$query->addField('streat_add', 'field_employee_street_add_value', 'streat_add');
+	$query->addField('employee_zip', 'field_employee_zip_value', 'employee_zip');
+	$query->addField('telephone', 'field_employee_telephone_value', 'telephone');
+	$query->addField('skills', 'field_employee_skills_value', 'skills');
+	
+	//$query->addExpression("CONCAT(l.city, ', ', l.province)", 'location');
+	//$query->addExpression("n.nid", 'code');
+	//$query->addExpression("from_unixtime(created, '%m/%d/%Y') ", 'posted');
+	//$query->addExpression("expire.field_job_expiration_value ", 'expires');
+	
+	
+	//$searchable_fields =  array('title','location','code');//,'total_apps','unread','active','archived');
+		
+	
+	$query2 = $query;
+	$total_apps = $query->execute()->fetchAll();
+	$total_apps_count = count($total_apps);
+
+	
+	/* 
+	 * Paging
+	 */
+	if ( isset( $filters['length'] ) && $filters['length'] ){
+		$query2->range(intval( $filters['start'] ), intval( $filters['length'] ));
+	}
+	//echo $query2->__toString();
+	
+	
+	$result = $query2->execute()->fetchAll();
+	$apps = array();
+	array_walk($result, function($item) use(&$apps){
+		$tmp_u = array();
+		$img_style = 'thumbnail';
+		$location = ($item->streat)?$item->streat . '<br />':'';
+		$location .= ($item->city)?$item->city . ', ':'';
+		$location .= ($item->province)?$item->province . ' ':'';
+		$location .= ($item->postal_code)?$item->postal_code . ' ':'';
+		$location = trim(trim($location),',');
+		
+		if(!$location){
+			$location = $item->streat_add . ' ' . $item->employee_zip;
+		}
+		
+		if(!$item->uri){ $item->uri = 'public://pictures/profile-default.jpg';}
+		$img = image_style_url($img_style,$item->uri);
+		$tmp_u['user_info'] = '<div class="user_info"><div class="utop"><div class="thumb"><img src="'.$img.'"></div><div class="info"><h5><a href="'.url("node/".$item->nid).'">'.$item->first_name. ' '.$item->last_name.'</a></h5>';
+		if($location){
+			$tmp_u['user_info'] .= '<h6 class="location">'.$location.'</h6>';
+		}
+		
+		$tmp_u['user_info'] .= '</div><div class="clearfix"></div></div>';
+		//$tmp_u['user_info'] .= '<div class="ubottom"><label><span class="glyphicon glyphicon-calendar" data-unicode="e109"></span> Updated 03/02/2017</label><label><span class="glyphicon glyphicon-pencil" data-unicode="270f"></span>Applied 02/07/2017</label></div>';
+		$tmp_u['user_info'] .= '</div>';
+		
+		$tmp_u['job_info'] = '<dive class="job_info">';
+		if($item->clearance){
+			$tmp_u['job_info'] .= '<div class="h">Clearance: </div> <div class="v"> '.$item->clearance.'</div><div class="clearfix clear"></div>';
+		}
+		if($item->availability){
+			$tmp_u['job_info'] .= '<div class="h">Availability: </div> <div class="v"> '.$item->availability.'</div><div class="clearfix clear"></div>';
+		}
+		if($item->position_type){
+			$tmp_u['job_info'] .= '<div class="h">Position Type: </div> <div class="v"> '.$item->position_type.'</div><div class="clearfix clear"></div>';
+		}
+		$tmp_u['job_info'] .= '</div>';
+		
+		$tmp_u['social_info'] = '<dive class="job_info social_info">';
+		$tmp_u['social_info'] .= '<div class="h">Telephone: </div> <div class="v"> '.$item->telephone.'</div><div class="clearfix clear"></div>';
+		$tmp_u['social_info'] .= '<div class="h">Skills: </div> <div class="v"> '.$item->skills.'</div><div class="clearfix clear"></div>';
+		$tmp_u['social_info'] .= '</div>';
+		//$tmp_u['action'] = '<span class="glyphicon glyphicon-cog" data-unicode="e019"></span>';
+		$apps[] = $tmp_u;
+	});
+	
+	$output = array(
+			"draw" => intval($filters['draw']),
+			"recordsTotal" => $total_apps_count,
+			"recordsFiltered" => $total_apps_count,
+			"data" => array_values($apps)
+		);
+	echo json_encode($output);
+	die;
+	
+}
+function tsskills_query_tsskillsposted_alter( QueryAlterableInterface $query){
+	global $user;
+	drupal_set_message("Alter query ".get_class($query));
+	$query->leftJoin('jobapplication', 'j','node.nid=j.nid');
+	$query->groupBy('j.nid');
+	$query->addField('j','vid'); $query->addField('j','nid');
+	drupal_set_message(print_r($query->getFields(),true));
+}
+
+function tsskills_user_edit($uid, $isemployee){
+	global $user;
+	module_load_include('inc', 'user', 'user.pages');
+	$euser = user_load($user->uid);
+	$data = array('euser'=>$euser,'employer'=>null,'employee'=>null);
+	drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/tsskills.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+	if(in_array('employee',$euser->roles)){
+		$data['employee'] = _tsskills_employee_by_uid($euser->uid);	
+	} else if(in_array('employer', $euser->roles)) {
+		$data['employer'] = _tsskills_employer_by_uid($euser->uid);
+	} else {
+		return drupal_get_form('user_profile_form', $euser);
+	}
+
+	$breadcrumbs = array();
+        $breadcrumbs[] = l(t('Home'),'');
+        $breadcrumbs[] = l(t('My Account'),'user');
+        $breadcrumbs[] = l(t('Edit Profile'),'user/'.$user->uid.'/edit/'.(isset($data['employee'])?'employee':'employer') );
+        drupal_set_breadcrumb($breadcrumbs);
+		 
+	return theme('tsskills_editprofile', $data);
+}
+
+function tsskills_applied_jobs() {
+	$rows = get_applied_jobs_by_user();
+	$breadcrumbs = array();
+        $breadcrumbs[] = l(t('Home'),'');
+        $breadcrumbs[] = l(t('My Account'),'user');
+        $breadcrumbs[] = l(t('Applied Jobs'),'user/applied-jobs');
+	drupal_set_breadcrumb($breadcrumbs);
+	return theme('tsskills_applied', array('data'=>$rows,'jobcount'=>($rows?count($rows):null) ) );
+}
+
+function tsskills_apply_job($jobnum){
+	global $user;
+	if(!$jobnum){
+		print "missing job number"; drupal_exit(); return;
+	}
+	$jobnode = node_load($jobnum);
+	$employee = _tsskills_employee_by_uid($user->uid);
+	$breadcrumbs = array();
+        $breadcrumbs[] = l(t('Home'),'');
+        $breadcrumbs[] = l(t('My Account'),'user');
+        $breadcrumbs[] = l(t('Posted Jobs'),'user/applied-jobs');
+        drupal_set_breadcrumb($breadcrumbs);
+	return theme('tsskills_apply', array('data'=>null, 'employee'=>$employee,'job'=>$jobnode) );
+}
+
+function tsskills_apply_form($form, &$form_state){
+	$form = array (
+  '#action' => '#', 
+  'cover_letter' => array ( 
+   '#type' => 'textarea',
+   '#title' => t('Cover Letter'),
+   '#description' => t(''),
+   '#required' => TRUE,
+  ),
+  //We define a simple submit button
+  'submit' => array ( 
+   '#type' => 'submit',
+   '#value' => t('Apply'),
+  ),
+ );
+	$form['#submit'][] = 'tsskills_apply_form_submit';
+  
+ return $form;
+}
+
+function tsskills_apply_form_submit($form, &$form_state){
+	drupal_set_message("Application submitted");
+}
+
+function tsskills_employee_register_form($form, &$form_state){
+	module_load_include('inc', 'node', 'node.pages');
+	$eform = node_add('employee');
+	$efields = array('field_clearance','field_employee_fname','field_employee_lname','field_employee_telephone','field_employee_cellphone',
+		'field_employee_street_add','field_employee_zip','field_availability','field_position_type','field_employee_skills','field_employee_text_resume',
+		'field_employee_resume','field_employee_message');
+	$efields_required = array('field_clearance','field_employee_fname','field_employee_lname','field_employee_telephone','field_availability');
+	foreach($efields as $efieldname){
+		$form[$efieldname] = $eform[$efieldname];
+	}
+	foreach($efields_required as $efieldname){
+		//$form[$efieldname]['#required'] = true;
+		$form[$efieldname][LANGUAGE_NONE]['#required'] = TRUE;
+		//$form[$efieldname][LANGUAGE_NONE]['0']['#required'] = TRUE;
+		$form[$efieldname][LANGUAGE_NONE]['0']['value']['#required'] = TRUE;
+	}
+
+	
+	unset($form['field_employee_resume']);
+	$form['field_employee_resume'] = array(
+		'#type' => 'managed_file',
+		'#name' => 'field_employee_resume',
+		'#title' => 'Upload Resume',
+		'#description' => 'Please upload resume here',
+		'#upload_location' => 'public://',
+		'#progress_indicator' => 'bar',
+		'#upload_validators' => array(
+			'file_validate_extensions' => array('txt doc docx')
+		)
+	);
+
+	if( isset($form['field_availability']) ){
+		$form['field_availability']['und']['#options'] = array( '_none' => '- None -',62 => 'Immediately',63 => 'Within 1 month',64 => 'Within 3 months',65 => 'Within 6 months',66=>'1 year' ); 
+	}	
+
+	$form['submit_button'] = array(
+	    	'#type' => 'submit',
+		'#value' => t('Submit Registration'),
+ 	);
+	
+	$form['user_email'] = array(
+		'#type' => 'textfield',
+		'#title' => t('Email'),
+		'#required' => true
+	);
+	$form['#submit'][] = 'tsskills_employee_register_form_submit';
+
+	foreach($form_state['input'] as $fkey => $fval) {
+		if(isset($form[$fkey])){
+			watchdog('tsskills','Setting form default '.$fkey.' to : '.print_r($fval,true) );
+			$form[$fkey]['#default_value'] = array($fval);
+		}
+	}
+	
+
+		
+	$form['my_captcha'] = array(
+		'#type' => 'captcha',
+		'#captcha_type' => 'image_captcha/Image'
+	);
+	$form['#attributes']['enctype'] = "multipart/form-data";
+	watchdog(WATCHDOG_DEBUG,"Created employee register form");
+	return $form;
+}
+
+
+function tsskills_employee_register_form_submit($form, &$form_state){
+	watchdog(WATCHDOG_DEBUG, "register_form_submit - ".print_r($form_state['input'],true) ); //values of content fields aren't being populated from input 
+	include_once('./includes/password.inc');
+	$new_pass = user_password();
+	$hashed_pass = user_hash_password($new_pass);
+	$account = new stdClass;
+        $account->is_new = TRUE;
+        $account->name = strtolower(str_replace(' ','_',$form_state['input']['field_employee_fname'][LANGUAGE_NONE][0]['value'].' '.$form_state['input']['field_employee_lname'][LANGUAGE_NONE][0]['value']));
+	$newName = $account->name;
+        $nameCounter = 0;
+        while($user_exists = user_load_by_name($newName) ){
+                $nameCounter++;
+                $newName = $account->name.$nameCounter;
+        }
+        if($newName != $account->name) { $account->name = $newName; }
+        $account->pass = $hashed_pass;
+        $account->mail = $form_state['values']['user_email'];
+        $account->init = $form_state['values']['user_email'];
+        $account->status = TRUE;
+        $account->roles = array(DRUPAL_AUTHENTICATED_RID => TRUE);
+        $account->roles[4] = TRUE;
+
+        $new_user = user_save($account);
+	if(!$new_user){
+		drupal_set_message("Unable to create new user",'error');
+		drupal_goto('user/registration/employee');
+		return;
+	}
+
+	watchdog(WATCHDOG_DEBUG, print_r($new_user->uid,true) );
+
+	db_update('users')
+        ->fields(array(
+          'pass' => $hashed_pass
+        ))
+        ->condition('uid', $new_user->uid)       
+        ->execute();
+
+	
+	//send mail to new user with their password
+	$mail_from = variable_get('site_mail', ini_get('sendmail_from'));
+	drupal_mail('tsskills','employeeregister',$account->mail,LANGUAGE_NONE,array('pass'=>$new_pass,'uid'=>$new_user->uid));
+	drupal_set_message("Account created with username: ".$new_user->name." and password ".$new_pass);
+
+	//create employee node
+	$node = new stdClass();
+	$node->type = 'employee';
+	$node->language = LANGUAGE_NONE;
+	node_object_prepare($node);
+	$node->uid = $new_user->uid;
+	$node->title = $form_state['input']['field_employee_fname']['und'][0]['value'].' '.$form_state['input']['field_employee_lname']['und'][0]['value'];
+	$node->status = 1; $node->promote = 0; $node->sticky = 0; $node->comment = 1;
+	
+	$e_fields = array('employee_fname','employee_lname','employee_telephone','employee_cellphone','employee_street_add','employee_zip',
+		'employee_skills','employee_message','employee_text_resume','notes');
+	foreach($e_fields as $efield){
+		$f_efield = 'field_'.$efield;
+		if(!isset($form_state['input'][$f_efield]) ) continue;
+		$node->$f_efield = $form_state['input'][$f_efield];
+	}
+
+	$e_terms = array('clearance','position_type','availability');
+	foreach($e_terms as $e_term){
+		$f_eterm = 'field_'.$e_term;
+		if(is_array($form_state['input'][$f_eterm])){ watchdog(WATCHDOG_DEBUG,'Received array of terms for '.$f_eterm.': '.print_r($form_state['input'][$f_eterm],true)); }
+		$vals = is_array($form_state['input'][$f_eterm][LANGUAGE_NONE]) ? $form_state['input'][$f_eterm][LANGUAGE_NONE] : explode(',',$form_state['input'][$f_eterm][LANGUAGE_NONE]);
+		if(count($vals)< 1){ continue; }
+		$new_val = array();
+		foreach($vals as $termval){
+			/*$arr_terms = taxonomy_get_term_by_name(trim($termval), $e_term);
+ 			if (!empty($arr_terms)) {
+    				$arr_terms = array_values($arr_terms);
+    				$tid = $arr_terms[0]->tid;
+				array_push($new_val,array('tid'=>$tid));
+  			}*/
+			array_push($new_val, array('tid'=>$termval) );
+		}
+		$node->$f_eterm = array(LANGUAGE_NONE=>$new_val);
+	}	
+	node_save($node);
+
+	$resume = file_load($form_state['values']['field_employee_resume']);
+	if($resume && $node->nid) {
+		$resume->status = FILE_STATUS_PERMENANT;
+		$resume->uid = $new_user->uid;
+		file_save($resume);
+		watchdog('tsskills','Saving resume file: '.$resume->fid.' - '.$resume->filename);
+	$node->field_employee_resume = array(LANGUAGE_NONE=>array(0=>array(
+		'fid' => $resume->fid,
+		'filename' => $resume->filename,
+		'filemime' => $resume->filemime,
+		'uid' => $new_user->uid,
+		'uri' => $resume->uri,
+		'status' => 1,
+		'display' => 1
+		)));
+	node_save($node);
+	}
+	drupal_set_message("Thank you for your registration. Please check your email ‘add user’s registration email’ for your login information");
+	if($node->nid){
+		drupal_goto('node/'.$node->nid);
+	} else {
+		drupal_goto('user/login');
+	}
+}
+
+function tsskills_mail($key, &$message, $params){
+	if($key=='employeeregister'){
+		watchdog(WATCHDOG_DEBUG,'composing welcome email to new employe registration for '.$params['uid']);
+		$message['subject'] = 'Welcome to TSSkills - Job Seeker registration included';
+		$message['body'][] = "Your password is ".$params['pass'];
+	}
+}
+
+function tsskills_employee_register_form_validate($form, &$form_state) {  drupal_set_message("Thank you for your registration. Please check your email ‘add user’s registration email’ for your login information");
+	$u_email = $form_state['values']['user_email'];
+	watchdog(WATCHDOG_DEBUG, 'validating employee register for '.$u_email);
+	
+	if(!$u_email || strpos($u_email,'@') < 2 || $user = user_load_by_name($u_email) ) {
+		form_set_error('user_email','Email is required');
+		return;
+	} else {
+	
+	}
+	
+
+	$e_terms = array('clearance','position_type','availability');
+        foreach($e_terms as $e_term){
+                $f_eterm = 'field_'.$e_term;
+		if( !isset($form_state['input'][$f_eterm]) ){ die;
+			form_set_error($f_eterm,"You must select a value for ".$e_term);
+			continue;
+		} else if( is_array($form_state['input'][$f_eterm]) ) {
+                        watchdog(WATCHDOG_DEBUG,'Received array of terms for '.$f_eterm.': '.print_r($form_state['input'][$f_eterm],true) );
+                }
+                $vals = is_array($form_state['input'][$f_eterm][LANGUAGE_NONE]) ? 
+			$form_state['input'][$f_eterm][LANGUAGE_NONE] : 
+			explode(',',$form_state['input'][$f_eterm][LANGUAGE_NONE]);
+                if(count($vals)< 1){
+			form_set_error($f_eterm, 'You must select a value for '.$e_term);
+			continue;
+		}
+                $new_val = array();
+                foreach($vals as $termval){
+			if($termval=='_none'){
+				form_set_error($f_eterm,'You must select an option for '.$e_term);
+			}
+                //        $arr_terms = taxonomy_get_term_by_name(trim($termval), $e_term);
+                //        if (empty($arr_terms)) {
+		//		form_set_error('field_'.$e_term,'Invalid option for '.$e_term);
+                //        }
+                }
+        }
+
+	//custom captcha checking 
+	$csid = intval($form_state['input']['captcha_sid']);
+	if(!$csid){
+		form_set_error('captcha_response','NO captcha sid received');
+		watchdog('tsskills','no captcha sid received');
+		return;
+	}
+	if(!$form_state['input']['captcha_response']){
+		form_set_error('captcha_response','NO captcha response received');
+                watchdog('tsskills','no captcha response received');
+                return;
+	}
+	$solution_query = 'SELECT solution FROM captcha_sessions WHERE csid = '.intval($csid);
+  	$solution = db_query(
+        	$solution_query
+    	)
+    	->fetchField();
+	if(!$solution){
+		form_set_error('my_captcha','Invalid captcha session');
+	} else if( strtolower($solution) != strtolower($form_state['input']['captcha_response']) ) {
+		watchdog('tsskills','received wrong captcha: '.$form_state['input']['captcha_response'].' vs '.$solution);
+		form_set_error('my_captcha','Invalid captcha answer');
+	}
+	
+}
+
+function tsskills_page_alter(&$page) {
+}
+
+function tsskills_employee_login_form($form, &$form_state) {
+	$uform = drupal_get_form('user_login');
+	$uform['name']['#title']='E-Mail';
+	$uform['name']['#description'] = 'Enter your e-mail address';
+	return $uform;
+}
+
+function tsskills_employee_login_form_submit($form, &$form_state) {
+
+}
+
+function tsskills_employer_register_form($form, &$form_state) {
+	module_load_include('inc', 'node', 'node.pages');
+        $eform = node_add('employer');
+        $efields = array('field_employer_fname','field_employer_lname','field_employer_phone','field_employer_company',
+		'field_employer_ext','field_employer_message','field_employer_zip','field_employer_cprofile'
+                );
+	//drupal_set_message("Employer fields: ".print_r(array_keys($eform),true) );
+        $efields_required = array('field_employer_fname','field_employer_lname','field_employer_company','field_employer_cprofile','field_employer_phone','field_employer_message');
+        foreach($efields as $efieldname){
+		if(!isset($eform[$efieldname])) continue;
+                $form[$efieldname] = $eform[$efieldname];
+                if( in_array($efieldname, $efields_required) ){
+			$form[$efieldname][LANGUAGE_NONE]['#required'] = TRUE;
+			$form[$efieldname][LANGUAGE_NONE]['0']['value']['#required'] = TRUE;
+                }
+        }
+
+
+        $form['submit_button'] = array(
+                '#type' => 'submit',
+                '#value' => t('Submit Registration'),
+        );
+
+        $form['user_email'] = array(
+                '#type' => 'textfield',
+                '#title' => t('Email'),
+                '#required' => true
+        );
+	$form['my_captcha'] = array(
+                '#type' => 'captcha',
+                '#captcha_type' => 'image_captcha/Image'
+        );
+
+        $form['#submit'][] = 'tsskills_employer_register_form_submit';
+        $form['#attributes']['enctype'] = "multipart/form-data";
+        watchdog(WATCHDOG_DEBUG,"Created employee register form");
+        return $form;
+
+}
+
+function tsskills_employer_register_form_submit($form, &$form_state) {
+	watchdog(WATCHDOG_DEBUG, "register_form_submit - ".print_r($form_state['input'],true) ); //values of content fields aren't being populated from input
+//      return;
+        include_once('./includes/password.inc');
+        $new_pass = user_password();
+        $hashed_pass = user_hash_password($new_pass);
+        $account = new stdClass;
+        $account->is_new = TRUE;
+        $account->name = strtolower(str_replace(' ','_',$form_state['input']['field_employer_fname'][LANGUAGE_NONE][0]['value'].' '.$form_state['input']['field_employer_lname'][LANGUAGE_NONE][0]['value']));
+	$newName = $account->name;
+	$nameCounter = 0;
+	while($user_exists = user_load_by_name($newName) ){
+		$nameCounter++;
+		$newName = $account->name.$nameCounter;
+	}
+	if($newName != $account->name) { $account->name = $newName; }
+        $account->pass = $hashed_pass;
+        $account->mail = $form_state['values']['user_email'];
+        $account->init = $form_state['values']['user_email'];
+        $account->status = TRUE;
+        $account->roles = array(DRUPAL_AUTHENTICATED_RID => TRUE);
+        $account->roles[5] = TRUE;
+
+        $new_user = user_save($account);
+        if(!$new_user){
+                drupal_set_message("Unable to create new user",'error');
+                drupal_goto('user/registration/employer');
+                return;
+        }
+
+        watchdog(WATCHDOG_DEBUG, "Created Employer User: ".print_r($new_user->uid,true) );
+
+        db_update('users')
+        ->fields(array(
+          'pass' => $hashed_pass
+        ))
+        ->condition('uid', $new_user->uid)
+        ->execute();
+
+
+        //send mail to new user with their password
+        $mail_from = variable_get('site_mail', ini_get('sendmail_from'));
+        drupal_mail('tsskills','employerregister',$account->mail,LANGUAGE_NONE,array('pass'=>$new_pass,'uid'=>$new_user->uid));
+        drupal_set_message("Account created with username: ".$new_user->name." and password ".$new_pass);
+
+        //create employer node
+        $node = new stdClass();
+        $node->type = 'employer';
+        $node->language = LANGUAGE_NONE;
+        node_object_prepare($node);
+        $node->uid = $new_user->uid;
+        $node->title = $form_state['input']['field_employer_company']['und'][0]['value'];
+        $node->status = 1; $node->promote = 0; $node->sticky = 0; $node->comment = 1;
+	$node->is_new = TRUE;
+	$e_fields = array('employer_fname','employer_lname','employer_telephone','employer_zip','employer_company','employer_cprofile','employer_ext',
+                'employer_message','employer_address','employer_zip','notes');
+        foreach($e_fields as $efield){
+                $f_efield = 'field_'.$efield;
+                if(!isset($form_state['input'][$f_efield]) ) continue;
+                $node->$f_efield = $form_state['input'][$f_efield];
+        }
+	node_save($node);
+	if($node->nid){
+                drupal_goto('node/'.$node->nid);
+        } else {
+		drupal_set_message("There was a problem creating your company profile");
+                drupal_goto('user/registration/employer');
+        }
+
+}
+
+function tsskills_employer_login_form($form, &$form_state) {
+
+}
+
+function tsskills_employer_login_form_submit($form, &$form_state) {
+
+}
+
+function tsskills_password_request_form($form, &$form_state) {
+	$uform = drupal_get_form('user_login');
+	//return $uform;
+	$form['name'] = $uform['name'];
+	$form['name']['#title'] = t('Email');
+	unset($form['name']['#description']);
+	$form['submit_button'] = array(
+                '#type' => 'submit',
+                '#value' => t('Send Request'),
+        );
+	unset($form['captcha']);
+	
+	$form['captcha'] = array(
+                '#type' => 'captcha',
+                '#captcha_type' => 'image_captcha/Image'
+        );
+
+		
+	$form['#submit'][] = 'tsskills_password_request_form_submit';
+	//unset($uform['pass']);
+	return $form;
+	
+}
+
+function tsskills_password_request_form_submit($form, &$form_state) {
+	
+}
+
+/** implements hook_user_view_alter() **/
+function tsskills_user_view_alter(&$build){
+	if(isset($build['summary'])){
+		unset($build['summary']);
+	}
+}
+
+/** implements hook_user_view()
+   changes user view to display employee/employer menu options
+**/
+function tsskills_user_view($account, $view_mode, $langcode) {
+	global $user;
+	if($user->uid != $account->uid) return;
+	unset($account->content['simplenews']);
+	$breadcrumbs = array();
+        $breadcrumbs[] = l(t('Home'),'');
+        $breadcrumbs[] = l(t('My Account'),'user');
+        drupal_set_breadcrumb($breadcrumbs);
+	drupal_add_css(drupal_get_path('module', 'job_search') . '/css/job_search.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+	if( in_array('employee',$account->roles) ){
+		drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/tsskills.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+		require_once( drupal_get_path('module', 'tsskills') . '/inc/employee-profile.php' );
+		tsskills_employee_menu($account,$user);
+
+	} else if( in_array('employer', $account->roles) ){
+		drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/tsskills.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+		require_once( drupal_get_path('module', 'tsskills') . '/inc/employee-profile.php' );
+                tsskills_employer_menu($account,$user);
+	} else if( in_array('administrator', $account->roles) ){
+		drupal_add_css(drupal_get_path('module', 'tsskills') . '/css/tsskills.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+                require_once( drupal_get_path('module', 'tsskills') . '/inc/employee-profile.php' );
+                tsskills_admin_menu($account,$user);
+
+	} else {
+		//drupal_set_message("Account ".$account->name." roles: ".print_r($account->roles,true) );
+	}
+}

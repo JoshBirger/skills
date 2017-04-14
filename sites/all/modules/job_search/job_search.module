@@ -1,0 +1,639 @@
+<?php
+
+// $Id$
+
+/**
+ * @file
+ * A module exemplifying Drupal coding practices and APIs.
+ *
+ * This module provides a block that lists all of the
+ * installed modules. It illustrates coding standards,
+ * practices, and API use for Drupal 7.
+ */
+
+ 
+function job_search_permission() {
+	return array(
+		  'administer my module' => array(
+			      'title' => t('Administer my module'),
+			      'description' => t('Perform administration tasks for my module.'),
+			    ),
+		  );
+}
+//drupal_add_js(drupal_get_path('module', 'mapsearch') . 'custom.js');
+
+function job_search_menu(){
+		$items['jobs'] = array(
+				    'title' => 'Job Openings', 
+				    'page callback'   => 'job_search_jobs_callback',
+				    'access arguments' => array('access content'), 
+				    'type' => MENU_NORMAL_ITEM,
+					//'file' => 'job_openings.inc',
+					//'file path' => drupal_get_path('module','job_search') . '/includes/',
+				);
+		$items['jobs_update_latlong'] = array(
+				    'title' => 'Update latitude longitude of Jobs', 
+				    'page callback'   => 'job_search_jobs_update_latlong',
+				    'access arguments' => array('access content'), 
+				    'type' => MENU_NORMAL_ITEM,
+					//'file' => 'job_openings.inc',
+					//'file path' => drupal_get_path('module','job_search') . '/includes/',
+				);
+		$items['states'] = array(
+				    'title' => 'Get States By Countries', 
+				    'page callback'   => 'job_search_states_by_countries',
+				    'access arguments' => array('access content'), 
+				    'type' => MENU_NORMAL_ITEM,
+					//'file' => 'job_openings.inc',
+					//'file path' => drupal_get_path('module','job_search') . '/includes/',
+				);
+
+				
+	    return $items;
+}
+
+
+
+function job_search_jobs_callback(){
+	$job_search_data = array();
+	$filter = array_merge($_GET, $_POST);
+	
+	error_reporting(1);
+	//print_r($filter);
+	
+	$query = db_select('node', 'n');
+	$query->distinct();
+	$query->leftJoin('location_instance', 'lin', 'n.nid = lin.nid');
+	$query->leftJoin('location', 'l', 'lin.lid = l.lid');
+	$query->leftJoin('field_data_field_job_description', 'descr', 'n.nid = descr.entity_id');
+	$query->leftJoin('field_data_field_job_requirements', 'req', 'n.nid = req.entity_id');
+	$query->leftJoin('field_data_field_job_category', 'cat', 'n.nid = cat.entity_id');
+	$query->leftJoin('taxonomy_term_data', 'cat_term', 'cat.field_job_category_tid = cat_term.tid');
+	
+	$query->leftJoin('field_data_field_clearance', 'clear', 'n.nid = clear.entity_id');
+	$query->leftJoin('taxonomy_term_data', 'clear_term', 'clear.field_clearance_tid = clear_term.tid');
+	
+	$query->leftJoin('field_data_body', 'body', 'n.nid = body.entity_id');
+	
+	$query->leftJoin('field_data_field_job_expiration','expiration','n.nid = expiration.entity_id');	
+	
+	$query->leftJoin('field_data_field_position_type', 'pos_type', 'n.nid = pos_type.entity_id');
+	
+	//conditions 
+	$query->condition('n.status', 1);
+	$query->condition('n.type', 'job');
+	$today = date('Y-m-d H:i:s', time());
+	$lastyear = strtotime("-1 year", time());
+	$query->condition(
+			db_or() -> condition( db_and() -> isNull('expiration.field_job_expiration_value')
+					-> condition('n.created',$lastyear,'>')
+				)
+				-> condition('expiration.field_job_expiration_value',$today,'>')
+		);
+	if(isset($filter['keywords']) && $filter['keywords']){
+		$query->condition(
+							db_or() ->condition('n.title',  '%' . db_like($filter['keywords']) . '%', 'LIKE')
+									->condition('l.city', '%' . db_like($filter['keywords']) . '%', 'LIKE')
+									->condition('l.province', '%'.db_like($filter['keywords']) . '%', 'LIKE')
+									->condition('l.street', '%'.db_like($filter['keywords']) . '%', 'LIKE')
+									->condition('l.postal_code', '%'.db_like($filter['keywords']) . '%', 'LIKE')
+									->condition('l.country', '%'.db_like($filter['keywords']) . '%', 'LIKE')
+									->condition('descr.field_job_description_value', '%'.db_like($filter['keywords']) . '%', 'LIKE')
+									->condition('cat_term.name', '%'.db_like($filter['keywords']) . '%', 'LIKE')
+									->condition('clear_term.name', '%'.db_like($filter['keywords']) . '%', 'LIKE')
+									->condition('req.field_job_requirements_value', '%'.db_like($filter['keywords']) . '%', 'LIKE')
+									//->condition('body.body_value', '%'.$filter['keywords'] . '%', 'LIKE')
+						);
+	}
+
+	$locations = array();
+	$filter_clearance = array();
+	$filter_countries = array();
+	$filter_zipcode = '';
+	
+	include_once DRUPAL_ROOT . '/includes/locale.inc';
+	$countries =  country_get_list();
+	$states = array();
+	
+	if(isset($filter['clearance']) && $filter['clearance']){
+		$filter_clearance = $filter['clearance'];
+		$query->condition('clear.field_clearance_tid', $filter_clearance, 'IN');
+	}
+
+	if(isset($filter['categories']) && $filter['categories']){
+		$filter_categories = $filter['categories'];
+		$query->condition('cat.field_job_category_tid', $filter_categories, 'IN');
+	}
+	//-------------------
+	$addressParts = array();
+	if(isset($filter['location']) && $filter['location']){
+		$addressParts = getAddressParts($filter['location']);
+		$filter['city'] = ($addressParts['city'])?$addressParts['city']:'';
+		$filter['states'] = ($addressParts['state'])?array($addressParts['state']):'';
+		$filter['countries'] = ($addressParts['county'])?array($addressParts['county']):'';
+		//$filter['zipcode'] = ($addressParts['city'])?$addressParts['city']:'';
+	}
+	//if(isset($filter['zipcode']) && $filter['zipcode']){
+		//$filter_zipcode = $filter['zipcode'];
+		//$query->condition('l.postal_code', $filter_zipcode);
+		//$addressParts = getAddressParts($filter['zipcode']);	
+	//}
+	$addr = '';
+	if(isset($filter['city']) && $filter['city'] && $filter['faceted']){
+		$filter_city = $filter['city'];
+		$query->condition('l.city', $filter_city);
+		$addr = $filter_city;
+	}
+	$filter['states'] = array_filter($filter['states']);
+	if(isset($filter['states']) && $filter['states']){
+		$filter_states = $filter['states'];
+		$query->condition('l.province', $filter_states, 'IN');
+		$locations['province'] = $filter_states;
+		if($addr){
+			$addr .= ', ' . $filter_states[0];
+		}
+	}
+
+	$filter['countries'] = array_filter($filter['countries']);
+	if(isset($filter['countries']) && $filter['countries']){
+		$filter_countries = $filter['countries'];
+		$query->condition('l.country', $filter_countries, 'IN');
+		$locations['countries'] = $filter_countries;
+		
+		if($addr){
+			$addr .= ', ' . $filter_countries[0];
+		}
+		
+		$location_module_path = DRUPAL_ROOT . '/sites/all/modules/location/supported/';
+		//print_r($filter_countries);
+		foreach($filter_countries as $country){
+			$country = strtolower($country);
+			include_once ( $location_module_path . 'location.'.$country.'.inc');
+			$method = 'location_province_list_'.$country;
+			$states[] = $method();
+		}
+	}
+	$addr_parts = '';
+	$zip_radius = (isset($filter['zip_radius']) && $filter['zip_radius'])?$filter['zip_radius']:'';
+	$apply_distance = false;
+	if((!isset($filter['zipcode']) || empty($filter['zipcode'])) && $addr){
+		$addr_parts = getAddressParts($addr);
+		$filter['zipcode'] = $addr_parts['zipcode'];
+
+	}
+
+	if(isset($filter['zipcode']) && $filter['zipcode']){
+		$filter_zipcode = $filter['zipcode'];
+		//$query->condition('l.postal_code', $filter_zipcode);
+		if(!$addr_parts){
+			$addr_parts =  getAddressParts($filter_zipcode, true);
+		}
+		if($addr_parts){
+			//(3959 miles, 6371 Km or 3440 nautical miles)
+			$distanceExpr = '( 3959 * acos( cos( radians('.$addr_parts["latitude"].') ) 
+					  * cos( radians( l.latitude ) ) 
+					  * cos( radians( l.longitude ) - radians('.$addr_parts["longitude"].') ) 
+					  + sin( radians('.$addr_parts["latitude"].') ) 
+					  * sin( radians( l.latitude ) ) ) ) ';
+
+			$query->addExpression($distanceExpr,'distance');
+			
+			if(!$zip_radius){
+				$zip_radius = '20';
+				$filter['zip_radius'] = '20';
+			}
+			if($zip_radius != 'all'){
+				//$query->groupBy("distance");
+				//$query->having('distance <= ' .$zip_radius );
+				//$query->condition('distance <= ' .$zip_radius );
+				$apply_distance = true;
+			}
+		}
+	}
+
+	//fields
+	$query->fields('n',array('nid','title','created','type'));
+	$query->fields('l',array('city','province', 'country', 'street','postal_code'));
+	//$query->fields('cat_term',array('name, tid'));
+	//$query->fields('clear_term',array('name'));
+	//$query->addField('cat_term', 'name', 'cat_name');
+	$query->addField('clear_term', 'name', 'clear_name');
+	
+	//echo $query->__toString(); 
+	
+	if($apply_distance){
+		$main_query = db_select($query, 'sub');
+		//$main_query->condition('sub.distance <= ' .$zip_radius );
+		$main_query->condition('sub.distance', $zip_radius, '<=');
+		$main_query->fields('sub',array('nid','title','created','type','city','province', 'country', 'street','postal_code','clear_name','distance'));
+		
+	} else {
+		$main_query = $query;
+	}
+	
+	//echo $main_query->__toString(); 
+	
+	$query2 = $main_query;
+	$total_jobs = $main_query->execute()->fetchAll();
+	$total_jobs_count = count($total_jobs);
+	$total_jobs_ids = array();
+	array_walk($total_jobs, function($item) use(&$total_jobs_ids){
+		$total_jobs_ids[] = $item->nid;
+	});
+	
+	$no_jobs_in_page = 25;
+	$page = (isset($filter['page']) && $filter['page'])? $filter['page'] : 1;
+	$start = ($page - 1) * $no_jobs_in_page;
+	
+	$query2->range($start, $no_jobs_in_page);
+	$query2->orderBy('created', 'DESC');
+	
+	//echo $query2->__toString();
+	$result = $query2->execute()->fetchAll();
+
+	
+	$voc_name = 'Clearance';
+	$voc_list = taxonomy_vocabulary_machine_name_load($voc_name);
+	$clearance = taxonomy_get_tree($voc_list->vid);
+	
+	$voc_name = 'job_category';
+	$voc_list = taxonomy_vocabulary_machine_name_load($voc_name);
+	$job_categories = taxonomy_get_tree($voc_list->vid);
+
+	$locations_job_count = (count($total_jobs_ids) > 0) ?locations_jobs_count($locations, $total_jobs_ids):array();
+	
+	$clearance_job_count = (count($total_jobs_ids) > 0) ?clearance_jobs_count($filter['clearance'], $total_jobs_ids):array();
+	
+	$categories_job_count = (count($total_jobs_ids) > 0) ?categories_jobs_count($filter['categories'], $total_jobs_ids):array();
+	
+	
+	drupal_add_css(drupal_get_path('module','job_search') . '/css/job_search.css');
+	drupal_add_js(drupal_get_path('module','job_search') . '/js/job_search.js');
+	return theme('job_search',array('no_jobs_in_page'=>$no_jobs_in_page,'total_jobs'=>$total_jobs_count,'page'=>$page, 'data' => $result,'clearance' => $clearance,'job_categories'=>$job_categories, 'countries' => $countries,'states' => $states,'filter' => $filter, 'locations_job_count' => $locations_job_count,'clearance_job_count' => $clearance_job_count,'categories_job_count'=>$categories_job_count));
+	
+}
+
+function job_search_theme() {
+  return array(
+    'job_search' => array(
+      'arguments' => array(),
+      'template' => 'job-openigs',
+      'variables' => array('data' => null),
+     ),
+  );
+}
+
+
+/**
+ * Implements hook_block_info().
+ */
+function job_search_block_info() {
+  $blocks = array();
+  $blocks['jobsearch_formblock'] = array(
+    'info' => t('Job Search Block'),
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+  $blocks['job_location'] = array(
+    'info' => t('Job Location'),
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+   $blocks['job_categories'] = array(
+    'info' => t('Job Categories'),
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+  return $blocks;
+}
+ 
+/**
+ * Implements hook_block_view().
+ */
+ 
+ 
+function job_search_block_view($delta = '') {
+   $block = array();
+   switch($delta) {
+        case 'jobsearch_formblock':
+	$block['content'] = job_search_custom_form();
+	break;
+
+	case 'job_location':
+	$block['content'] = job_location_view();
+	break;
+
+	case 'job_categories':
+	$block['content'] = job_categories_view();
+	break;
+   }
+   return $block;
+}
+function job_search_custom_form(){
+	drupal_add_css(drupal_get_path('module', 'job_search') . '/css/job_search.css');
+	drupal_add_css(drupal_get_path('module', 'job_search') . '/css/bootstrap-select.min.css');
+	drupal_add_js(drupal_get_path('module', 'job_search') . '/js/bootstrap-select.min.js');
+	//drupal_add_js("https://maps.googleapis.com/maps/api/js?key=AIzaSyDCob92Ti5YP7UUwqjp1_F8CdToLK9gusw&v=3&sensor=false&libraries=places");
+	drupal_add_js(drupal_get_path('module', 'job_search') . '/js/job_search.js');
+	$voc_name = 'Clearance';
+	$voc_list = taxonomy_vocabulary_machine_name_load($voc_name);
+	$clearance = taxonomy_get_tree($voc_list->vid);
+	
+	$clearance_html = '<select name="clearance[]" multiple class="selectpicker" title="Security Clearance">';
+	foreach($clearance as $clear){
+		$clearance_html .= '<option value="'.$clear->tid.'" > '.$clear->name.'</option>';
+	}
+	$clearance_html .= '</select>';
+	$form_html = '<div class="highlighted-image-1 position-relative bg-image-newyork job-search-block">
+				  <div class="overlay">
+					<div class="vertical-center text-center">
+					  <div class="container">
+						<div class="row1"><h2> Job Search </h2> </div>
+						<div class="row1">
+							 <form class="form-inline"  action="/jobs">
+								<input class="form-control form-text" type="text" name="keywords" placeholder="Keywords" />
+								<input id="job_search_block_location_box" class="form-control form-text" type="text" placeholder="City / State" />
+								'.$clearance_html.' 
+								<input id="jsb-city" type="hidden" name="city" />
+								<input id="jsb-states" type="hidden" name="states[]" />
+								<input id="jsb-countries" type="hidden" name="countries[]" />
+								<input id="jsb-zipcode" type="hidden" name="zipcode" />
+								<input id="jsb-zip_radius" type="hidden" name="zip_radius" value="20" />
+								
+								<button type="submit" class="btn btn-info fill" >Search</button>
+							</form>
+						</div>
+					  </div> <!-- /container -->
+					</div> <!-- /vertical-center -->
+				  </div> <!-- /overlay -->
+				</div> <!-- /highlighted-slider-1-->
+				<script type="text/javascript">
+					function init_address_autocomplete() {
+						//var input = document.getElementById("job_search_block_location_box");
+						//var jsb_autocomplete = new google.maps.places.Autocomplete(input);
+						var searchBox = new google.maps.places.SearchBox(document.getElementById("job_search_block_location_box"));
+						google.maps.event.addListener(searchBox, "places_changed", function() {
+							var place = searchBox.getPlaces()[0];
+							if (place.address_components ) {
+								var ac = place.address_components;
+								for(j in ac ) {
+									var a = ac[j];
+									console.log(a);
+									if(a.types[0] == "locality"){
+										document.getElementById("jsb-city").value = a.long_name;
+									} else if(a.types[0] == "administrative_area_level_1"){
+										document.getElementById("jsb-states").value = a.short_name;
+									}else if(a.types[0] == "country"){
+										document.getElementById("jsb-countries").value = a.short_name.toLowerCase();
+									}else if(a.types[0] == "postal_code"){
+										document.getElementById("jsb-zipcode").value = a.short_name;
+									}
+								}
+							}
+						});
+						
+						
+					}
+				</script>
+				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCob92Ti5YP7UUwqjp1_F8CdToLK9gusw&libraries=places&callback=init_address_autocomplete"></script>
+				
+				';
+	return $form_html;
+}
+
+function clearance_jobs_count( $clearances = array() , $nids = array()){
+	$where = " WHERE fc.bundle='job' AND fc.entity_id IN(".implode(',',$nids).")";
+	if($clearances && count($clearances) > 0){
+		$where .= ' AND fc.field_clearance_tid IN ('.implode(",",$clearances).')';
+	}
+	$sql = "SELECT ttd.name,fc.field_clearance_tid as tid, count(fc.field_clearance_tid)as node_count FROM field_data_field_clearance fc JOIN taxonomy_term_data as ttd on (fc.field_clearance_tid=ttd.tid) ".$where." group by fc.field_clearance_tid  Order by ttd.weight ";
+	$result = db_query($sql)->fetchAll();
+	return $result;
+}
+function categories_jobs_count( $categories = array() , $nids = array()){
+	if(is_array($nids) && count($nids)){
+		$where = " WHERE n.type='job' AND li.nid IN(".implode(',',$nids).")";
+	} else {
+		$where = '';
+	}
+	$where = " WHERE fc.bundle='job' AND fc.entity_id IN(".implode(',',$nids).")";
+	if($categories && count($categories) > 0){
+		$where .= ' AND fc.field_job_category_tid IN ('.implode(",",$categories).')';
+	}
+	$sql = "SELECT ttd.name,fc.field_job_category_tid as tid, count(fc.field_job_category_tid)as node_count FROM field_data_field_job_category fc JOIN taxonomy_term_data as ttd on (fc.field_job_category_tid=ttd.tid) ".$where." group by fc.field_job_category_tid Order by ttd.weight ";
+	//echo "sql: " . $sql;
+	$result = db_query($sql)->fetchAll();
+	return $result;
+}
+function locations_jobs_count($locations = array() , $nids = array()){
+	if(is_array($nids) && count($nids)){
+		$where = " WHERE n.type='job' AND li.nid IN(".implode(',',$nids).")";
+	} else {
+		$where = '';
+	}
+	//if(isset($locations['province'])){
+	//	$where .= ' AND l.province IN ('.implode(",", $locations["province"]).') ';
+	//} else if(isset($locations['countries'])){
+	//	$where .= ' AND l.country IN ('.implode(",", $locations["countries"]).') ';
+	//}
+	//$where = '';
+	$sql = "select l.city, l.province,l.country, count(li.nid) as node_count from location_instance as li left join  location as l  on (li.lid=l.lid) left join node as n on (n.nid=li.nid)  ".$where."  group by l.city Order by node_count desc";
+	
+	//echo '<div style="display:none;">';
+	//echo 'location sql: ' . $sql;
+	//echo '</div>';
+	
+	$result = db_query($sql)->fetchAll();
+	return $result;
+}
+function categories_jobs_count2(){
+	
+	$sql = "SELECT ttd.name,fc.field_job_category_tid as tid, count(fc.field_job_category_tid)as node_count FROM field_data_field_job_category fc JOIN taxonomy_term_data as ttd on (fc.field_job_category_tid=ttd.tid) WHERE ttd.name <> 'other'  group by fc.field_job_category_tid Order by node_count desc limit 0,12";
+	$result = db_query($sql)->fetchAll();
+	return $result;
+}
+
+function locations_jobs_count2(){
+	
+	$sql = "select l.city, l.province,l.country, count(li.nid) as node_count from location_instance as li left join  location as l  on (li.lid=l.lid) left join node as n on (n.nid=li.nid)  group by l.city Order by node_count desc limit 0,12";
+	
+	$result = db_query($sql)->fetchAll();
+	return $result;
+}
+
+function job_location_view(){
+	
+	$locations = locations_jobs_count2();
+	$popularlocation = "<div class='job-locations'> <h3>Popular Locations</h3> <ul>";
+		foreach($locations as $location){
+			//$popularlocation .= '<li><a href="/jobs?page=1&city='.trim($location->city).'&faceted=facet&keywords=&zipcode=&zip_radius=20&countries[]='.$location->country.'&states[]='.$location->province.'">'. $location->city. ', '. $location->province.'('.$location->node_count.')</a>';
+			$popularlocation .= '<li><a href="/jobs?page=1&city='.trim($location->city).'&faceted=facet&keywords=&zipcode=&zip_radius=20&countries[]='.$location->country.'&states[]='.$location->province.'">'. $location->city. ', '. $location->province.'</a>';
+		}
+	$popularlocation .= "</ul></div>";
+	//echo "<pre>"; print_r($locations); die;
+	return $popularlocation;
+}
+
+function job_categories_view(){
+	$categories = categories_jobs_count2();
+	
+	$popularcategories = "<div class='job-categories'> <h3>Popular Jobs</h3><ul>";
+	
+		foreach($categories as $category){
+			//$popularcategories .= '<li><a href="jobs?page=1&city=&faceted=&keywords=&categories[]='.$category->tid.'&zipcode=&zip_radius=20">'. $category->name. '('.$category->node_count.')</a>';
+			$popularcategories .= '<li><a href="jobs?page=1&city=&faceted=&keywords=&categories[]='.$category->tid.'&zipcode=&zip_radius=20">'. $category->name. '</a>';
+		}
+	
+	$popularcategories .= "</ul></div>";
+	return $popularcategories;
+}
+
+function job_search_jobs_update_latlong(){
+		
+		ini_set('memory_limit','1024M');
+		ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
+		
+		$query = db_select('location', 'l');
+		$query->condition(db_or()->condition('l.longitude', '0.000000')->condition('l.latitude', '0.000000'));
+		$query->fields('l',array('lid','city','province', 'country', 'street','postal_code'));
+		$query->range(0, 100);
+		$result = $query->execute()->fetchAll();
+		foreach($result as $node){
+			$address = $node->city . ', ' . $node->province .', ' .$node->country;
+			$latLong = getAddressParts($address);
+			if(!$latLong) {continue;}
+			
+			$latitude  = $latLong['latitude']; 
+			$longitude = $latLong['longitude'];
+			$zipcode = $latLong['zipcode'];
+			if(!$zipcode){
+				$zipcode = getZipByLatLong($latitude, $longitude);
+			}
+			$fields = array();
+			if($latitude && $longitude){
+				$fields ['latitude'] = $latitude;
+				$fields ['longitude'] = $longitude;
+			}
+			if($zipcode){
+				$fields['postal_code'] = $zipcode;
+			}
+			if(count($fields) > 0 ){
+				db_update('location')
+				  ->fields($fields)
+				  ->condition('lid', $node->lid)
+				  ->execute();
+			}
+		}
+		
+		$output = '<h2>Please wait.... </h2><script type="text/javascript">setTimeout(function(){ location.reload(); },120000);</script>';
+		return $output;
+}
+function job_search_states_by_countries(){
+	$location_module_path = DRUPAL_ROOT . '/sites/all/modules/location/supported/';
+	$countries = isset($_POST['countries']) && $_POST['countries'] ? $_POST['countries'] : '';
+	$states = array();
+	if($countries){
+		foreach($countries as $country){
+			$country = strtolower($country);
+			include_once ( $location_module_path . 'location.'.$country.'.inc');
+			$method = 'location_province_list_'.$country;
+			$states[] = $method();
+		}
+	}
+	echo json_encode($states);
+	die;
+}
+
+
+function job_search_node_presave($node) {
+    global $user;
+	if($node->type === 'job'){
+		
+		$address = $node->locations[0]['city'] . ', ' . $node->locations[0]['province'] .', ' .$node->locations[0]['country'];
+		if(!$node->locations[0]['locpick']['user_latitude'] || !$node->locations[0]['locpick']['user_longitude']){
+			$latLong = getAddressParts($address);
+			if($latLong) {
+				$node->locations[0]['locpick']['user_latitude'] = $latLong['latitude']; 
+				$node->locations[0]['locpick']['user_longitude'] = $latLong['longitude']; 
+			}
+			if(!$node->locations[0]['postal_code']){
+				$zipcode = $latLong['zipcode'];
+				if(!$zipcode){
+					$latitude  = $latLong['latitude']; 
+					$longitude = $latLong['longitude'];
+					$zipcode = getZipByLatLong($latitude, $longitude);
+				}
+				$node->locations[0]['postal_code'] = $zipcode;
+			}
+		}
+		
+		if(!$node->locations[0]['postal_code']){
+			$latLong = getAddressParts($address);
+			$zipcode = $latLong['zipcode'];
+			if(!$zipcode){
+				$latitude  = $latLong['latitude']; 
+				$longitude = $latLong['longitude'];
+				$zipcode = getZipByLatLong($latitude, $longitude);
+			}
+			$node->locations[0]['postal_code'] = $zipcode;
+		}
+		
+		//print_r($node); die;
+	}
+}
+
+
+function getAddressParts($address, $onlyLatLong = false){ 
+	$url = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDCob92Ti5YP7UUwqjp1_F8CdToLK9gusw&address=".urlencode($address)."";
+	$result_string = file_get_contents($url); 
+	$output = json_decode($result_string);
+	if(!isset($output->results[0])){ return false;}
+	
+	$latitude  = $output->results[0]->geometry->location->lat; 
+	$longitude = $output->results[0]->geometry->location->lng;
+	if($onlyLatLong){
+		return array('latitude'=>$latitude, 'longitude' => $longitude);
+	} else {
+	
+		 $parts = array(
+		  'address'=>array('street_number','route'),
+		  'city'=>array('locality'),
+		  'state'=>array('administrative_area_level_1'),
+		  'country' => array('country'),
+		  'zipcode'=>array('postal_code')
+		);
+		$results = json_decode($result_string,1);
+		if (!empty($results['results'][0]['address_components'])) {
+		  $ac = $results['results'][0]['address_components'];
+		  foreach($parts as $need=>&$types) {
+			foreach($ac as &$a) {
+			  if (in_array($a['types'][0],$types)) {
+				  $address_out[$need] = $a['short_name'];
+			  } else if (empty($address_out[$need])) {
+				  $address_out[$need] = '';
+			  }
+			}
+		  }
+		}
+		if(!$address_out['zipcode']){
+			$address_out['zipcode'] = getZipByLatLong($latitude,$longitude);
+		}
+		$address_out ['latitude'] = $latitude;
+		$address_out ['longitude'] = $longitude;
+		return $address_out;
+	}
+}
+
+function getZipByLatLong($latitude, $longitude){
+	$url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDCob92Ti5YP7UUwqjp1_F8CdToLK9gusw&latlng='.$latitude.','.$longitude.'';
+
+	$zip_json = file_get_contents($url);
+	$zip_data = json_decode($zip_json);
+	$zipcode = '';
+	foreach($zip_data->results as $results){
+		foreach($results->address_components as $address_components)    {
+			if(isset($address_components->types) && $address_components->types[0] == 'postal_code')        {
+				$zipcode = $address_components->long_name; 
+				break;
+			}
+		}
+	}
+	return $zipcode;
+}

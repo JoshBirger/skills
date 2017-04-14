@@ -1,0 +1,10 @@
+; $Id: jobapplication.info,v 1.4.2.2.2.8 2010/01/04 22:38:18 boombatower Exp $
+; Core: Id: jobapplication.info,v 1.10 2009/08/31 18:30:26 webchick Exp
+name = "Jobapplication"
+description = "Keep track of the job applications"
+package = Development
+
+version = "7.x-2.11"
+core = "7.x"
+project = "jobapplication"
+datestamp = "1286493665"
