@@ -67,6 +67,8 @@ function goto_location(city, state, country){
 	
 	jQuery('.job_search_form .list.states input[value="'+state+'"]').prop('checked', true);
 	jQuery('.job_search_form .list.countries input[value="'+country+'"]').prop('checked', true);
+	jQuery('.job_search_form input[name="faceted"]').val('city');
+	
 	
 	jQuery('.job_search_form').submit();
 	

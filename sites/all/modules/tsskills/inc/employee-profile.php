@@ -59,8 +59,23 @@ function tsskills_employee_menu_old(&$account,$user){
 }
 
 function tsskills_employee_menu(&$account,$user){
+			$employee = '';
+			$query = new EntityFieldQuery();
+			$entities = $query->entityCondition('entity_type', 'node')
+				->propertyCondition('type', 'employee')
+				->propertyCondition('uid', $user->uid)
+				->propertyCondition('title', $user->name)
+				->propertyCondition('status', 1)
+				->range(0,1)
+				->execute();
+
+			if (!empty($entities['node'])) {
+				$employee = node_load(array_shift(array_keys($entities['node'])));
+			}
+		$zip = ($employee)?$employee->field_employee_zip['und'][0]['value']:'';
+
         $opts = array(
-                array('Find a job','tsskills/find_a_job.png','/jobs'),
+                array('Find a job','tsskills/find_a_job.png','/jobs/?zipcode='.$zip.'&zip_radius=250'),
                 array('Jobs I\'ve Applied to','tsskills/josb_ive_applied_to.png','/user/applied-jobs'),
                 array('Manage resume','tsskills/manage_resume.png','/user/'.$user->uid.'/edit/employee')
         );

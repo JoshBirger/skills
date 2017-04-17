@@ -79,6 +79,18 @@
  *
  * @ingroup themeable
  */
+ 
+ //print_r($_POST);
+ //echo "<br /><br /><br />";
+ //print_r($node);
+ 
+ if(isset($_POST['op']) && $_POST['op'] == 'Preview'){
+	 $node->location = $node->locations[0];
+	 $node->location['province_name'] = $node->location['province'];
+	 $node->location['country_name'] = $node->location['country'];
+	 $node->body['und'][0]['value'] = $node->field_job_description['und'][0]['value'];
+ }
+ 
 ?>
 <?php //print_r($node); ?>
 <div id="node-<?php print $node->nid; ?>" class="job-post <?php print $classes; ?>"<?php print $attributes; ?>>
@@ -121,7 +133,7 @@
 		<div class="info-row">
 			<label class="in-content-heading"><strong>Job Number:</strong></label>
 			<label class="in-content">
-				<?php echo $node->field_job_number['und'][0]['value'];?>
+				<?php echo isset($node->field_job_number['und'][0])?$node->field_job_number['und'][0]['value']:'';?>
 			</label>
 		</div>
 		
@@ -145,7 +157,7 @@
 		<div class="info-row">
 			<?php 
 				$address =  $node->location['city']. ', ' . $node->location['province_name'] . ', '. $node->location['country_name'];
-				$latLong =  $node->location['latitude'] .','.$node->location['longitude'];
+				$latLong =  (isset($node->location['latitude']) && isset($node->location['latitude']) ) ? $node->location['latitude'] .','.$node->location['longitude']:'';
 			?>
 			<div style="width:100%; height:300px;" id="job_map_canvas">
 			<iframe style="width:100%;height:300px;border:0;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDCob92Ti5YP7UUwqjp1_F8CdToLK9gusw
@@ -161,7 +173,7 @@
 	<div class="job-post-right col-xs-12 col-md-9">
 		<div class="head-wrap"><h2><?php echo $node->title;?></h2></div>
 		<div class="cotent-wrap">
-			<div class="job-body"><?php if(isset($node->body['und'])) { echo $node->body['und'][0]['value']; }?> </div>
+			<div class="job-body"><?php if(isset($node->body['und']) && isset($node->body['und'][0])) { echo $node->body['und'][0]['value']; }?> </div>
 			
 			<?php if(isset($node->field_job_requirements['und'][0]['value']) && $node->field_job_requirements['und'][0]['value']){ ?>
 				<div class="info-row job-requirements">
@@ -172,11 +184,21 @@
 				</div>
 			<?php } ?>
 			
-			<?php 	if(isset($user) && in_array('employee',$user->roles) ){ ?>
-				<div class="info-row job-apply">
-					<a class="btn btn-info fill" href="/apply/<?php print $node->nid; ?>">Apply</a>
-				</div>
-			<?php } ?>
+			<?php 	if(isset($user) && in_array('employee',$user->roles) ){ 
+						$r = db_query('SELECT vid FROM jobapplication WHERE uid = :uid AND nid = :nid',array(':uid'=>$user->uid,':nid'=>$node->nid) );
+						$application = $r->fetchObject();
+						if($application){
+							echo '<div class=" job-applied-info">You\'ve already applied for this position</div>';
+						} else {
+			
+			?>
+							<div class="info-row job-apply">
+								<a class="btn btn-info fill" href="/apply/<?php print $node->nid; ?>">Apply</a>
+							</div>
+			<?php 
+						}
+					} 
+				?>
 		</div>
 	</div>
 	<div class="clearfix"></div>
@@ -188,7 +210,7 @@
 
 			function initialize() {
 			  geocoder = new google.maps.Geocoder();
-			  var latlng = new google.maps.LatLng(<?php echo $node->location['latitude'];?>, <?php echo $node->location['longitude'];?>);
+			  var latlng = new google.maps.LatLng(<?php echo $latLong;?> );
 			  var myOptions = {
 				zoom: 8,
 				center: latlng,

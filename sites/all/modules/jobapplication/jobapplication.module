@@ -120,11 +120,26 @@ function save_application($form)
 
 	drupal_write_record('jobapplication',$application);
 	
-	$message = 'Thank you for submitting your resume.  A representative will contact you with further information on the submittal process. <a href="'.base_path().'jobs/">Click here to return to the job search</a>, or <a href="'.base_path()."user/".'">click here to view you profile.</a>';
+	$employee = '';
+	$query = new EntityFieldQuery();
+	$entities = $query->entityCondition('entity_type', 'node')
+		->propertyCondition('type', 'employee')
+		->propertyCondition('uid', $user->uid)
+		->propertyCondition('title', $user->name)
+		->propertyCondition('status', 1)
+		->range(0,1)
+		->execute();
+
+	if (!empty($entities['node'])) {
+		$employee = node_load(array_shift(array_keys($entities['node'])));
+	}
+	$zip = ($employee)?$employee->field_employee_zip['und'][0]['value']:'';
+	
+	$message = 'Thank you for submitting your resume.  A representative will contact you with further information on the submittal process. <a href="'.base_path().'jobs/?zipcode='.$zip.'&zip_radius=250">Click here to return to the job search</a>, or <a href="'.base_path()."user/".'">click here to view you profile.</a>';
 	drupal_set_message($message);
 	
 	//send_application_notice($form);
-
+	drupal_goto('user/applied-jobs');
 }
 function send_application_notice($form)
 {

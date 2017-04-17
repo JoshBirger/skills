@@ -1,0 +1,159 @@
+
+.job-search-wrap{
+	background: #ffffff;
+}
+.job-search-wrap .job-search-left {
+	padding:0;
+	background:#eeeeee;
+}
+.job-search-wrap .job-search-listing{
+	background: #ffffff;
+}
+.job-search-wrap .job-search-left .nav-tabs{
+	background: #ffffff;
+}
+.job-search-wrap .job-search-left .nav-tabs li{
+	background:#bbbbbb;
+}
+.job-search-wrap .job-search-left .nav-tabs li.active, .job-search-wrap .job-search-left .nav-tabs li:active{
+	background:#eeeeee;
+}
+.job-search-wrap .job-search-left .nav-tabs li a{
+	padding: 5px 20px;
+	border:0;
+	color:#777777;
+	font-weight:bold;
+	width: 110px;
+}
+.job-search-wrap .job-search-left .nav-tabs li.active a,.job-search-wrap .job-search-left .nav-tabs li:active a,.job-search-wrap .job-search-left .nav-tabs li:hover a{
+	color:#222222;
+	border:0;
+	font-weight:bold;
+}
+.job-search-wrap .tab-content .tab-pane{
+	padding:0 7px 10px 7px;
+}
+.job-search-wrap .job_search_form .filter-content {
+	padding-left: 7px;
+	max-height: 200px;
+	overflow: auto;
+}
+.filter-content ul, .filter-content li{ list-style: none; margin:0;padding:0;}
+.job-search-wrap .job_search_browse .filter-content {
+	padding-left: 7px;
+	height: 200px;
+	overflow: auto;
+	transition: all 1000ms ease;
+	transition-property: height;
+}
+.job-search-wrap .job_search_browse .filter-content.show {
+	height: 100%;
+	transition: all 1000ms ease;
+	transition-property: height;
+}
+.less_more{text-align:right;font-weight:bold;}
+.job-search-wrap .job_search_form .filter-content.list, .job-search-wrap .job_search_browse .filter-content.list {
+	background:#ffffff;
+}
+.job-search-wrap .job_search_form .filter-content label{
+	display:block;
+	
+}
+.job-search-wrap  .filter-label{
+	color:#222222;
+	font-weight:bold;
+}
+.btn-success.fill{
+	background:#5cb85c;
+	color:#ffffff;
+}
+.btn-danger.fill{
+	background:#d9534f;
+	color:#ffffff;
+}
+.btn-info.fill{
+	background:#5bc0de;
+	color:#ffffff;
+}
+.bg-image-job-search{
+	background: url('/sites/default/files/styles/image_full_width/public/highlighted/Washington_DC.jpg') scroll center no-repeat;
+     background-size: cover;
+}
+.job-search-block{
+	
+}
+.job-search-block .row1 .btn{
+	padding-top:2px;
+	padding-bottom:2px;
+}
+.job-search-block .row1 .btn-default{
+	background:#f0f0f0;
+	color:#999999;
+}
+.job-search-block .row1 h2{
+	display: inline-block;
+}
+.job-search-block .container{
+	width: 75%;
+	border-left: 5px solid #2ac5ee;
+	background: rgba(255,255,255,0.5);
+	padding: 15px;
+}
+.job-search-listing-list .job-search-job  label{
+	font-size:14px;
+	display:block;
+}
+.job-search-listing-list .job-search-job h3{
+	margin:0;
+	padding:0;
+}
+.job-search-listing-list .job-search-job{
+	padding:15px 0;
+}
+.job-search-listing-list .job-search-job.odd{
+	background:#eee;
+}
+
+.job-search-listing-list .job-search-job .action a{
+	margin: 0 5px;
+	display:block;
+	font-weight:bold;
+}
+.job-search-listing-list .job-search-job .action a i{
+	margin-right:5px;
+	font-size:30px;
+}
+.job-search-listing-list .job-search-job .action a span{
+	vertical-align: super;
+    display: inline-block;
+}
+.clear{clear:both;}
+.job_search_pagination ul, .job_search_pagination li{ list-style:none; }
+.job_search_pagination ul li { float:left; }
+.job_search_pagination ul li a{padding:0px 10px; display:block; background:#eeeeee; border:1px solid #dddddd;}
+.job_search_pagination ul li.current a{background:#4CAF50; border:1px solid #4Cbe50; color:#ffffff;}
+.job_search_pagination .dots{ margin:0 15px; } 
+.job_search_pagination .next a, .job_search_pagination .previous a{
+	background:#dddddd;
+}
+.job_search_pagination .first a, .job_search_pagination .last a{
+	background:#cccccc;
+}
+
+@media only screen and (max-width: 768px) {
+	.job-search-wrap .job-search-left .nav-tabs li{
+		float:none;
+		width:100%;
+		margin: 4px 0;
+	}
+	.job-search-wrap .job-search-left .nav-tabs li a{
+		width:100%;
+		display:block;
+	}
+	.job_search_form .clear-filter, .job_search_form  .search-filter{
+		margin: 6px auto !important;
+		display: block !important;
+		width: 100%;
+		padding: 5px 0;
+	}
+}

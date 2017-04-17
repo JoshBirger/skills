@@ -67,17 +67,14 @@ function load_page(page){
 }
 function goto_location(city, state, country){ 
 	jQuery('.job_search_form input[name="city"]').val(city); 
+        jQuery('.job_search_form input[name="faceted"]').val('facet');
 	jQuery('.job_search_form .list.states input[type="checkbox"]').prop('checked',false);
 	jQuery('.job_search_form .list.countries input[type="checkbox"]').prop('checked',false);
 	
 	jQuery('.job_search_form .list.states input[value="'+state+'"]').prop('checked', true);
 	jQuery('.job_search_form .list.countries input[value="'+country+'"]').prop('checked', true);
-	//var statess = '<input type="checkbox" value="'+state+'" name="states[]" checked="checked">';
-    //jQuery(".job_search_form .list.states").html(statess);
-	
-	jQuery('.job_search_form input[name="faceted"]').val('city');
-	
-	
+	var statess = '<input type="checkbox" value="'+state+'" name="states[]" checked="checked">';
+         jQuery(".job_search_form .list.states").html(statess);
 	jQuery('.job_search_form').submit();
 	
 }

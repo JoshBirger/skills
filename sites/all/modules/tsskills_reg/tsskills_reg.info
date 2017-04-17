@@ -1,0 +1,9 @@
+;$Id$
+
+name = TSSkills Registration
+description = This is custom module for custom registration .
+package = Custom
+core = 7.x
+files[] = tsskills_reg.module
+ 
+;php = 5.2

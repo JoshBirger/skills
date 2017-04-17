@@ -245,6 +245,23 @@ form#tsskills-employee-register-form label, #tsskills-employer-register-form lab
     padding-right: 30px;
     width: 350px;
 }
+
+.page-user-edit-employee #edit-picture, .page-user-edit-employee .form-item-mail, .page-user-edit-employee .form-item-title
+, .page-user-edit-employer #edit-picture, .page-user-edit-employer .form-item-mail
+
+{
+	display:none;
+	opacity:0;
+	visibility:hidden;
+}
+.node-type-job .job-applied-info{
+		margin-top:20px;
+		font-size:20px;
+		color:#898989;
+}
+
+
+
 /*.job-categories ul, .job-locations ul {
 padding: 0;
 text-align: left;
@@ -1148,6 +1165,10 @@ header {
 .nestor-main-menu .dropdown-menu > li:hover,
 .nestor-main-menu .dropdown-menu > .active {
   background: transparent;
+}
+
+#edit-field-employee-resume-upload-button{
+	/*display:none;*/
 }
 
 @media (max-width: 991px) {

@@ -21,7 +21,7 @@
 					<button type="submit" class="btn btn-success search-filter">Search</button>
 					<input type="hidden" name="page" value="<?php echo $page; ?>" />
 					<input type="hidden" name="city" value="<?php echo $filter['city']; ?>" />
-					<input type="hidden" name="faceted" value="<?php echo $filter['faceted']; ?>" />
+					<input type="hidden" name="faceted" value="" />
 					<div class="form-group">
 						<label class="filter-label" for="js_keywords">Keywords</label>
 						<div class="filter-content">
@@ -52,7 +52,7 @@
 							<?php
 								$post_categories = isset($filter['categories'])?$filter['categories']:array();
 								foreach($job_categories as $jcat){
-								 	$sel = in_array($jcat->vid .'_'.$jcat->tid,$post_categories) ? ' checked="checked" ':''; 
+								 	$sel = in_array($jcat->tid,$post_categories) ? ' checked="checked" ':''; 
 									echo '<label ><input '.$sel.' name="categories[]" type="checkbox" value="'.$jcat->tid.'" /> '.$jcat->name.'</label>';
 								}
 							?>
@@ -123,8 +123,6 @@
 						</div>
 						<div class="less_more"></div>
 					</div>
-					
-					
 					
 					
 					

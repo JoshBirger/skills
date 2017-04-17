@@ -131,7 +131,7 @@ function job_search_jobs_callback(){
 		$filter['city'] = ($addressParts['city'])?$addressParts['city']:'';
 		$filter['states'] = ($addressParts['state'])?array($addressParts['state']):'';
 		$filter['countries'] = ($addressParts['county'])?array($addressParts['county']):'';
-		//$filter['zipcode'] = ($addressParts['city'])?$addressParts['city']:'';
+		$filter['zipcode'] = ($addressParts['city'])?$addressParts['city']:'';
 	}
 	//if(isset($filter['zipcode']) && $filter['zipcode']){
 		//$filter_zipcode = $filter['zipcode'];
@@ -139,11 +139,14 @@ function job_search_jobs_callback(){
 		//$addressParts = getAddressParts($filter['zipcode']);	
 	//}
 	$addr = '';
-	if(isset($filter['city']) && $filter['city'] && $filter['faceted']){
+	
+	//if(isset($filter['city']) && $filter['city'] && $filter['faceted']){
+	if(isset($filter['city']) && $filter['city']){
 		$filter_city = $filter['city'];
-		$query->condition('l.city', $filter_city);
+		//$query->condition('l.city', $filter_city);
 		$addr = $filter_city;
 	}
+	
 	$filter['states'] = array_filter($filter['states']);
 	if(isset($filter['states']) && $filter['states']){
 		$filter_states = $filter['states'];
@@ -182,7 +185,8 @@ function job_search_jobs_callback(){
 
 	}
 
-	if(isset($filter['zipcode']) && $filter['zipcode']){
+	//if(isset($filter['zipcode']) && $filter['zipcode'] && !$filter['faceted']){
+	if(isset($filter['zipcode']) && $filter['zipcode'] ){
 		$filter_zipcode = $filter['zipcode'];
 		//$query->condition('l.postal_code', $filter_zipcode);
 		if(!$addr_parts){
@@ -209,7 +213,11 @@ function job_search_jobs_callback(){
 				$apply_distance = true;
 			}
 		}
+	} 
+	if(isset($filter['city']) && $filter['city'] && isset($filter['faceted']) && $filter['faceted'] == 'city' ){
+		$query->condition('l.city', $filter_city);
 	}
+	
 
 	//fields
 	$query->fields('n',array('nid','title','created','type'));

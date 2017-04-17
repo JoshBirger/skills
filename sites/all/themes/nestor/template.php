@@ -798,8 +798,8 @@ function get_company_info($node){
 		//print_r($employer[$ids[0]]->field_employer_company['und'][0]['value']);
 		
 		$company = array(
-					'name' => $employer[$ids[0]]->field_employer_company['und'][0]['value'],
-					'profile' => $employer[$ids[0]]->field_employer_cprofile['und'][0]['value'],
+					'name' => isset($employer[$ids[0]]->field_employer_company['und'])?$employer[$ids[0]]->field_employer_company['und'][0]['value']:'',
+					'profile' => isset($employer[$ids[0]]->field_employer_cprofile['und'])?$employer[$ids[0]]->field_employer_cprofile['und'][0]['value']:'',
 					'nid' => $employer[$ids[0]]->nid,
 					);
 		return $company;

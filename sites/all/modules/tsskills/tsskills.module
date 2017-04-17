@@ -247,7 +247,19 @@ function tsskills_employee_search(){
         $query->entityCondition('entity_type', 'node')
   		->propertyCondition('type', 'employee');
 	//add more queries here ---
-	if(isset($_GET['sortby'])){
+	if(isset($_GET['keywords']) && $_GET['keywords']){
+		$query->fieldCondition('field_employee_fname', 'value',  '%' . $_GET['keywords'] . '%', 'like');
+		$query->fieldCondition('field_employee_lname', 'value',  '%' . $_GET['keywords'] . '%', 'like');
+		$query->fieldCondition('field_employee_street_add', 'value',  '%' .$_GET['keywords'] . '%', 'like');
+		$query->fieldCondition('field_employee_zip', 'value',  '%' . $_GET['keywords'] . '%', 'like');
+		$query->fieldCondition('field_employee_telephone', 'value',  '%' . $_GET['keywords'] . '%', 'like');
+		$query->fieldCondition('field_employee_cellphone', 'value',  '%' . $_GET['keywords'] . '%', 'like');
+	}
+	if(isset($_GET['expertise']) && $_GET['expertise']){
+		$query->fieldCondition('field_employee_skills', 'value',  '%' . $_GET['keywords'] . '%', 'like');
+	}
+	
+	if(isset($_GET['sortby']) && $_GET['sortby']){
 		if($_GET['sortby']=='created'){
 			$query->propertyOrderBy($_GET['sortby'],(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
 		} else {
@@ -261,12 +273,12 @@ function tsskills_employee_search(){
 	/*
 	$content = node_view_multiple(node_load_multiple(array_keys($result['node'])));
 	$build = array(
-  'content' => $content,
-  'pager' => array(
-    '#markup' => theme('pager'),
-    '#weight' => 10
-  )
-);
+	  'content' => $content,
+	  'pager' => array(
+		'#markup' => theme('pager'),
+		'#weight' => 10
+	  )
+	);
 return $build;
 	*/
 
@@ -799,7 +811,7 @@ function tsskills_apply_form($form, &$form_state){
   '#action' => '#', 
   'cover_letter' => array ( 
    '#type' => 'textarea',
-   '#title' => t('Cover Letter'),
+   '#title' => t('Cover Letter 2'),
    '#description' => t(''),
    '#required' => TRUE,
   ),
@@ -998,7 +1010,7 @@ function tsskills_mail($key, &$message, $params){
 	}
 }
 
-function tsskills_employee_register_form_validate($form, &$form_state) {  drupal_set_message("Thank you for your registration. Please check your email ‘add user’s registration email’ for your login information");
+function tsskills_employee_register_form_validate($form, &$form_state) { 
 	$u_email = $form_state['values']['user_email'];
 	watchdog(WATCHDOG_DEBUG, 'validating employee register for '.$u_email);
 	
@@ -1006,7 +1018,7 @@ function tsskills_employee_register_form_validate($form, &$form_state) {  drupal
 		form_set_error('user_email','Email is required');
 		return;
 	} else {
-	
+	 
 	}
 	
 

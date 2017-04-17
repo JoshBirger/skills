@@ -247,11 +247,11 @@
           <?php if ($messages) { print render($messages); } ?>
 
 
-	<?php if( $page_alias && $page_alias=='user/registration/employee') {
+	<?php if( $page_alias && $page_alias=='user/registration/employee-old') {
                 ?><div class="container"><?php
                 include('page--employee-registration.tpl.php');
                 ?></div><?php
-        } else if( $page_alias && $page_alias=='user/registration/employer') {
+        } else if( $page_alias && $page_alias=='user/registration/employer-old') {
                 ?><div class="container"><?php
                 include('page--employer-registration.tpl.php');
                 ?></div><?php

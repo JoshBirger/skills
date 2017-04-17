@@ -34,7 +34,7 @@ global $pager_total_items;
 		<div class="col-lg-2 col-xs-2"><a onClick='sortBy("field_employee_zip");'>Zip</a></div>
 		<div class="col-lg-2 col-xs-2"><a onClick='sortBy("field_employee_telephone");'>Telephone</a></div>
 		<div class="col-lg-2 col-xs-2"><a onClick='sortBy("field_employee_cellphone");'>Cellphone</a></div>
-		<div class="col-lg-2 col-xs-2"><a onClick='sortBy("created");'>Created</div>
+		<div class="col-lg-2 col-xs-2"><a onClick='sortBy("created");'>Created</a></div>
 </div>
 <div class="clearfix"></div>
 	<?php $e_i=0; foreach($employees as $e){  $e_i++; ?>
@@ -43,25 +43,32 @@ global $pager_total_items;
 			$name = isset($e->field_employee_fname[LANGUAGE_NONE])?$e->field_employee_fname[LANGUAGE_NONE][0]['value']:'';
 			$name .= '  ';
 			$name .= isset($e->field_employee_lname[LANGUAGE_NONE])?$e->field_employee_lname[LANGUAGE_NONE][0]['value']:'';
-			$zip = field_view_field('node', $e, 'field_employee_zip');
-			$streetadd = field_view_field('node',$e,'field_employee_street_add');
-			$telephone = field_view_field('node', $e,'field_employee_telephone');
-			$cell = field_view_field('node',$e,'field_employee_cellphone');
+			//$zip = field_view_field('node', $e, 'field_employee_zip');
+			//$streetadd = field_view_field('node',$e,'field_employee_street_add');
+			//$telephone = field_view_field('node', $e,'field_employee_telephone');
+			//$cell = field_view_field('node',$e,'field_employee_cellphone');
+			
+			$streetadd = isset($e->field_employee_street_add[LANGUAGE_NONE]) && trim($e->field_employee_street_add[LANGUAGE_NONE][0]['value'])?$e->field_employee_street_add[LANGUAGE_NONE][0]['value']:' - ';
+			$zip = isset($e->field_employee_zip[LANGUAGE_NONE]) && trim($e->field_employee_zip[LANGUAGE_NONE][0]['value'])?$e->field_employee_zip[LANGUAGE_NONE][0]['value']:' - ';
+			$telephone = isset($e->field_employee_telephone[LANGUAGE_NONE]) && trim($e->field_employee_telephone[LANGUAGE_NONE][0]['value'])?$e->field_employee_telephone[LANGUAGE_NONE][0]['value']:' - ';
+			$cell = isset($e->field_employee_cellphone[LANGUAGE_NONE]) && trim($e->field_employee_cellphone[LANGUAGE_NONE][0]['value'])?$e->field_employee_cellphone[LANGUAGE_NONE][0]['value']:' - ';
+			
 		?>
+		<?php /*
 		<div class="col-lg-6"><h6><?php print l($name,drupal_get_path_alias('node/'.$e->nid)); ?></h4></div>
 		<div class="col-lg-3"><?php print drupal_render($telephone); ?></div>
 		<div class="col-lg-3"><?php print drupal_render($cell); ?></div>
 		
 		<div class="col-lg-6"><?php print drupal_render($streetadd); ?></div>
 		<div class="col-lg-3"><?php print drupal_render($zip); ?></div>
-		<div class="col-lg-3"><?php print drupal_render($created); ?></div>
+		<div class="col-lg-3"><?php //print drupal_render($created); ?></div> */ ?>
 
-		<!--
-		<td><?php print isset($e->field_employee_street_add[LANGUAGE_NONE])?$e->field_employee_street_add[LANGUAGE_NONE][0]['value']:''; ?></td>
-		<td><?php print isset($e->field_employee_zip[LANGUAGE_NONE])?$e->field_employee_zip[LANGUAGE_NONE][0]['value']:''; ?></td>
-		<td><?php print isset($e->field_employee_telephone[LANGUAGE_NONE])?$e->field_employee_telephone[LANGUAGE_NONE][0]['value']:''; ?></td>
-		<td><?php print isset($e->field_employee_cellphone[LANGUAGE_NONE])?$e->field_employee_cellphone[LANGUAGE_NONE][0]['value']:''; ?><</td>
-		<td><?php print date ("M d, Y", $e->created); ?></td>-->
+		<div class="col-lg-2 col-xs-2"><?php print $name ; ?></div>
+		<div class="col-lg-2 col-xs-2"><?php print $streetadd; ?></div>
+		<div class="col-lg-2 col-xs-2"><?php print $zip; ?></div>
+		<div class="col-lg-2 col-xs-2"><?php print $telephone; ?></div>
+		<div class="col-lg-2 col-xs-2"><?php print $cell; ?></div>
+		<div class="col-lg-2 col-xs-2"><?php print date ("M d, Y", $e->created); ?></div>
 
 	<hr>
 	</div>
