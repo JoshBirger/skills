@@ -809,3 +809,12 @@ function get_company_info($node){
 	
 	
 }
+
+function nestor_block_view_user_login_alter(&$data, $block) {
+	global $user;
+	if (!$user->uid && !(arg(0) == 'user' && (arg(1) == 'login'))) {
+        $block->subject = t('User login');
+        $block->content = drupal_get_form('user_login_block');
+    }
+}
+

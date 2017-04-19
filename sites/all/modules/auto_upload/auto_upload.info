@@ -1,0 +1,4 @@
+name = Auto Upload
+description = Removes the need for users to press the 'Upload' button for AJAX file uploads.
+core = 7.x
+dependencies[] = file

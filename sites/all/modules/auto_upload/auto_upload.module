@@ -1,0 +1,5 @@
+<?php
+
+function auto_upload_init() {
+  drupal_add_js(drupal_get_path('module', 'auto_upload') . '/auto_upload.js');
+}

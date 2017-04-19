@@ -85,7 +85,7 @@ drupal_add_css(drupal_get_path('theme','nestor').'/css/employee.css',array('grou
 						
 					?></p>
 					<script type="text/javascript">
-							setTimeout(function(){
+							/*setTimeout(function(){
 									document.querySelector('div.captcha img').height=60;
 									document.querySelector('div.captcha img').width=180;
 							},150);
@@ -93,7 +93,7 @@ drupal_add_css(drupal_get_path('theme','nestor').'/css/employee.css',array('grou
 									document.querySelector('#tsskills-password-request-reg_form > div > div.captcha > img').height=60;
 									document.querySelector('#tsskills-password-request-reg_form > div > div.captcha > img').width=180;
 							}; //tab js appears to be forcing the captcha to 0 height
-							
+							*/
 					</script>
 
 			</div> <!-- /tab-pane -->

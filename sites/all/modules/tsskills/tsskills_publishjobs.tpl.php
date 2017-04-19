@@ -27,28 +27,30 @@ global $pager_total_items;
 		<div class="col-lg-3 col-xs-3"><a onClick='sortBy("title");'>Title</a></div>
 		<div class="col-lg-3 col-xs-3"><a onClick='sortBy("author");'>Author</a></div>
 		<div class="col-lg-2 col-xs-2"><a onClick='sortBy("status");'>Published</a></div>
-		<div class="col-lg-2 col-xs-2"><a onClick='sortBy("created");'>Created</div>
+		<div class="col-lg-2 col-xs-2"><a onClick='sortBy("created");'>Created </a></div>
 </div>
 <div class="clearfix"></div>
-	<?php $e_i=0; foreach($jobs as $e){  $e_i++; ?>
-	<div class="col-lg-12" style="<?php if($e_i%2){ print "background: #eeeeee;"; } ?>">
-		<?php
-			//$author = field_view_field('node',$e,'author');
-		?>
-		<div class="col-lg-3"><h6><?php print l($e->title,drupal_get_path_alias('node/'.$e->nid)); ?></h6></div>
-		
-		<div class="col-lg-3"><?php print $e->employer? l($e->employer->title,'node/'.$e->employer->nid):l('User '.$e->uid,'user/'.$e->uid); ?></div>
-		<div class="col-lg-2"><?php print $e->status; ?></div>
-		<div class="col-lg-2"><?php print date ("M d, Y", $e->created); ?></div>
-		<div class="col-lg-2">
-			<button class="btn <?php print $e->status?'btn-danger':'btn-success'; ?>" onClick='sendPublish(<?php print $e->nid; ?>);'><?php print ($e->status?"Unpublish":"Publish"); ?></button></div>
-
-		<!--
-		<td><?php print date ("M d, Y", $e->created); ?></td>-->
-
-	<hr>
-	</div>
-	<?php } ?>
+	<?php $e_i = 0; 
+		if(count($jobs) > 0){
+			foreach($jobs as $e){ 
+				$e_i++; 
+	?>
+				<div class="col-lg-12" style="<?php if($e_i%2){ print "background: #eeeeee;"; } ?>">
+					<div class="col-lg-3"><h6><?php print l($e->title,drupal_get_path_alias('node/'.$e->nid)); ?></h6></div>
+					<div class="col-lg-3"><?php print $e->author_fname? l($e->author_fname . ' ' . $e->author_lname,'node/'.$e->author_id):l('User '.$e->uid,'user/'.$e->uid); ?></div>
+					<div class="col-lg-2"><?php print $e->status; ?></div>
+					<div class="col-lg-2"><?php print date ("M d, Y", $e->created); ?></div>
+					<div class="col-lg-2">
+						<button class="btn <?php print $e->status?'btn-danger':'btn-success'; ?>" onClick='sendPublish(<?php print $e->nid; ?>);'><?php print ($e->status?"Unpublish":"Publish"); ?></button>
+					</div>
+					<hr />
+				</div>
+	<?php 
+			} 
+		} else {
+			echo '<div class="col-lg-12" >No Matching Records Found</div>';
+		}
+	?>
 </div>
 
 

@@ -132,22 +132,6 @@
 			$("#search-toggle").css("display", "block");
 		});
 		
-		/*$(".page-user-edit-employee  #profileTab li a").click(function(e){
-			$(".page-user-edit-employee  #profileTab li a").removeClass('active');
-			$(this).addClass('active');
-			var cid = $(this).attr('href');
-			$("#tab-content .tab-pane").removeClass('active').removeClass('in');
-			$("#tab-content #"+cid).addClass('active').addClass('in');
-		});
-		*/
-		
-		jQuery("#edit-field-employee-resume-upload").change(function(e){
-			alert('clicked');
-			console.log(jQuery(this).next());
-			jQuery(this).next().trigger( "click" );
-			//jQuery(this).next().click();
-		});
-		//edit-field-employee-resume-upload-button
     });
   
 })(jQuery);

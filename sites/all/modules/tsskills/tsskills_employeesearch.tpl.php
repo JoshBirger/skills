@@ -9,8 +9,8 @@ global $pager_total_items;
 <form accept-charset="UTF-8" method="get" id="frm_searchemployees" name="frm_searchemployees">
 	<input type="hidden" name="sortby" id="sortby" value="<?php print isset($_GET['sortby'])?$_GET['sortby']:'' ; ?>">
 	<input type="hidden" name="sortasc" id="sortasc" value="<?php print isset($_GET['sortasc'])?$_GET['sortasc']:'ASC' ; ?>">
-	<div class="col-lg-3"><label for="keywords">Keywords</label><input type="text" name="keywords"></div>
-	<div class="col-lg-3"><label for="keywords">Expertise</label><input type="text" name="expertise"></div>
+	<div class="col-lg-3"><label for="keywords">Keywords</label><input value="<?php if(isset($_GET['keywords'])){ echo $_GET['keywords']; }?>" type="text" name="keywords"></div>
+	<?php /*<div class="col-lg-3"><label for="keywords">Expertise</label><input value="<?php if(isset($_GET['expertise'])){ echo $_GET['expertise']; }?>" type="text" name="expertise"></div> */ ?>
 
 	<div class="col-lg-2"><input type="submit" value="Apply"></div>
 </form>

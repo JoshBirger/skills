@@ -37,10 +37,20 @@ function tsskills_reg_menu(){
 			  'access callback' => TRUE,
 			  'type'    => MENU_NORMAL_ITEM
 		);
-	
+		$items ['user/registration/success'] = array (
+			 'page callback'  => 'tsskills_reg_success_callback',
+			 'title'    => 'Thanks For Registration', 
+			 //'page arguments'  => array ('tsskills_employer_form'),
+			  'access callback' => TRUE,
+			  'type'    => MENU_NORMAL_ITEM
+		);
 		
 				
 	    return $items;
+}
+
+function tsskills_reg_success_callback(){
+	return '<div class="reg_success"></div>';
 }
 
 function tsskills_reg_employer_callback(){
@@ -56,6 +66,7 @@ function tsskills_reg_employee_callback(){
 //function tsskills_employee_form($form, &$form_state){
 function tsskills_employee_form(){
 	$form = array();
+	$form['#id'] = 'tsskills-employee-register-form';
 	$form['#attributes'] = array('enctype' => 'multipart/form-data');
 	$voc = taxonomy_vocabulary_machine_name_load('clearance');
 	$form['field_learance'] = array(
@@ -141,6 +152,12 @@ function tsskills_employee_form(){
 	$form['field_employee_resume'] = array(
 		'#title' => t('Upload Resume '),
 		'#type' => 'managed_file',
+		'#description' => 'Please upload resume here',
+		'#upload_location' => 'public://',
+		'#progress_indicator' => 'bar',
+		'#upload_validators' => array(
+			'file_validate_extensions' => array('txt doc docx pdf')
+		),
 		'#required' => TRUE,
 	);
 	
@@ -161,7 +178,10 @@ function tsskills_employee_form(){
 }
 
 function tsskills_employee_form_validate($form, &$form_state) {
-	$user = user_load(array('mail'=> $form_state['values']['employee_email'])); 
+	if (!valid_email_address($form_state['values']['employee_email'])) {
+		form_set_error('employee_email', t('Please fill valid email'));
+	}
+	$user = user_load_by_mail($form_state['values']['employee_email']);
 	if ($user && $user->uid > 0) {
 		form_set_error('employee_email', t('Email Already Exists'));
 	}
@@ -206,8 +226,9 @@ function tsskills_employee_form_submit($form, &$form_state) {
 		->execute();
 	//send mail to new user with their password
 	$mail_from = variable_get('site_mail', ini_get('sendmail_from'));
-	drupal_mail('tsskills','employeeregister',$account->mail,LANGUAGE_NONE,array('pass'=>$new_pass,'uid'=>$new_user->uid));
-	drupal_set_message("Account created with username: ".$new_user->name." and password ".$new_pass);
+	//drupal_mail('tsskills','employeeregister',$account->mail,LANGUAGE_NONE,array('pass'=>$new_pass,'uid'=>$new_user->uid));
+	drupal_mail('tsskills_reg','employeesignup',$account->mail,LANGUAGE_NONE,array('password'=>$new_pass,'username'=>$account->name,'uid'=>$new_user->uid),$mail_from);
+	//drupal_set_message("Account created with username: ".$new_user->name." and password ".$new_pass);
 
 	$node = new stdClass();
 	$node->type = 'employee';
@@ -215,7 +236,10 @@ function tsskills_employee_form_submit($form, &$form_state) {
 	node_object_prepare($node);
 	$node->uid = $new_user->uid;
 	$node->title = $form_state['values']['field_employee_fname'].' '.$form_state['values']['field_employee_lname'];
-	$node->status = 1; $node->promote = 0; $node->sticky = 0; $node->comment = 1;
+	$node->status = 1; 
+	$node->promote = 0; 
+	$node->sticky = 0; 
+	$node->comment = 1;
 	
 	$e_fields = array('employee_fname','employee_lname','employee_telephone','employee_cellphone','employee_street_add','employee_zip','employee_skills','employee_message','employee_text_resume','notes');
 	foreach($e_fields as $efield){
@@ -257,21 +281,20 @@ function tsskills_employee_form_submit($form, &$form_state) {
 		)));
 		node_save($node);
 	}
-	drupal_set_message("Thank you for your registration. Please check your email ‘add user’s registration email’ for your login information");
+	drupal_set_message("Thank you for your registration. Please check your email ". $form_state['values']['employee_email']." for your login information");
 	if($node->nid){
-		drupal_goto('node/'.$node->nid);
-	} else {
-		drupal_goto('user/login');
-	}
+		drupal_goto('user/registration/success');
+	} 
 	
 	
 }
 
 /* ********* Employer **************** */
-function tsskills_employer_form($form, &$form_state){
-	
+function tsskills_employer_form(){
+	$form = array();
 	$voc = taxonomy_vocabulary_machine_name_load('clearance');
-	
+	$form['#attributes'] = array('enctype' => 'multipart/form-data');
+	$form['#id'] = 'tsskills-employer-register-form';
 	$form['employer_email'] = array(
 		'#title' => t('Email Address'),
 		'#type' => 'textfield',
@@ -288,25 +311,9 @@ function tsskills_employer_form($form, &$form_state){
 		'#type' => 'textfield',
 		'#required' => TRUE,
 	);
-	$form['field_employer_phone'] = array(
-		'#title' => t('Telephone'),
-		'#type' => 'textfield',
-		'#required' => TRUE,
-	);
-	$form['field_employer_cprofile'] = array(
-		'#title' => t('Profile'),
-		'#type' => 'textfield',
-		'#required' => TRUE,
-	);
-	
-	$form['field_employer_address'] = array(
-		'#title' => t('Address '),
-		'#type' => 'textfield',
-		'#required' => TRUE,
-	);
-	
-	$form['field_employer_zip'] = array(
-		'#title' => t('Zip Code or APO Code '),
+
+	$form['field_employer_company'] = array(
+		'#title' => t('Company Name'),
 		'#type' => 'textfield',
 		'#required' => TRUE,
 	);
@@ -316,6 +323,37 @@ function tsskills_employer_form($form, &$form_state){
 		'#type' => 'textarea',
 		'#required' => TRUE,
 	);
+	
+	$form['field_employer_cprofile'] = array(
+		'#title' => t('Company Profile'),
+		'#type' => 'textarea',
+		'#required' => TRUE,
+	);
+	
+	
+	
+	$form['field_employer_address'] = array(
+		'#title' => t('Address'),
+		'#type' => 'textfield',
+		'#required' => TRUE,
+	);
+	
+	$form['field_employer_city'] = array(
+		'#title' => t('City'),
+		'#type' => 'textfield',
+		'#required' => TRUE,
+	);
+	$form['field_employer_zip'] = array(
+		'#title' => t('Zip Code or APO Code '),
+		'#type' => 'textfield',
+		'#required' => TRUE,
+	);
+	$form['field_employer_telephone'] = array(
+		'#title' => t('Work Phone#'),
+		'#type' => 'textfield',
+		'#required' => TRUE,
+	);
+	
 
 	$form['captcha'] = array(
 	  '#type' => 'captcha',
@@ -331,13 +369,97 @@ function tsskills_employer_form($form, &$form_state){
   return $form;
 }
 function tsskills_employer_form_validate($form, &$form_state) {
-	$user = user_load(array('mail'=> $form_state['values']['employee_email'])); 
+
+	if (!valid_email_address($form_state['values']['employer_email'])) {
+		form_set_error('employer_email', t('Please fill valid email'));
+	}
+	
+	$user = user_load_by_mail($form_state['values']['employer_email']);
 	if ($user && $user->uid > 0) {
-		form_set_error('employee_email', t('Email Already Exists'));
+		form_set_error('employer_email', t('Email Already Exists'));
 	}
 }
 
 function tsskills_employer_form_submit($form, &$form_state) {
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	include_once('./includes/password.inc');
+    $new_pass = user_password();
+	$hashed_pass = user_hash_password($new_pass);
+	$account = new stdClass;
+	$account->is_new = TRUE;
+	$account->name = strtolower(str_replace(' ','_',$form_state['values']['field_employer_fname'].' '.$form_state['values']['field_employer_lname']));
+	$newName = $account->name;
+	$nameCounter = 0;
+	while($user_exists = user_load_by_name($newName) ){
+		$nameCounter++;
+		$newName = $account->name.$nameCounter;
+	}
+	if($newName != $account->name) { $account->name = $newName; }
+	$account->pass = $hashed_pass;
+	$account->mail = $form_state['values']['employer_email'];
+	$account->init = $form_state['values']['employer_email'];
+	$account->status = TRUE;
+	$account->roles = array(DRUPAL_AUTHENTICATED_RID => TRUE);
+	$account->roles[5] = TRUE;
+
+	
+	$new_user = user_save($account);
+	if(!$new_user){
+			drupal_set_message("Unable to create new user",'error');
+			drupal_goto('user/registration/employer');
+			return;
+	}
+	db_update('users')
+	->fields(array(
+	  'pass' => $hashed_pass
+	))
+	->condition('uid', $new_user->uid)
+	->execute();
+
+	//send mail to new user with their password
+	$mail_from = variable_get('site_mail', ini_get('sendmail_from'));
+	drupal_mail('tsskills_reg','employersignup',$account->mail,LANGUAGE_NONE,array('password'=>$new_pass,'username'=>$account->name,'uid'=>$new_user->uid),$mail_from);
+	//drupal_set_message("Account created with username: ".$new_user->name." and password ".$new_pass);
+
+	
+	//create employer node
+	$node = new stdClass();
+	$node->type = 'employer';
+	$node->language = LANGUAGE_NONE;
+	node_object_prepare($node);
+	$node->uid = $new_user->uid;
+	$node->title = $form_state['values']['field_employer_company'];
+	$node->status = 1; 
+	$node->promote = 0; 
+	$node->sticky = 0; 
+	$node->comment = 1;
+	$node->is_new = TRUE;
+	$e_fields = array('employer_fname','employer_lname','employer_company','employer_telephone','employer_cprofile','employer_zip','field_employer_city','field_employer_address','employer_message','notes');
+
+	foreach($e_fields as $efield){
+		$f_efield = 'field_'.$efield;
+		if(!isset($form_state['input'][$f_efield]) ) continue;
+		$nv = array();
+		$nv['und'][0]['value'] = $form_state['input'][$f_efield];
+		$node->$f_efield = $nv;
+	}
+	
+	
+	node_save($node);
+	
+	drupal_set_message("Thank you for your registration. Please check your email ". $form_state['values']['employer_email']." for your login information");
+	if($node->nid){
+		drupal_goto('user/registration/success');
+	} 
+	
 	
 }
 
@@ -370,7 +492,15 @@ function tsskills_reg_theme($existing, $type, $theme, $path) {
 	
     return $items;
 }
-
+function tsskills_reg_mail($key, &$message, $params){
+	if($key=='employeesignup'){
+		$message['subject'] = 'Welcome to TSSkills - Job Seeker registration included';
+		$message['body'][] = "Dear Job Seeker,<br />Thanks for joing TSSkills. Please find Your login info below.<br /><br /> username:".$params['username']."<br /> password : ".$params['password']."<br /><br />Thanks,<br />TSSkills Team";
+	} else if($key=='employersignup'){
+		$message['subject'] = 'Welcome to TSSkills - Employer registration included';
+		$message['body'][] = "Dear Employer,<br />Thanks for joing TSSkills. Please find Your login info below.<br /><br /> username:".$params['username']."<br /> password : ".$params['password']."<br /><br />Thanks,<br />TSSkills Team";
+	}
+}
 function tsskills_reg_taxonomy_selectbox($vid) {
 	$terms = taxonomy_get_tree($vid);
 	$output = array();

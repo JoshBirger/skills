@@ -185,52 +185,137 @@ function _tsskills_employer_by_uid($uid){
         return $node;
 }
 
+function tsskills_query_publishjobs_alter(QueryAlterableInterface $query) {
+
+}
+
 function tsskills_publish_jobs(){
 
-	if(isset($_GET['changepublish']) && strlen($_GET['changepublish']) > 0){
-		$node_change = node_load($_GET['changepublish']);
-		if(!$node_change){
-			drupal_set_message("Could not find a job with node id ".$_GET['changepublish']);
-		} else {
-			$node_change->status = $node_change->status?0:1;
-			node_save($node_change);
-			drupal_set_message("Changed status to ".$node_change->status." for ".$node_change->title);
-		}
-	}
 
-        $query = new EntityFieldQuery();
+		$filter = $_GET;
+		if(isset($_GET['changepublish']) && strlen($_GET['changepublish']) > 0){
+			$node_change = node_load($_GET['changepublish']);
+			if(!$node_change){
+				drupal_set_message("Could not find a job with node id ".$_GET['changepublish']);
+			} else {
+				$node_change->status = $node_change->status?0:1;
+				node_save($node_change);
+				drupal_set_message("Changed status to ".$node_change->status." for ".$node_change->title);
+			}
+		}
+		
+		$qr = db_select('node', 'n');
+		$qr->distinct();
+		$qr->leftJoin('node', 'emp', 'n.uid = emp.uid');
+		$qr->leftJoin('field_data_field_employer_fname', 'fname', 'emp.nid = fname.entity_id');
+		$qr->leftJoin('field_data_field_employer_lname', 'lname', 'emp.nid = lname.entity_id');
+		
+		//conditions 
+		//$qr->condition('n.status', 1);
+		$qr->condition('n.type', 'job');
+		$qr->condition('emp.type',"employer");
+		if(isset($filter['keywords']) && $filter['keywords']){
+			$qr->condition('n.title', '%'.$filter['keywords'].'%', 'like');
+		}
+		
+		//$qr->condition('employer.type', 'employer');
+		//if(isset($filter['keywords']) && $filter['keywords']){
+		//	$qr->condition('n.title', '%'.$filter['keywords'].'%', 'like');
+		//}
+		//fields 
+		$qr->fields('n',array('nid','title','created','status'));
+		//$qr->fields('fname',array('field_employer_fname'));
+		//$qr->fields('lname',array('field_employer_lname'));
+		$qr->addField('emp', 'uid', 'author_id');
+		$qr->addField('fname', 'field_employer_fname_value', 'author_fname');
+		$qr->addField('lname', 'field_employer_lname_value', 'author_lname');
+		
+		
+		
+		
+		$no_jobs_in_page = 15;
+		$page = (isset($filter['page']) && $filter['page'])? $filter['page'] : 1;
+		$start = ($page - 1) * $no_jobs_in_page;
+		
+		$qr->range($start, $no_jobs_in_page);
+		
+		if(isset($filter['sortby']) && $filter['sortby']){
+			$dir = (isset($filter['sortasc'])  && $filter['sortasc']) ? $filter['sortasc']:'asc';
+			if($filter['sortby'] == 'author'){
+				$qr->orderBy('fname.field_employer_fname_value', $dir);
+				$qr->orderBy('lname.field_employer_lname_value', $dir);
+			} else {
+				$qr->orderBy($filter['sortby'], $dir);
+			}
+		}
+		
+		//echo "hello1";die;
+		//echo $qr->__toString();
+
+		$result = $qr->execute()->fetchAll();
+		
+		$data = array('jobs'=>$result);
+			
+		$breadcrumbs = array();
+        $breadcrumbs[] = l(t('Home'),'');
+        $breadcrumbs[] = l(t('Admin'),'user');
+        $breadcrumbs[] = l(t('Publish Jobs'),'tsadmin/publish-jobs');
+        drupal_set_breadcrumb($breadcrumbs);
+
+        return theme('tsskills_publishjobs',$data);
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
+		$query = new EntityFieldQuery();
         $query->entityCondition('entity_type', 'node')
+				//->addTag('publishjobs')
                 ->propertyCondition('type', 'job');
-        //add more queries here ---
-	if( isset($_GET['keywords']) && strlen($_GET['keywords']) > 1 ){
-		$query->propertyCondition('title', '%'.$_GET['keywords'].'%', 'like');
-	}
+
+		if( isset($_GET['keywords']) && strlen($_GET['keywords']) > 1 ){
+			$query->propertyCondition('title', '%'.$_GET['keywords'].'%', 'like');
+		}
+
 
         if(isset($_GET['sortby']) && strlen($_GET['sortby']) > 1){
-                if($_GET['sortby']=='created'){
-                        $query->propertyOrderBy($_GET['sortby'],(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
+				if($_GET['sortby'] == 'author' ){
+					$_GET['sortby'] = 'title';
+				}
+				//$query->propertyOrderBy($_GET['sortby'],(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
+				if($_GET['sortby'] == 'author' ){
+                    //$query->fieldOrderBy($_GET['sortby'],'value',(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
+					//$query->propertyOrderBy('title',(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
+					
                 } else {
-                        $query->fieldOrderBy($_GET['sortby'],'value',(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
+					$query->propertyOrderBy($_GET['sortby'],(isset($_GET['sortasc'])?$_GET['sortasc']:'ASC') );
                 }
         }
         $query->pager(15);
 
         $result = $query->execute();
-	$data = array('jobs'=>array());
+		
+
+		
+		$data = array('jobs'=>array());
         if($result && isset($result['node']) && count($result['node']) > 0){
                 $nids = array_keys($result['node']);
                 $data['jobs'] = entity_load('node',$nids);
         }
-	foreach( $data['jobs'] as $job){
-		$job->employer = null;
-		$query = new EntityFieldQuery();
-		$result = $query->entityCondition('entity_type','node')->propertyCondition('type','employer')->propertyCondition('uid',$job->uid)->execute();
-		if($result && isset($result['node']) && count($result['node']) > 0){
-                	$nids = array_keys($result['node']);
-                	$job->employer = node_load($nids[0]); //entity_load('node',$nids[0]);
-			//drupal_set_message( print_r($nids,true) );
-        	}
-	}
+		foreach( $data['jobs'] as $job){
+			$job->employer = null;
+			$query = new EntityFieldQuery();
+			$result = $query->entityCondition('entity_type','node')->propertyCondition('type','employer')->propertyCondition('uid',$job->uid)->execute();
+			if($result && isset($result['node']) && count($result['node']) > 0){
+						$nids = array_keys($result['node']);
+						$job->employer = node_load($nids[0]); //entity_load('node',$nids[0]);
+				//drupal_set_message( print_r($nids,true) );
+				}
+		}
 
         $breadcrumbs = array();
         $breadcrumbs[] = l(t('Home'),'');
@@ -239,8 +324,33 @@ function tsskills_publish_jobs(){
         drupal_set_breadcrumb($breadcrumbs);
 
         return theme('tsskills_publishjobs',$data);
+		*/
+		//echo 'end';
+		//die;
 }
 
+function tsskills_query_employeekeywords_alter(QueryAlterableInterface $query) {
+	
+	$query->leftJoin('field_data_field_employee_fname', 'fname', 'node.nid = fname.entity_id');
+	$query->leftJoin('field_data_field_employee_lname', 'lname', 'node.nid = lname.entity_id');
+	$query->leftJoin('field_data_field_employee_street_add', 'addr', 'node.nid = addr.entity_id');
+	$query->leftJoin('field_data_field_employee_zip', 'zip', 'node.nid = zip.entity_id');
+	$query->leftJoin('field_data_field_employee_telephone', 'tel', 'node.nid = tel.entity_id');
+	$query->leftJoin('field_data_field_employee_cellphone', 'cell', 'node.nid = cell.entity_id');
+	
+	$or = db_or()
+		->condition('fname.field_employee_fname_value',   '%' . $_GET['keywords'] . '%' , 'like')
+		->condition('lname.field_employee_lname_value',   '%' . $_GET['keywords'] . '%' , 'like')
+		->condition('addr.field_employee_street_add_value',  '%' .$_GET['keywords'] . '%' , 'like')
+		->condition('zip.field_employee_zip_value', '%' . $_GET['keywords'] . '%' , 'like')
+		->condition('tel.field_employee_telephone_value',  '%' . $_GET['keywords'] . '%' , 'like')
+		->condition('cell.field_employee_cellphone_value',   '%' . $_GET['keywords'] . '%' , 'like')
+		;
+	
+	
+	
+  $query ->condition($or);
+}
 
 function tsskills_employee_search(){
 	$query = new EntityFieldQuery();
@@ -248,12 +358,7 @@ function tsskills_employee_search(){
   		->propertyCondition('type', 'employee');
 	//add more queries here ---
 	if(isset($_GET['keywords']) && $_GET['keywords']){
-		$query->fieldCondition('field_employee_fname', 'value',  '%' . $_GET['keywords'] . '%', 'like');
-		$query->fieldCondition('field_employee_lname', 'value',  '%' . $_GET['keywords'] . '%', 'like');
-		$query->fieldCondition('field_employee_street_add', 'value',  '%' .$_GET['keywords'] . '%', 'like');
-		$query->fieldCondition('field_employee_zip', 'value',  '%' . $_GET['keywords'] . '%', 'like');
-		$query->fieldCondition('field_employee_telephone', 'value',  '%' . $_GET['keywords'] . '%', 'like');
-		$query->fieldCondition('field_employee_cellphone', 'value',  '%' . $_GET['keywords'] . '%', 'like');
+		$query->addTag('employeekeywords');
 	}
 	if(isset($_GET['expertise']) && $_GET['expertise']){
 		$query->fieldCondition('field_employee_skills', 'value',  '%' . $_GET['keywords'] . '%', 'like');
@@ -268,6 +373,8 @@ function tsskills_employee_search(){
 	}
 	$query->pager(15);
 
+	//echo $query->__toString(); die;
+	
 	$result = $query->execute();
 
 	/*

@@ -145,7 +145,7 @@ a:active {
  #block-user-login .form-item.form-group.form-type-password.form-item-pass label{
  display: none;
 }
- .form-item.form-group.form-type-password.form-item-pass {
+ .form-item.form-group.form-type-password.form-item-pass , .page-user .region-header .form-item.form-group.form-type-password.form-item-pass {
 float: left;
 margin-left: 10px;
 margin-bottom: 5px;
@@ -1168,7 +1168,7 @@ header {
 }
 
 #edit-field-employee-resume-upload-button{
-	/*display:none;*/
+	display:none;
 }
 
 @media (max-width: 991px) {
