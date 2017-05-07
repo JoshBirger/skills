@@ -15,7 +15,7 @@
 					<!--th>Unread</th>
 					<th>Active</th>
 					<th>Archived</th-->
-					<th>Action</th>
+					<!--<th>Action</th>-->
 				</tr>
 			</thead>
 		</table>

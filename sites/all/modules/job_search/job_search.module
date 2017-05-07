@@ -485,8 +485,8 @@ function job_categories_view(){
 	$popularcategories = "<div class='job-categories'> <h3>Popular Jobs</h3><ul>";
 	
 		foreach($categories as $category){
-			//$popularcategories .= '<li><a href="jobs?page=1&city=&faceted=&keywords=&categories[]='.$category->tid.'&zipcode=&zip_radius=20">'. $category->name. '('.$category->node_count.')</a>';
-			$popularcategories .= '<li><a href="jobs?page=1&city=&faceted=&keywords=&categories[]='.$category->tid.'&zipcode=&zip_radius=20">'. $category->name. '</a>';
+			//$popularcategories .= '<li><a href="/jobs?page=1&city=&faceted=&keywords=&categories[]='.$category->tid.'&zipcode=&zip_radius=20">'. $category->name. '('.$category->node_count.')</a>';
+			$popularcategories .= '<li><a href="/jobs?page=1&city=&faceted=&keywords=&categories[]='.$category->tid.'&zipcode=&zip_radius=20">'. $category->name. '</a>';
 		}
 	
 	$popularcategories .= "</ul></div>";

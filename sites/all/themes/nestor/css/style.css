@@ -260,6 +260,9 @@ form#tsskills-employee-register-form label, #tsskills-employer-register-form lab
 		color:#898989;
 }
 
+#applied-jobs-wrap .th a{
+	cursor:pointer;
+}
 
 
 /*.job-categories ul, .job-locations ul {

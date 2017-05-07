@@ -11,11 +11,11 @@ jQuery(document).ready(function(){
 					//{ "data": "code"},
 					{ "data": "posted", 'width': '12%'},
 					{ "data": "expires", 'width': '12%'},
-					{ "data": "total_apps", 'width': '10%',"orderable": false,'searchable': false},
+					{ "data": "total_apps", 'width': '10%',"orderable": true,'searchable': false},
 					//{ "data": "unread"},
 					//{ "data": "active"},
 					//{ "data": "archived"},
-					{ "data": "action", 'width': '8%',"orderable": false,'searchable': false},
+					//{ "data": "action", 'width': '8%',"orderable": false,'searchable': false},
 				],
 		"order": [[0, 'asc']],
 		"fnServerParams": function ( aoData ) {
