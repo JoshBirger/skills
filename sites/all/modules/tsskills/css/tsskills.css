@@ -232,3 +232,18 @@ div.location-wrapper {
     background: 0 0;
     border: 0;
 }
+
+.form-item {
+	padding-top: 10px;
+	padding-bottom: 15px;
+}
+
+/* the default height is too large and it shows extra whitespace if it is not forced smaller */
+#edit-field-position-type-und {
+	height: 65px;
+}
+
+/* give enough space for dropdown */
+#edit-field-funding-status-und {
+	margin-bottom:30px;
+}

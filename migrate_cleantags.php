@@ -1,5 +1,5 @@
 <?php
-
+exit;
 /** Go through employer/employee records and clean <p> tags from text fields **/
 
 // set HTTP_HOST or drupal will refuse to bootstrap

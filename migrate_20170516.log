@@ -1,0 +1,351 @@
+Connected successfully to D6 and D7 DBD7 Bootstrapped
+Found 198 users
+Opened migrate_resumes.txt for logging files that need to be copied over
+Processing user [5254] karenjs11
+query: select nid, type, vid, title from node where type = "employee" and uid = "5254" LIMIT 1
+Creating new employee record [12144].. 
+Found 3 terms
+User employee [12144] karenjs11 saved as [12349]
+Couldnt find location instance for nid 12144
+Processing user [5255] wbottorf
+query: select nid, type, vid, title from node where type = "employee" and uid = "5255" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12155].. 
+Found 3 terms
+User employee [12155] wbottorf saved as [12350]
+Couldnt find location instance for nid 12155
+Found file that needs to be uploaded: private/resumes/resume_25.docx
+ERROR: File does not existsError saving resume
+Processing user [5256] phinni
+query: select nid, type, vid, title from node where type = "employer" and uid = "5256" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12157].. 
+User employer [12157] Orbital Insight-04.07.17 saved as [12351]
+Couldnt find location instance for nid 12157
+Processing user [5257] anton.kemps
+query: select nid, type, vid, title from node where type = "employer" and uid = "5257" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12159].. 
+User employer [12159] Catapult Staffing-04.11.17 saved as [12352]
+Couldnt find location instance for nid 12159
+Processing user [5263] soledad.lopez
+query: select nid, type, vid, title from node where type = "employer" and uid = "5263" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12169].. 
+User employer [12169] Collins Consulting-04.13.17 saved as [12353]
+Couldnt find location instance for nid 12169
+Processing user [5264] amanda.teubert
+query: select nid, type, vid, title from node where type = "employer" and uid = "5264" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12171].. 
+User employer [12171] Honeywell-04.14.17 saved as [12354]
+Couldnt find location instance for nid 12171
+Processing user [5265] Mrobryant
+query: select nid, type, vid, title from node where type = "employee" and uid = "5265" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12172].. 
+Found 3 terms
+User employee [12172] Mrobryant saved as [12355]
+Couldnt find location instance for nid 12172
+Processing user [5266] powell
+query: select nid, type, vid, title from node where type = "employee" and uid = "5266" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12188].. 
+Found 3 terms
+User employee [12188] powell saved as [12356]
+Couldnt find location instance for nid 12188
+Found file that needs to be uploaded: private/resumes/powell_benedict_resume.pdf
+ERROR: File does not existsError saving resume
+Processing user [5267] velvadixon
+query: select nid, type, vid, title from node where type = "employee" and uid = "5267" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12189].. 
+Found 3 terms
+User employee [12189] velvadixon saved as [12357]
+Couldnt find location instance for nid 12189
+Processing user [5268] carsongedeus
+query: select nid, type, vid, title from node where type = "employee" and uid = "5268" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12196].. 
+Found 3 terms
+User employee [12196] carsongedeus saved as [12358]
+Couldnt find location instance for nid 12196
+Found file that needs to be uploaded: private/resumes/april_2017resume.pdf
+ERROR: File does not existsError saving resume
+Processing user [5269] Danielle
+query: select nid, type, vid, title from node where type = "employer" and uid = "5269" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12197].. 
+User employer [12197] Sherlock Talent-04.20.17 saved as [12359]
+Couldnt find location instance for nid 12197
+Processing user [5270] gary
+query: select nid, type, vid, title from node where type = "employer" and uid = "5270" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12198].. 
+User employer [12198] Beyondtekit-04.20.17 saved as [12360]
+Couldnt find location instance for nid 12198
+Processing user [5271] brendenhawkinsm
+query: select nid, type, vid, title from node where type = "employee" and uid = "5271" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12199].. 
+Found 3 terms
+Adding new term position_type -- Six Month Contract 
+User employee [12199] brendenhawkinsm saved as [12361]
+Couldnt find location instance for nid 12199
+Found file that needs to be uploaded: private/resumes/brenden_hawkins_resume.pdf
+ERROR: File does not existsError saving resume
+Processing user [5272] adam.morillo
+query: select nid, type, vid, title from node where type = "employee" and uid = "5272" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12201].. 
+Found 3 terms
+User employee [12201] adam.morillo saved as [12362]
+Couldnt find location instance for nid 12201
+Found file that needs to be uploaded: private/resumes/resume_14.pdf
+ERROR: File does not existsError saving resume
+Processing user [5273] Jlramey14
+query: select nid, type, vid, title from node where type = "employee" and uid = "5273" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12202].. 
+Found 3 terms
+User employee [12202] Jlramey14 saved as [12363]
+Couldnt find location instance for nid 12202
+Found file that needs to be uploaded: private/resumes/jlramey14_resume_.docx
+ERROR: File does not existsError saving resume
+Processing user [5274] greg_giddings
+query: select nid, type, vid, title from node where type = "employee" and uid = "5274" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12203].. 
+Found 3 terms
+User employee [12203] greg_giddings saved as [12364]
+Couldnt find location instance for nid 12203
+Found file that needs to be uploaded: private/resumes/gregory_giddings_resume.docx
+ERROR: File does not existsError saving resume
+Processing user [5275] Bobfabienzinga
+query: select nid, type, vid, title from node where type = "employee" and uid = "5275" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12204].. 
+Found 3 terms
+User employee [12204] Bobfabienzinga saved as [12365]
+Couldnt find location instance for nid 12204
+Processing user [5276] egdemeritt
+query: select nid, type, vid, title from node where type = "employee" and uid = "5276" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12206].. 
+Found 3 terms
+User employee [12206] egdemeritt saved as [12366]
+Couldnt find location instance for nid 12206
+Found file that needs to be uploaded: private/resumes/eric_demeritt_resume_2017.docx
+ERROR: File does not existsError saving resume
+Processing user [5277] mary.maves
+query: select nid, type, vid, title from node where type = "employer" and uid = "5277" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12207].. 
+User employer [12207] RGNext-04.25.17 saved as [12367]
+Couldnt find location instance for nid 12207
+Processing user [5278] mychael10
+query: select nid, type, vid, title from node where type = "employee" and uid = "5278" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12209].. 
+Found 3 terms
+User employee [12209] mychael10 saved as [12368]
+Couldnt find location instance for nid 12209
+Found file that needs to be uploaded: private/resumes/resume_-_rhonda_adams.doc
+ERROR: File does not existsError saving resume
+Processing user [5280] nicojohnson1914
+query: select nid, type, vid, title from node where type = "employee" and uid = "5280" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12217].. 
+Found 3 terms
+User employee [12217] nicojohnson1914 saved as [12369]
+Couldnt find location instance for nid 12217
+Found file that needs to be uploaded: private/resumes/johnson_resume.docx
+ERROR: File does not existsError saving resume
+Processing user [5281] Jerri.Thomas.IC
+query: select nid, type, vid, title from node where type = "employer" and uid = "5281" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12218].. 
+User employer [12218] Carter Lambert Divisions (CLD)-04.27.17 saved as [12370]
+Couldnt find location instance for nid 12218
+Processing user [5287] woodsed57
+query: select nid, type, vid, title from node where type = "employee" and uid = "5287" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12232].. 
+Found 3 terms
+User employee [12232] woodsed57 saved as [12371]
+Couldnt find location instance for nid 12232
+Found file that needs to be uploaded: private/resumes/paul_woods_july_2016.doc
+ERROR: File does not existsError saving resume
+Processing user [5288] astepanian
+query: select nid, type, vid, title from node where type = "employer" and uid = "5288" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12235].. 
+User employer [12235] Applied Minds, LLC-05.03.17 saved as [12372]
+Couldnt find location instance for nid 12235
+Processing user [5289] shaney.b.evans
+query: select nid, type, vid, title from node where type = "employee" and uid = "5289" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12236].. 
+Found 2 terms
+User employee [12236] shaney.b.evans saved as [12373]
+Couldnt find location instance for nid 12236
+Processing user [5290] cjeffrey65
+query: select nid, type, vid, title from node where type = "employee" and uid = "5290" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12237].. 
+Found 3 terms
+User employee [12237] cjeffrey65 saved as [12374]
+Couldnt find location instance for nid 12237
+Processing user [5291] juneb71
+query: select nid, type, vid, title from node where type = "employee" and uid = "5291" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12241].. 
+Found 3 terms
+User employee [12241] Intelligence Analyst saved as [12375]
+Couldnt find location instance for nid 12241
+Processing user [5292] mjschiappa
+query: select nid, type, vid, title from node where type = "employee" and uid = "5292" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12246].. 
+Found 3 terms
+User employee [12246] mjschiappa saved as [12376]
+Couldnt find location instance for nid 12246
+Found file that needs to be uploaded: private/resumes/new_resume3.doc
+ERROR: File does not existsError saving resume
+Processing user [5293] anavarrette
+query: select nid, type, vid, title from node where type = "employer" and uid = "5293" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12247].. 
+User employer [12247] Camber Corporation-05.08.17 saved as [12377]
+Couldnt find location instance for nid 12247
+Processing user [5294] abbs215
+query: select nid, type, vid, title from node where type = "employee" and uid = "5294" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12248].. 
+Found 3 terms
+User employee [12248] abbs215 saved as [12378]
+Couldnt find location instance for nid 12248
+Found file that needs to be uploaded: private/resumes/joe_abbott_resume.pdf
+ERROR: File does not existsError saving resume
+Processing user [5295] eashey
+query: select nid, type, vid, title from node where type = "employer" and uid = "5295" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12249].. 
+User employer [12249] Gemini Industries Inc.-05.09.17 saved as [12379]
+Couldnt find location instance for nid 12249
+Processing user [5296] francis.a.kellyiii
+query: select nid, type, vid, title from node where type = "employee" and uid = "5296" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12253].. 
+Found 3 terms
+User employee [12253] francis.a.kellyiii saved as [12380]
+Couldnt find location instance for nid 12253
+Processing user [5297] amatthews
+query: select nid, type, vid, title from node where type = "employer" and uid = "5297" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12258].. 
+User employer [12258] Allied Government Solutions, Inc -05.10.17 saved as [12381]
+Couldnt find location instance for nid 12258
+Processing user [5298] dustin
+query: select nid, type, vid, title from node where type = "employer" and uid = "5298" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12262].. 
+User employer [12262] TPM Staffing-05.11.17 saved as [12382]
+Couldnt find location instance for nid 12262
+Processing user [5299] arun
+query: select nid, type, vid, title from node where type = "employer" and uid = "5299" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12265].. 
+User employer [12265] NewAgeSys-05.12.17 saved as [12383]
+Couldnt find location instance for nid 12265
+Processing user [5300] scott_1
+query: select nid, type, vid, title from node where type = "employer" and uid = "5300" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12266].. 
+User employer [12266] NewAgeSys Inc-05.12.17 saved as [12384]
+Couldnt find location instance for nid 12266
+Imported Array
+(
+    [users] => 36
+    [jobs] => 0
+    [employee] => 21
+    [employer] => 15
+)
+
+Searching for jobs newer than 1493930468
+Found 16 newer jobs
+Found 4 terms
+Adding new term job_category -- Program/Project Management 
+Job added (old# 12242) [FMS Logistics Manager] - #12385 to user 4994 - 0
+Setting job author directly in the database
+Saving location 49746 to nid 12385
+Found 4 terms
+Job added (old# 12243) [VX-23 Test Weapons System Operator] - #12386 to user 4994 - 0
+Setting job author directly in the database
+Saving location 49747 to nid 12386
+Found 4 terms
+Job added (old# 12244) [Joint Mission Planning System Program Analyst] - #12387 to user 4994 - 0
+Setting job author directly in the database
+Saving location 49748 to nid 12387
+Found 4 terms
+Job added (old# 12245) [FMS Financial Analyst] - #12388 to user 4994 - 0
+Setting job author directly in the database
+Saving location 49749 to nid 12388
+Found 2 terms
+Job added (old# 12250) [Military & Travel Pay Specialist] - #12389 to user 5295 - 0
+Setting job author directly in the database
+Saving location 49750 to nid 12389
+Found 3 terms
+Job added (old# 12251) [Sr. Budget Analyst] - #12390 to user 5295 - 0
+Setting job author directly in the database
+Saving location 49751 to nid 12390
+Found 3 terms
+Adding new term job_category -- Intelligence 
+Job added (old# 12252) [Counterintelligence Analyst] - #12391 to user 5295 - 0
+Setting job author directly in the database
+Saving location 49752 to nid 12391
+Found 3 terms
+Job added (old# 12254) [Sr. Facilities Planner] - #12392 to user 5295 - 0
+Setting job author directly in the database
+Saving location 49753 to nid 12392
+Found 3 terms
+Job added (old# 12255) [Sr. Facilities Planner] - #12393 to user 5295 - 0
+Setting job author directly in the database
+Saving location 49754 to nid 12393
+Found 3 terms
+Job added (old# 12256) [Sr. Facilities Planner] - #12394 to user 5295 - 0
+Setting job author directly in the database
+Saving location 49755 to nid 12394
+Found 3 terms
+Job added (old# 12257) [Business Development Associate-Proposal Writer] - #12395 to user 5295 - 0
+Setting job author directly in the database
+Saving location 49756 to nid 12395
+Found 4 terms
+Adding new term job_category -- General/Other 
+Job added (old# 12259) [Records Clerk III] - #12396 to user 5297 - 0
+Setting job author directly in the database
+Saving location 49757 to nid 12396
+Found 1 terms
+Job added (old# 12260) [Combat Pilot Consultant ] - #12397 to user 5288 - 0
+Setting job author directly in the database
+Saving location 49758 to nid 12397
+Found 4 terms
+Job added (old# 12261) [A$AP HIRE:"Systems Engineer Level III", w/Engineering Degree] - #12398 to user 5281 - 0
+Setting job author directly in the database
+Saving location 49759 to nid 12398
+Found 4 terms
+Job added (old# 12263) [Transportation Specialist-Fleet Assest Manager] - #12399 to user 5122 - 0
+Setting job author directly in the database
+Saving location 49760 to nid 12399
+Found 4 terms
+Job added (old# 12264) [Junior Investigative Analyst] - #12400 to user 5122 - 0
+Setting job author directly in the database
+Saving location 49761 to nid 12400
+Imported Array
+(
+    [users] => 36
+    [jobs] => 16
+    [employee] => 21
+    [employer] => 15
+)
+

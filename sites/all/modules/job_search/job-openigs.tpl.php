@@ -139,7 +139,8 @@
 							<ul>
 							<?php
 								foreach($clearance_job_count as $clearance){
-									echo '<li><a href="javascript:goto_clearance(\''.$clearance->tid.'\')">'. $clearance->name. '('.$clearance->node_count.')</a>';
+									//echo '<li><a href="javascript:goto_clearance(\''.$clearance->tid.'\')">'. $clearance->name. '('.$clearance->node_count.')</a>';
+echo '<li><a href="javascript:goto_clearance(\''.$clearance->tid.'\')">'.$clearance->name.'</a>';
 								}
 							?>
 							</ul>
@@ -153,7 +154,8 @@
 							<ul>
 							<?php
 								foreach($locations_job_count as $location){
-									echo '<li><a href="javascript:goto_location(\''.trim($location->city).'\',\''.$location->province.'\',\''.$location->country.'\');" >'. $location->city. ', '. $location->province.'('.$location->node_count.')</a>';
+									//echo '<li><a href="javascript:goto_location(\''.trim($location->city).'\',\''.$location->province.'\',\''.$location->country.'\');" >'. $location->city. ', '. $location->province.'('.$location->node_count.')</a>';
+echo '<li><a href="javascript:goto_location(\''.trim($location->city).'\',\''.$location->province.'\',\''.$location->country.'\');" >'. $location->city. ', '. $location->province.'</a>';
 								}
 							?>
 							</ul>
@@ -166,7 +168,8 @@
 							<ul>
 							<?php
 								foreach($categories_job_count as $category){
-									echo '<li><a href="javascript:goto_categories(\''.$category->tid.'\')">'. $category->name. '('.$category->node_count.')</a>';
+									//echo '<li><a href="javascript:goto_categories(\''.$category->tid.'\')">'. $category->name. '('.$category->node_count.')</a>';
+echo '<li><a href="javascript:goto_categories(\''.$category->tid.'\')">'. $category->name. '</a>';
 								}
 							?>
 							</ul>

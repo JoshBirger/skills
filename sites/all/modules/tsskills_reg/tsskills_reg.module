@@ -25,14 +25,14 @@ function tsskills_reg_permission() {
 function tsskills_reg_menu(){
 		$items ['user/registration/employee'] = array (
 			 'page callback'  => 'tsskills_reg_employee_callback',//'drupal_get_form',
-			 'title'    => 'Employee Singup', 
+			 'title'    => 'Employee Sign-up', 
 			 'page arguments'  => array ('tsskills_employee_form'),
 			  'access callback' => TRUE,
 			  'type'    => MENU_NORMAL_ITEM
 		);
 		$items ['user/registration/employer'] = array (
 			 'page callback'  => 'tsskills_reg_employer_callback',
-			 'title'    => 'Employer Singup', 
+			 'title'    => 'Employer Sign-up', 
 			 'page arguments'  => array ('tsskills_employer_form'),
 			  'access callback' => TRUE,
 			  'type'    => MENU_NORMAL_ITEM
@@ -171,7 +171,7 @@ function tsskills_employee_form(){
 
 	$form['submit_button'] = array(
 		'#type' => 'submit',
-		'#value' => t('Singup!'),
+		'#value' => t('Sign-up!'),
 	);
   
   return $form;
@@ -363,7 +363,7 @@ function tsskills_employer_form(){
 
 	$form['submit_button'] = array(
 		'#type' => 'submit',
-		'#value' => t('Singup!'),
+		'#value' => t('Sign-up!'),
 	);
   
   return $form;

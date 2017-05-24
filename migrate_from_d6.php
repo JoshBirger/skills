@@ -16,7 +16,7 @@ $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 $servername = "localhost";
 $username = "root";
 $password = "gunslinger";
-$dbname="nestor_import";
+$dbname="import_20170516";
 // Create connection
 $D6CONN = new mysqli($servername, $username, $password, $dbname);
 // Check connection
@@ -40,7 +40,7 @@ require_once "./includes/password.inc";
 
 print "D7 Bootstrapped\n";
 
-
+/*
 //first get all D6 users
 $roles = array();
 $roles_d7 = array('employee'=>4,'employer'=>5,'Recruiter'=>6);
@@ -62,7 +62,7 @@ print "Found ".$result->num_rows." users\n";
 if(!$result || $result->num_rows < 1){ die("Could not load users"); }
 $imported = array('users'=>0,'jobs'=>0,'employee'=>0,'employer'=>0);
 
-/*
+
 $f_resumes = fopen('migrate_resumes.txt','w');
 if($f_resumes){
 	print "Opened migrate_resumes.txt for logging files that need to be copied over\n";
@@ -147,6 +147,7 @@ while($row = $result->fetch_assoc()){
 
 
 print "Imported ".print_r($imported,true)."\n";
+exit;
 */
 
 //clean up duplicate locations from new db
@@ -156,6 +157,8 @@ $result = $D7CONN->query($qLoc);
 	//$result = $conn7->query('select * from location_instance left join location on location_instance.lid = location.lid  where nid = '.$node->nid);
 	if(!$result || $result->num_rows < 1){
 		print("ERROR: no location entries found for this node\n");
+	} else if($result->num_rows < 2){
+		print("Only one location found, skipping row\n");
 	} else {
 		$good_row = null; 
 		$good_info = array();
@@ -236,7 +239,7 @@ function addJob($row, $conn,$equery, $conn7){
 	
 	node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
 	if($existing) { //when importing dont keep the same nid as there are new pages
-		$node->nid = $existing->nid; 
+		//$node->nid = $existing->nid; 
 	} else {
 		$node->is_new = true;
 	}

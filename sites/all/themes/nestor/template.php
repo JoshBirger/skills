@@ -790,15 +790,20 @@ function get_company_info($node){
 			->entityCondition('bundle', 'employer')
 			->propertyCondition('uid', $uid)
 			//->fieldCondition('uid', $uid)
-			->range(0, 2);
+			->range(0, 1);
 	$result = $query->execute();
 	if (isset($result['node'])) {
 		$ids = array_keys( $result['node'] );
 		$employer = entity_load('node', array($ids[0]));
 		//print_r($employer[$ids[0]]->field_employer_company['und'][0]['value']);
+		//drupal_set_message("employer? ".gettype($employer)." -- ".print_r($employer[$ids[0]],true));
+		if(!$employer || !isset($employer[$ids[0]]) ){
+			return false;
+		} 
+		$title_fixed = preg_replace('/\-\d\d\.\d\d\.\d\d$/','',$employer[$ids[0]]->title);
 		
 		$company = array(
-					'name' => isset($employer[$ids[0]]->field_employer_company['und'])?$employer[$ids[0]]->field_employer_company['und'][0]['value']:'',
+					'name' => isset($employer[$ids[0]]->field_employer_company['und'])?$employer[$ids[0]]->field_employer_company['und'][0]['value']: $title_fixed,
 					'profile' => isset($employer[$ids[0]]->field_employer_cprofile['und'])?$employer[$ids[0]]->field_employer_cprofile['und'][0]['value']:'',
 					'nid' => $employer[$ids[0]]->nid,
 					);

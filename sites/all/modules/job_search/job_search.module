@@ -239,7 +239,7 @@ function job_search_jobs_callback(){
 		$main_query = $query;
 	}
 	
-	//echo $main_query->__toString(); 
+	watchdog('job_search',$main_query->__toString()."\n\n".print_r($filter,true)); 
 	
 	$query2 = $main_query;
 	$total_jobs = $main_query->execute()->fetchAll();
