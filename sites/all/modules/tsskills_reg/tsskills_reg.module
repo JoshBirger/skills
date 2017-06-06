@@ -434,6 +434,7 @@ function tsskills_employer_form_submit($form, &$form_state) {
 
 	//send admin notification
         $site_mail = variable_get('site_mail','');
+	$site_mail .= ", bquinn@tsskills.com";
         drupal_mail('tsskills_reg','employeradminnotify',$site_mail,LANGUAGE_NONE,array('username'=>$account->name),$mail_from);
 	watchdog('tsskills_reg','Email sent to admin ('.$site_mail.') from ('.$mail_from.') on new employer creation for '.$account->name);
 
