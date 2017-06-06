@@ -143,8 +143,8 @@ function job_search_jobs_callback(){
 	//if(isset($filter['city']) && $filter['city'] && $filter['faceted']){
 	if(isset($filter['city']) && $filter['city']){
 		$filter_city = $filter['city'];
-		//$query->condition('l.city', $filter_city);
-		$addr = $filter_city;
+		$query->condition('l.city', $filter_city);
+		//$addr = $filter_city;
 	}
 	
 	$filter['states'] = array_filter($filter['states']);

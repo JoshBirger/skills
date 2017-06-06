@@ -1,7 +1,38 @@
 jQuery(document).ready(function(){
 	
 	window.queryDict = {};
-	location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});	
+	location.search.substr(1).split("&").forEach(function(item) {
+		var key = decodeURIComponent(item.split("=")[0]);
+		if( queryDict[key] ){
+			queryDict[key].push( item.split("=")[1] );
+		} else {
+			queryDict[key] = [ item.split("=")[1] ];
+		}
+	});
+	console.log(queryDict);	
+
+	//make sure checkboxes match the url
+	jQuery('.job_search_form input[name="clearance[]"]').removeAttr('checked');
+	if(queryDict["clearance[]"]){
+		for(var i=0;i<queryDict["clearance[]"].length;i++){
+			if( document.querySelector('form.job_search_form input[name="clearance[]"][value="'+queryDict["clearance[]"][i]+'"]') ){
+				document.querySelector('form.job_search_form input[name="clearance[]"][value="'+queryDict["clearance[]"][i]+'"]').checked=true;
+				//console.log("Set clearance "+queryDict["clearance[]"][i]+" to true");
+			} else {
+				//console.log("Couldnt find clearance checkbox");
+			}
+		}
+	}
+	if(queryDict["categories[]"]){
+                for(var i=0;i<queryDict["categories[]"].length;i++){
+                        if( document.querySelector('form.job_search_form input[name="categories[]"][value="'+queryDict["categories[]"][i]+'"]') ){
+                                document.querySelector('form.job_search_form input[name="categories[]"][value="'+queryDict["categories[]"][i]+'"]').checked=true;
+                        } else {
+                        }
+                }
+        }
+
+	document.querySelector('input[name="city"]').value = (queryDict['city'] ? queryDict['city'] : null );
 
 	jQuery(".clear-filter").click(function(e){
 		jQuery('.job_search_form input[type="checkbox"]').removeAttr('checked');
@@ -87,11 +118,12 @@ function goto_location(city, state, country){
 	jQuery('.job_search_form').submit();
 	
 }
+
 function goto_clearance(clearance){
 	jQuery('.job_search_form .list.clearance input[type="checkbox"]').prop('checked',false);
 	jQuery('.job_search_form .list.clearance input[value="'+clearance+'"]').prop('checked', true);
-	if(queryDict['faceted']){
-                jQuery('.job_search_form input[name="faceted"]').val(queryDict['faceted']);
+	if(queryDict && queryDict['faceted']){
+                jQuery('.job_search_form input[name="faceted"]').val(queryDict['faceted'][0]);
         }
 
 	jQuery('.job_search_form').submit();
@@ -100,8 +132,8 @@ function goto_categories(category){
 	jQuery('.job_search_form .list.categories input[type="checkbox"]').prop('checked',false);
 	//console.log(jQuery('.job_search_form .list.categories input[value="'+category+'"]'));
 	jQuery('.job_search_form .list.categories input[value="'+category+'"]').prop('checked', true);
-	if(queryDict['faceted']){
-		jQuery('.job_search_form input[name="faceted"]').val(queryDict['faceted']);
+	if(queryDict && queryDict['faceted']){
+		jQuery('.job_search_form input[name="faceted"]').val(queryDict['faceted'][0]);
 	}
 	jQuery('.job_search_form').submit();
 }

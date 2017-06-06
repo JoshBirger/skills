@@ -173,7 +173,14 @@
 	<div class="job-post-right col-xs-12 col-md-9">
 		<div class="head-wrap"><h2><?php echo $node->title;?></h2></div>
 		<div class="cotent-wrap">
-			<div class="job-body"><?php if(isset($node->body['und']) && isset($node->body['und'][0])) { echo $node->body['und'][0]['value']; }?> </div>
+			<div class="job-body"><?php 
+			if(isset($node->body['und']) && isset($node->body['und'][0])) { 
+				echo $node->body['und'][0]['value']; 
+			} else if(isset($node->field_job_description['und']) && isset($node->field_job_description['und'][0])) {
+				echo $node->field_job_description['und'][0]['value'];
+			}
+					
+			?> </div>
 			
 			<?php if(isset($node->field_job_requirements['und'][0]['value']) && $node->field_job_requirements['und'][0]['value']){ ?>
 				<div class="info-row job-requirements">

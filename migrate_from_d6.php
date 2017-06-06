@@ -16,7 +16,7 @@ $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 $servername = "localhost";
 $username = "root";
 $password = "gunslinger";
-$dbname="import_20170516";
+$dbname="import_20170525";
 // Create connection
 $D6CONN = new mysqli($servername, $username, $password, $dbname);
 // Check connection
@@ -40,7 +40,7 @@ require_once "./includes/password.inc";
 
 print "D7 Bootstrapped\n";
 
-/*
+
 //first get all D6 users
 $roles = array();
 $roles_d7 = array('employee'=>4,'employer'=>5,'Recruiter'=>6);
@@ -62,7 +62,7 @@ print "Found ".$result->num_rows." users\n";
 if(!$result || $result->num_rows < 1){ die("Could not load users"); }
 $imported = array('users'=>0,'jobs'=>0,'employee'=>0,'employer'=>0);
 
-
+/*
 $f_resumes = fopen('migrate_resumes.txt','w');
 if($f_resumes){
 	print "Opened migrate_resumes.txt for logging files that need to be copied over\n";
@@ -129,9 +129,10 @@ if(!$result || $result->num_rows < 1){
 	die("ERROR: no jobs found\n");
 }
 $row7 = $result->fetch_assoc();
-print "Searching for jobs newer than ".$row7['created']."\n";
+$row7_created = 1494978625; //$row7['created'];
+print "Searching for jobs newer than ".$row7_created."\n";
 
-$result = $D6CONN->query('select node_revisions.body, content_type_job.*, node.uid, node.title, users.name, node.created from content_type_job left join node on content_type_job.nid = node.nid left join users on node.uid = users.uid left join node_revisions on node.nid = node_revisions.nid and node.vid = node_revisions.vid where node.nid IS NOT NULL and node.created > '.$row7['created']);
+$result = $D6CONN->query('select node_revisions.body, content_type_job.*, node.uid, node.title, users.name, node.created from content_type_job left join node on content_type_job.nid = node.nid left join users on node.uid = users.uid left join node_revisions on node.nid = node_revisions.nid and node.vid = node_revisions.vid where node.nid IS NOT NULL and node.created > '.$row7_created);
 if(!$result || $result->num_rows < 1){
 	die("ERROR: no jobs found\n");
 }
@@ -255,7 +256,10 @@ function addJob($row, $conn,$equery, $conn7){
 	$node->field_job_requirements[LANGUAGE_NONE][0]['format'] = $row['field_job_requirements_format'];
 	$node->field_job_number[LANGUAGE_NONE][0]['value'] = $row['field_job_number_value'];
 	$node->field_job_email[LANGUAGE_NONE][0]['value'] = $row['field_job_email_value'];
-	
+
+	$node->field_job_description[LANGUAGE_NONE][0]['value'] = utf8_encode(str_replace('<p>','',$row['field_job_requirements_value']));
+	$node->field_job_description[LANGUAGE_NONE][0]['format'] = 'full_html';
+
 	//terms
 	$vTof = array('Clearance'=>'field_clearance','Availability'=>'field_availability','Position Type'=>'field_position_type','Job Category'=>'field_job_category','Funding Status'=>'field_funding_status');
 	$all_terms = getOldTerms($row, $conn);

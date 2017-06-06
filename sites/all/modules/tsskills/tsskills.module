@@ -36,6 +36,13 @@ function tsskills_menu(){
 		'access arguments' => array('edit tsskills profile'),
 		'type' => MENU_LOCAL_TASK,
 	);
+	$items['users/%'] = array(
+		'title' => 'View Users',
+		'page callback' => 'tsskills_users_view',
+		'page arguments' => array(1),
+		'access arguments' => array('administer users'),
+		'type' => MENU_LOCAL_TASK
+	);
 	$items['user/%/posted-jobs'] = array(
                 'title' => 'Posted Jobs',
                 'page callback' => 'tsskills_posted_jobs_new',//'tsskills_posted_jobs',
@@ -93,6 +100,10 @@ function tsskills_menu(){
         );
 
 	return $items;
+}
+
+function tsskills_menu_alter(&$items){
+	//$items['user/%user']['page callback'] = 'tsskills_users_view';
 }
 
 function tsskills_menu_local_tasks_alter(&$data, $router_item, $root_path){
@@ -154,7 +165,12 @@ function tsskills_theme() {
                         'arguments' => array(),
                         'template' => 'tsskills_createjob',
                         'variables' => array('jobform' => null)
-                )
+                ),
+		'tsskills_users_view' => array(
+			'arguments' => array(),
+			'template' => 'tsskills_users_view',
+			'variables' => array()
+		)
 
 
 
@@ -168,6 +184,7 @@ function _tsskills_employee_by_uid($uid){
   ->propertyCondition('type', 'employee')
   ->propertyCondition('uid', $uid)
   ->execute();
+	if(!$result) return null;
 	$nids = array_keys($result['node']);
 	$node = node_load($nids[0]);
 	return $node;
@@ -180,6 +197,7 @@ function _tsskills_employer_by_uid($uid){
   ->propertyCondition('type', 'employer')
   ->propertyCondition('uid', $uid)
   ->execute();
+	if(!$result) return null;
         $nids = array_keys($result['node']);
         $node = node_load($nids[0]);
         return $node;
@@ -840,6 +858,20 @@ function tsskills_user_edit($uid, $isemployee){
 	return theme('tsskills_editprofile', $data);
 }
 
+//for users/%username when viewed by admin
+function tsskills_users_view($userp){
+	//drupal_set_message('view users');	
+	//return '<h1>users_view </h1><p><!-- '.print_r($username,true).' --></p>';
+	$employer=0;$employee=0;
+	if( isset($userp->roles[4]) ){ //employee
+		$employee = _tsskills_employee_by_uid($userp->uid);
+	} else if(isset($userp->roles[5])){ //employer
+		$employer = _tsskills_employer_by_uid($userp->uid);
+	}
+	return theme('tsskills_users_view', array('uprofile'=>$userp,'employee'=>$employee,'employer'=>$employer ) );
+}
+
+
 function tsskills_applied_jobs() {
 	$rows = get_applied_jobs_by_user();
 	$breadcrumbs = array();
@@ -1062,10 +1094,13 @@ function tsskills_employee_register_form_submit($form, &$form_state){
 }
 
 function tsskills_mail($key, &$message, $params){
-	if($key=='employeeregister'){
-		watchdog(WATCHDOG_DEBUG,'composing welcome email to new employe registration for '.$params['uid']);
-		$message['subject'] = 'Welcome to TSSkills - Job Seeker registration included';
+	if($key=='employeeregister' || $key=='employerregister'){
+		watchdog(WATCHDOG_DEBUG,'composing welcome email to new '.$key.' registration for '.$params['uid']);
+		$message['subject'] = 'Welcome to TSSkills - '.($key=='employeeregister'?'Job Seeker':'Employer').' registration included';
 		$message['body'][] = "Your password is ".$params['pass'];
+	} else if($key=='employernotifyadmin'){
+		$message['subject'] = 'TSSkills Notification - New Employer Registered';
+                $message['body'][] = "User ".$params['uname']." has registered as a new employer: ".l('User profile','user/'.$params['uname']);
 	}
 }
 
@@ -1234,6 +1269,10 @@ function tsskills_employer_register_form_submit($form, &$form_state) {
         drupal_mail('tsskills','employerregister',$account->mail,LANGUAGE_NONE,array('pass'=>$new_pass,'uid'=>$new_user->uid));
         drupal_set_message("Account created with username: ".$new_user->name." and password ".$new_pass);
 
+	//send admin notification
+	$site_mail = variable_get('site_mail','');
+	drupal_mail('tsskills','employernotifyadmin',$site_mail,LANGUAGE_NONE,array('uname'=>$new_user->name,'uid'=>$new_user->uid));
+
         //create employer node
         $node = new stdClass();
         $node->type = 'employer';
@@ -1241,8 +1280,9 @@ function tsskills_employer_register_form_submit($form, &$form_state) {
         node_object_prepare($node);
         $node->uid = $new_user->uid;
         $node->title = $form_state['input']['field_employer_company']['und'][0]['value'];
-        $node->status = 1; $node->promote = 0; $node->sticky = 0; $node->comment = 1;
+        $node->status = 0; $node->promote = 0; $node->sticky = 0; $node->comment = 1;
 	$node->is_new = TRUE;
+	$node->status = 0;
 	$e_fields = array('employer_fname','employer_lname','employer_telephone','employer_zip','employer_company','employer_cprofile','employer_ext',
                 'employer_message','employer_address','employer_zip','notes');
         foreach($e_fields as $efield){

@@ -289,6 +289,9 @@ function tsskills_employee_form_submit($form, &$form_state) {
 	
 }
 
+/*** **/
+
+
 /* ********* Employer **************** */
 function tsskills_employer_form(){
 	$form = array();
@@ -406,7 +409,7 @@ function tsskills_employer_form_submit($form, &$form_state) {
 	$account->pass = $hashed_pass;
 	$account->mail = $form_state['values']['employer_email'];
 	$account->init = $form_state['values']['employer_email'];
-	$account->status = TRUE;
+	$account->status = 0;
 	$account->roles = array(DRUPAL_AUTHENTICATED_RID => TRUE);
 	$account->roles[5] = TRUE;
 
@@ -429,7 +432,11 @@ function tsskills_employer_form_submit($form, &$form_state) {
 	drupal_mail('tsskills_reg','employersignup',$account->mail,LANGUAGE_NONE,array('password'=>$new_pass,'username'=>$account->name,'uid'=>$new_user->uid),$mail_from);
 	//drupal_set_message("Account created with username: ".$new_user->name." and password ".$new_pass);
 
-	
+	//send admin notification
+        $site_mail = variable_get('site_mail','');
+        drupal_mail('tsskills_reg','employeradminnotify',$site_mail,LANGUAGE_NONE,array('username'=>$account->name),$mail_from);
+	watchdog('tsskills_reg','Email sent to admin ('.$site_mail.') from ('.$mail_from.') on new employer creation for '.$account->name);
+
 	//create employer node
 	$node = new stdClass();
 	$node->type = 'employer';
@@ -437,7 +444,7 @@ function tsskills_employer_form_submit($form, &$form_state) {
 	node_object_prepare($node);
 	$node->uid = $new_user->uid;
 	$node->title = $form_state['values']['field_employer_company'];
-	$node->status = 1; 
+	$node->status = 0; 
 	$node->promote = 0; 
 	$node->sticky = 0; 
 	$node->comment = 1;
@@ -493,12 +500,26 @@ function tsskills_reg_theme($existing, $type, $theme, $path) {
     return $items;
 }
 function tsskills_reg_mail($key, &$message, $params){
+	global $base_url, $base_path;
 	if($key=='employeesignup'){
 		$message['subject'] = 'Welcome to TSSkills - Job Seeker registration included';
-		$message['body'][] = "Dear Job Seeker,<br />Thanks for joing TSSkills. Please find Your login info below.<br /><br /> username:".$params['username']."<br /> password : ".$params['password']."<br /><br />Thanks,<br />TSSkills Team";
+		$message['body'][] = "Dear Job Seeker,<br />Thanks for joining TSSkills. Please find your login info below.<br /><br /> username: ".$params['username']."<br /> password : ".$params['password']."<br /><br />Thanks,<br />TSSkills Team";
 	} else if($key=='employersignup'){
 		$message['subject'] = 'Welcome to TSSkills - Employer registration included';
-		$message['body'][] = "Dear Employer,<br />Thanks for joing TSSkills. Please find Your login info below.<br /><br /> username:".$params['username']."<br /> password : ".$params['password']."<br /><br />Thanks,<br />TSSkills Team";
+		$message['body'][] = "Dear Employer,\r\n\r\nThanks for joining TSSkills. Please find your login info below.\n\n<br /><br />Your login is currently pending admin approval by TSSkills.<br /><br /> username: ".$params['username']."<br /> password : ".$params['password']."<br /><br />Thanks,<br />TSSkills Team";
+		$msg = array("Dear Employer,","Thanks for joining TSSkills. Please find your login info below.","Your login is currently pending admin approval by TSSkills.");
+		$msg[] = "Username : ".$params['username'];
+		$msg[] = "Password : ".$params['password'];
+		$msg[] = "Thanks,\nTSSkills Team";
+		$message['body'] = $msg;
+	} else if($key=='employeradminnotify'){
+		$message['subject'] = 'TSSkills Notification - New Employer Registered';
+                $message['body'] = array(
+			"Dear Admin,",
+			"User ".$params['username']." has registered as a new employer: ".$base_url.$base_path."users/". $params['username'] ,
+			"Thanks,\nAuto TSSkills"
+			);
+
 	}
 }
 function tsskills_reg_taxonomy_selectbox($vid) {

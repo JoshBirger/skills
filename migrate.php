@@ -17,7 +17,17 @@
 
 
     print "D7 Bootstrapped\n";
-//	exit;
+
+
+	$site_mail = variable_get('site_mail','');
+	print "Site Mail: ".$site_mail."\n";
+	$mail_from = variable_get('site_mail', ini_get('sendmail_from'));
+	print "Mail From : ".$mail_from."\n";
+	//$site_mail = 'ryan@ryanguthrie.com';
+	//drupal_mail('tsskills_reg','employersignup',$site_mail,LANGUAGE_NONE,array('password'=>'new_pass','username'=>'account->name','uid'=>'new_user->uid'),$mail_from);
+        drupal_mail('tsskills_reg','employeradminnotify',$site_mail,LANGUAGE_NONE,array('username'=>'account->name'),$mail_from);
+
+	exit;
 
     //print "File public path: ".drupal_realpath('public://');  exit;
 

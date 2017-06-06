@@ -15,7 +15,7 @@ jQuery(document).ready(function(){
 					//{ "data": "unread"},
 					//{ "data": "active"},
 					//{ "data": "archived"},
-					//{ "data": "action", 'width': '8%',"orderable": false,'searchable': false},
+					{ "data": "action", 'width': '8%',"orderable": false,'searchable': false},
 				],
 		"order": [[0, 'asc']],
 		"fnServerParams": function ( aoData ) {

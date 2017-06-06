@@ -1,149 +1,76 @@
 Connected successfully to D6 and D7 DBD7 Bootstrapped
-Found 151 users
-Searching for jobs newer than 1488134831
-Found 34 newer jobs
-Found 4 terms
-Job added (old# 12059) [Communications (Public Relations) Specialist] - #12288 to user 5122 - 0
+Found 203 users
+Searching for jobs newer than 1494978625
+Found 16 newer jobs
+Job: 12267 - A/V Technical Specialist 601501 (NCI) Job already exists as A/V Technical Specialist 601501 (NCI) Job
+Found 2 terms
+Job added (old# 12267) [A/V Technical Specialist 601501 (NCI) Job] - #12414 to user 2105 - 0
 Setting job author directly in the database
-Saving location 49648 to nid 12288
-Found 4 terms
-Job added (old# 12067) [DevOps Systems Engineer] - #12289 to user 5209 - 0
+Saving location 49762 to nid 12414
+Found 2 terms
+Job added (old# 12268) [AV System Designer Job] - #12415 to user 2105 - 0
 Setting job author directly in the database
-Saving location 49649 to nid 12289
-Found 4 terms
-Job added (old# 12071) [Reverse Engineering Programmer] - #12290 to user 5205 - 0
+Saving location 49763 to nid 12415
+Found 2 terms
+Job added (old# 12269) [Mechanical Engineer Job] - #12416 to user 2105 - 0
 Setting job author directly in the database
-Saving location 49650 to nid 12290
+Saving location 49764 to nid 12416
 Found 4 terms
-Job added (old# 12072) [Computer Network Defense Intrusion Analyst ] - #12291 to user 5205 - 0
+Job added (old# 12270) [A$AP HIRE: SYSTEM ENGINEER / PROJECT LEAD (Edgewood, MD)] - #12417 to user 5281 - 0
 Setting job author directly in the database
-Saving location 49651 to nid 12291
+Saving location 49765 to nid 12417
 Found 4 terms
-Job added (old# 12073) [Computer Network Defense Intrusion Analyst ] - #12292 to user 5205 - 0
+Job added (old# 12272) [5/24/17 Security Clearance Virtual Career Fair] - #12418 to user 1 - 0
 Setting job author directly in the database
-Saving location 49652 to nid 12292
+Couldnt find location instance for nid 12272
 Found 4 terms
-Job added (old# 12074) [Computer Network Defense Intrusion Analyst ] - #12293 to user 5205 - 0
+Job added (old# 12274) [Software Engineer] - #12419 to user 4994 - 0
 Setting job author directly in the database
-Saving location 49653 to nid 12293
+Saving location 49767 to nid 12419
 Found 4 terms
-Adding new term job_category -- Security 
-Job added (old# 12075) [Cloud Software Engineer ] - #12294 to user 5205 - 0
+Job added (old# 12275) [Requirements Analyst] - #12420 to user 4994 - 0
 Setting job author directly in the database
-Saving location 49654 to nid 12294
+Saving location 49768 to nid 12420
 Found 4 terms
-Job added (old# 12076) [Cloud Software Engineer ] - #12295 to user 5205 - 0
+Job added (old# 12276) [Java Developer] - #12421 to user 4994 - 0
 Setting job author directly in the database
-Saving location 49655 to nid 12295
+Saving location 49769 to nid 12421
 Found 4 terms
-Job added (old# 12083) [3/14/17 Los Angeles Career Fair] - #12296 to user 1 - 0
+Job added (old# 12277) [Senior Software Scientist] - #12422 to user 4994 - 0
 Setting job author directly in the database
-Saving location 49656 to nid 12296
-Found 4 terms
-Job added (old# 12086) [Engineering Division Manager-WICC 2017-2110] - #12297 to user 5080 - 0
-Setting job author directly in the database
-Saving location 49657 to nid 12297
-Found 4 terms
-Job added (old# 12088) [Senior Network Support Technician] - #12298 to user 5122 - 0
-Setting job author directly in the database
-Saving location 49658 to nid 12298
-Found 4 terms
-Job added (old# 12093) [Junior Investigative Analyst] - #12299 to user 5122 - 0
-Setting job author directly in the database
-Saving location 49659 to nid 12299
-Found 4 terms
-Job added (old# 12098) [Senior SQL Developer] - #12300 to user 5122 - 0
-Setting job author directly in the database
-Saving location 49660 to nid 12300
-Found 4 terms
-Job added (old# 12102) [3/22/17 Security Clearance Only Virtual Career Fair] - #12301 to user 1 - 0
-Setting job author directly in the database
-Saving location 49661 to nid 12301
-Found 4 terms
-Job added (old# 12105) [Embedded Software Engineer] - #12302 to user 5227 - 0
-Setting job author directly in the database
-Saving location 49663 to nid 12302
-Found 4 terms
-Job added (old# 12106) [STEM Outreach Coordinator] - #12303 to user 5231 - 0
-Setting job author directly in the database
-Saving location 49664 to nid 12303
-Found 4 terms
-Job added (old# 12107) [Advanced Trainer] - #12304 to user 5231 - 0
-Setting job author directly in the database
-Saving location 49665 to nid 12304
+Saving location 49770 to nid 12422
 Found 3 terms
-Job added (old# 12113) [Electrical Engineer - FPGA Designer] - #12305 to user 5229 - 0
+Job added (old# 12278) [Program Manager] - #12423 to user 4789 - 0
 Setting job author directly in the database
-Saving location 49666 to nid 12305
+Saving location 49771 to nid 12423
 Found 3 terms
-Job added (old# 12114) [Electrical Engineer (CCA Designer / Fiber Optics)] - #12306 to user 5229 - 0
+Job added (old# 12281) [Help Desk Customer Support Professional 2017-2143] - #12424 to user 5080 - 0
 Setting job author directly in the database
-Saving location 49667 to nid 12306
-Found 3 terms
-Job added (old# 12115) [Systems Engineer (Software)] - #12307 to user 5229 - 0
-Setting job author directly in the database
-Saving location 49668 to nid 12307
-Found 3 terms
-Job added (old# 12116) [Systems Engineer] - #12308 to user 5229 - 0
-Setting job author directly in the database
-Saving location 49669 to nid 12308
+Saving location 49772 to nid 12424
 Found 4 terms
-Job added (old# 12117) [Systems Development Engineer- AWS GovCloud] - #12309 to user 5234 - 0
+Job added (old# 12284) [Software Engineer Sr Stf] - #12425 to user 2680 - 0
 Setting job author directly in the database
-Saving location 49670 to nid 12309
+Saving location 49773 to nid 12425
 Found 4 terms
-Job added (old# 12120) [Cyber Engineer] - #12310 to user 4994 - 0
+Job added (old# 12285) [Network Engineer Stf] - #12426 to user 2680 - 0
 Setting job author directly in the database
-Saving location 49671 to nid 12310
+Saving location 49774 to nid 12426
 Found 4 terms
-Job added (old# 12121) [Senior Security Engineer (Cleared)] - #12311 to user 5237 - 0
+Job added (old# 12286) [Embedded S/W Engineer Sr] - #12427 to user 2680 - 0
 Setting job author directly in the database
-Saving location 49672 to nid 12311
+Saving location 49775 to nid 12427
 Found 4 terms
-Job added (old# 12122) [Security Solution Architect (Cleared)] - #12312 to user 5237 - 0
+Job added (old# 12287) [Systems Engineer Staff - OCONUS] - #12428 to user 2680 - 0
 Setting job author directly in the database
-Saving location 49673 to nid 12312
+Saving location 49776 to nid 12428
 Found 4 terms
-Job added (old# 12124) [Senior Security Specialist] - #12313 to user 4994 - 0
+Job added (old# 12288) [Test Engineer Sr] - #12429 to user 2680 - 0
 Setting job author directly in the database
-Saving location 49674 to nid 12313
-Found 4 terms
-Job added (old# 12125) [Senior Cybersecurity Analyst] - #12314 to user 4994 - 0
-Setting job author directly in the database
-Saving location 49675 to nid 12314
-Found 4 terms
-Job added (old# 12126) [Systems Engineer] - #12315 to user 4994 - 0
-Setting job author directly in the database
-Saving location 49676 to nid 12315
-Found 4 terms
-Job added (old# 12127) [Sr. System Administrator] - #12316 to user 4994 - 0
-Setting job author directly in the database
-Saving location 49677 to nid 12316
-Found 4 terms
-Adding new term job_category -- Program/Project Management 
-Job added (old# 12128) [Advanced Systems Air Warfare Analyst] - #12317 to user 4994 - 0
-Setting job author directly in the database
-Saving location 49678 to nid 12317
-Found 4 terms
-Job added (old# 12129) [Personnel Security Specialist] - #12318 to user 4994 - 0
-Setting job author directly in the database
-Saving location 49679 to nid 12318
-Found 4 terms
-Job added (old# 12131) [Component Engineer] - #12319 to user 5231 - 0
-Setting job author directly in the database
-Saving location 49680 to nid 12319
-Found 3 terms
-Job added (old# 12139) [Windows System Administrator - Top Secret Clearance] - #12320 to user 5251 - 0
-Setting job author directly in the database
-Saving location 49681 to nid 12320
-Found 4 terms
-Job added (old# 12140) [Program Security Officer] - #12321 to user 5231 - 0
-Setting job author directly in the database
-Saving location 49682 to nid 12321
+Saving location 49777 to nid 12429
 Imported Array
 (
     [users] => 0
-    [jobs] => 34
+    [jobs] => 16
     [employee] => 0
     [employer] => 0
 )

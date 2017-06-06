@@ -1,92 +1,945 @@
 Connected successfully to D6 and D7 DBD7 Bootstrapped
-Found 1 users
+Found 203 users
 Opened migrate_resumes.txt for logging files that need to be copied over
-Processing user [5126] JayPolatnick
-query: select nid, type, vid, title from node where type = "employee" and uid = "5126" LIMIT 1
+Processing user [5301] janon.chilcoat
+query: select nid, type, vid, title from node where type = "employer" and uid = "5301" LIMIT 1
+There already exists an employer record with this nid
+Creating new employer record [12271].. 
+User employer [12271] Cherokee Nation-05.18.17 saved as [12402]
+Couldnt find location instance for nid 12271
+Processing user [5302] wmcghee3
+query: select nid, type, vid, title from node where type = "employee" and uid = "5302" LIMIT 1
 There already exists an employee record with this nid
-Creating new employee record [11855].. 
+Creating new employee record [12279].. 
 Found 3 terms
-Vocab Clearance has 1 terms to add
-clearance -- TS/SCI 
-Set field_clearance 1 term ids (Array
-(
-    [0] => Array
-        (
-            [tid] => 56
-        )
-
-)
-)
-Array
-(
-    [und] => Array
-        (
-            [0] => Array
-                (
-                    [tid] => 56
-                )
-
-        )
-
-)
-
-Vocab Availability has 1 terms to add
-availability -- Within 3 months 
-Set field_availability 1 term ids (Array
-(
-    [0] => Array
-        (
-            [tid] => 64
-        )
-
-)
-)
-Array
-(
-    [und] => Array
-        (
-            [0] => Array
-                (
-                    [tid] => 64
-                )
-
-        )
-
-)
-
-Vocab Position Type has 1 terms to add
-position_type -- Full-time 
-Set field_position_type 1 term ids (Array
-(
-    [0] => Array
-        (
-            [tid] => 86
-        )
-
-)
-)
-Array
-(
-    [und] => Array
-        (
-            [0] => Array
-                (
-                    [tid] => 86
-                )
-
-        )
-
-)
-
-User employee [11855] JayPolatnick saved as [12144]
-Couldnt find location instance for nid 11855
-Found file that needs to be uploaded: private/resumes/it_resume_jpolatnick.docx
+User employee [12279] wmcghee3 saved as [12403]
+Couldnt find location instance for nid 12279
+Found file that needs to be uploaded: private/resumes/newwmcghee3.doc
+Saved resume
+Processing user [5303] terryjhogan
+query: select nid, type, vid, title from node where type = "employee" and uid = "5303" LIMIT 1
+There already exists an employee record with this nid
+Creating new employee record [12280].. 
+Found 3 terms
+User employee [12280] terryjhogan saved as [12404]
+Couldnt find location instance for nid 12280
+Found file that needs to be uploaded: private/resumes/general_resume_2016_terry_james_hogan.docx
+Saved resume
+Processing user [5304] gene.rey12
+query: select nid, type, vid, title from node where type = "employee" and uid = "5304" LIMIT 1
+Creating new employee record [12282].. 
+Found 3 terms
+User employee [12282] gene.rey12 saved as [12405]
+Couldnt find location instance for nid 12282
+Found file that needs to be uploaded: private/resumes/resume_ga_rey.docx
+Saved resume
+Processing user [5305] l2darobinson
+query: select nid, type, vid, title from node where type = "employee" and uid = "5305" LIMIT 1
+Creating new employee record [12283].. 
+Found 2 terms
+User employee [12283] l2darobinson saved as [12406]
+Couldnt find location instance for nid 12283
+Found file that needs to be uploaded: private/resumes/robinsonexpandedresume.pdf
 Saved resume
 Imported Array
 (
-    [users] => 1
+    [users] => 5
     [jobs] => 0
-    [employee] => 1
-    [employer] => 0
+    [employee] => 4
+    [employer] => 1
 )
 
+Searching for jobs newer than 1495370146
+Found 7 newer jobs
+Found 3 terms
+Job added (old# 12278) [Program Manager] - #12407 to user 4789 - 0
+Setting job author directly in the database
+Saving location 49771 to nid 12407
+Found 3 terms
+Job added (old# 12281) [Help Desk Customer Support Professional 2017-2143] - #12408 to user 5080 - 0
+Setting job author directly in the database
+Saving location 49772 to nid 12408
+Found 4 terms
+Job added (old# 12284) [Software Engineer Sr Stf] - #12409 to user 2680 - 0
+Setting job author directly in the database
+Saving location 49773 to nid 12409
+Found 4 terms
+Job added (old# 12285) [Network Engineer Stf] - #12410 to user 2680 - 0
+Setting job author directly in the database
+Saving location 49774 to nid 12410
+Found 4 terms
+Job added (old# 12286) [Embedded S/W Engineer Sr] - #12411 to user 2680 - 0
+Setting job author directly in the database
+Saving location 49775 to nid 12411
+Found 4 terms
+Job added (old# 12287) [Systems Engineer Staff - OCONUS] - #12412 to user 2680 - 0
+Setting job author directly in the database
+Saving location 49776 to nid 12412
+Found 4 terms
+Job added (old# 12288) [Test Engineer Sr] - #12413 to user 2680 - 0
+Setting job author directly in the database
+Saving location 49777 to nid 12413
+Imported Array
+(
+    [users] => 5
+    [jobs] => 7
+    [employee] => 4
+    [employer] => 1
+)
+
+Loading jobs to look for duplicate 
+Nid: 12288 - last: 
+Clear row
+Nid: 12289 - last: 12288
+Update location instance with : Array
+(
+    [nid] => 12288
+    [created] => 1488224356
+    [lid] => 49648
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49648 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12288 AND lid != 49648 LIMIT 1 
+Clear row
+Nid: 12290 - last: 12289
+Clear row
+Nid: 12291 - last: 12290
+Clear row
+Nid: 12292 - last: 12291
+Update location instance with : Array
+(
+    [nid] => 12291
+    [created] => 1488652975
+    [lid] => 49651
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49651 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12291 AND lid != 49651 LIMIT 1 
+Clear row
+Nid: 12293 - last: 12292
+Update location instance with : Array
+(
+    [nid] => 12292
+    [created] => 1488652991
+    [lid] => 49652
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49652 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12292 AND lid != 49652 LIMIT 1 
+Clear row
+Nid: 12294 - last: 12293
+Update location instance with : Array
+(
+    [nid] => 12293
+    [created] => 1488652992
+    [lid] => 49653
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49653 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12293 AND lid != 49653 LIMIT 1 
+Clear row
+Nid: 12295 - last: 12294
+Update location instance with : Array
+(
+    [nid] => 12294
+    [created] => 1488655243
+    [lid] => 49654
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49654 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12294 AND lid != 49654 LIMIT 1 
+Clear row
+Nid: 12296 - last: 12295
+Update location instance with : Array
+(
+    [nid] => 12295
+    [created] => 1488655255
+    [lid] => 49663
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49663 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12295 AND lid != 49663 LIMIT 1 
+Clear row
+Nid: 12297 - last: 12296
+Update location instance with : Array
+(
+    [nid] => 12296
+    [created] => 1488911242
+    [lid] => 49665
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49665 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12296 AND lid != 49665 LIMIT 1 
+Clear row
+Nid: 12298 - last: 12297
+Update location instance with : Array
+(
+    [nid] => 12297
+    [created] => 1489170351
+    [lid] => 49667
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49667 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12297 AND lid != 49667 LIMIT 1 
+Clear row
+Nid: 12299 - last: 12298
+Update location instance with : Array
+(
+    [nid] => 12298
+    [created] => 1489433677
+    [lid] => 49669
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49669 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12298 AND lid != 49669 LIMIT 1 
+Clear row
+Nid: 12300 - last: 12299
+Update location instance with : Array
+(
+    [nid] => 12299
+    [created] => 1489522944
+    [lid] => 49671
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49671 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12299 AND lid != 49671 LIMIT 1 
+Clear row
+Nid: 12301 - last: 12300
+Update location instance with : Array
+(
+    [nid] => 12300
+    [created] => 1489683866
+    [lid] => 49673
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49673 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12300 AND lid != 49673 LIMIT 1 
+Clear row
+Nid: 12302 - last: 12301
+Update location instance with : Array
+(
+    [nid] => 12301
+    [created] => 1490019204
+    [lid] => 49675
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49675 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12301 AND lid != 49675 LIMIT 1 
+Clear row
+Nid: 12303 - last: 12302
+Update location instance with : Array
+(
+    [nid] => 12302
+    [created] => 1490106723
+    [lid] => 49677
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49677 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12302 AND lid != 49677 LIMIT 1 
+Clear row
+Nid: 12304 - last: 12303
+Update location instance with : Array
+(
+    [nid] => 12303
+    [created] => 1490106773
+    [lid] => 49679
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49679 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12303 AND lid != 49679 LIMIT 1 
+Clear row
+Nid: 12305 - last: 12304
+Update location instance with : Array
+(
+    [nid] => 12304
+    [created] => 1490107339
+    [lid] => 49681
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49681 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12304 AND lid != 49681 LIMIT 1 
+Clear row
+Nid: 12306 - last: 12305
+Update location instance with : Array
+(
+    [nid] => 12305
+    [created] => 1490197902
+    [lid] => 49683
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49683 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12305 AND lid != 49683 LIMIT 1 
+Clear row
+Nid: 12307 - last: 12306
+Update location instance with : Array
+(
+    [nid] => 12306
+    [created] => 1490198818
+    [lid] => 49685
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49685 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12306 AND lid != 49685 LIMIT 1 
+Clear row
+Nid: 12308 - last: 12307
+Update location instance with : Array
+(
+    [nid] => 12307
+    [created] => 1490199284
+    [lid] => 49687
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49687 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12307 AND lid != 49687 LIMIT 1 
+Clear row
+Nid: 12309 - last: 12308
+Update location instance with : Array
+(
+    [nid] => 12308
+    [created] => 1490199511
+    [lid] => 49689
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49689 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12308 AND lid != 49689 LIMIT 1 
+Clear row
+Nid: 12310 - last: 12309
+Update location instance with : Array
+(
+    [nid] => 12309
+    [created] => 1490275871
+    [lid] => 49691
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49691 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12309 AND lid != 49691 LIMIT 1 
+Clear row
+Nid: 12311 - last: 12310
+Update location instance with : Array
+(
+    [nid] => 12310
+    [created] => 1490296803
+    [lid] => 49693
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49693 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12310 AND lid != 49693 LIMIT 1 
+Clear row
+Nid: 12312 - last: 12311
+Update location instance with : Array
+(
+    [nid] => 12311
+    [created] => 1490308993
+    [lid] => 49695
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49695 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12311 AND lid != 49695 LIMIT 1 
+Clear row
+Nid: 12313 - last: 12312
+Update location instance with : Array
+(
+    [nid] => 12312
+    [created] => 1490309337
+    [lid] => 49697
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49697 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12312 AND lid != 49697 LIMIT 1 
+Clear row
+Nid: 12314 - last: 12313
+Update location instance with : Array
+(
+    [nid] => 12313
+    [created] => 1490365670
+    [lid] => 49699
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49699 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12313 AND lid != 49699 LIMIT 1 
+Clear row
+Nid: 12315 - last: 12314
+Update location instance with : Array
+(
+    [nid] => 12314
+    [created] => 1490365839
+    [lid] => 49701
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49701 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12314 AND lid != 49701 LIMIT 1 
+Clear row
+Nid: 12316 - last: 12315
+Update location instance with : Array
+(
+    [nid] => 12315
+    [created] => 1490365977
+    [lid] => 49703
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49703 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12315 AND lid != 49703 LIMIT 1 
+Clear row
+Nid: 12317 - last: 12316
+Update location instance with : Array
+(
+    [nid] => 12316
+    [created] => 1490366206
+    [lid] => 49705
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49705 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12316 AND lid != 49705 LIMIT 1 
+Clear row
+Nid: 12318 - last: 12317
+Update location instance with : Array
+(
+    [nid] => 12317
+    [created] => 1490366375
+    [lid] => 49707
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49707 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12317 AND lid != 49707 LIMIT 1 
+Clear row
+Nid: 12319 - last: 12318
+Update location instance with : Array
+(
+    [nid] => 12318
+    [created] => 1490366505
+    [lid] => 49709
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49709 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12318 AND lid != 49709 LIMIT 1 
+Clear row
+Nid: 12320 - last: 12319
+Update location instance with : Array
+(
+    [nid] => 12319
+    [created] => 1490369809
+    [lid] => 49711
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49711 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12319 AND lid != 49711 LIMIT 1 
+Clear row
+Nid: 12321 - last: 12320
+Update location instance with : Array
+(
+    [nid] => 12320
+    [created] => 1490975380
+    [lid] => 49713
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49713 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12320 AND lid != 49713 LIMIT 1 
+Clear row
+Nid: 12346 - last: 12321
+Update location instance with : Array
+(
+    [nid] => 12321
+    [created] => 1491255613
+    [lid] => 49715
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49715 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12321 AND lid != 49715 LIMIT 1 
+Clear row
+Nid: 12385 - last: 12346
+Clear row
+Nid: 12386 - last: 12385
+Update location instance with : Array
+(
+    [nid] => 12385
+    [created] => 1493996086
+    [lid] => 49746
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49746 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12385 AND lid != 49746 LIMIT 1 
+Clear row
+Nid: 12387 - last: 12386
+Update location instance with : Array
+(
+    [nid] => 12386
+    [created] => 1493996368
+    [lid] => 49748
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49748 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12386 AND lid != 49748 LIMIT 1 
+Clear row
+Nid: 12388 - last: 12387
+Update location instance with : Array
+(
+    [nid] => 12387
+    [created] => 1493996667
+    [lid] => 49748
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49748 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12387 AND lid != 49748 LIMIT 1 
+Clear row
+Nid: 12389 - last: 12388
+Update location instance with : Array
+(
+    [nid] => 12388
+    [created] => 1493996815
+    [lid] => 49751
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49751 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12388 AND lid != 49751 LIMIT 1 
+Clear row
+Nid: 12390 - last: 12389
+Update location instance with : Array
+(
+    [nid] => 12389
+    [created] => 1494358340
+    [lid] => 49753
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49753 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12389 AND lid != 49753 LIMIT 1 
+Clear row
+Nid: 12391 - last: 12390
+Update location instance with : Array
+(
+    [nid] => 12390
+    [created] => 1494358911
+    [lid] => 49755
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49755 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12390 AND lid != 49755 LIMIT 1 
+Clear row
+Nid: 12392 - last: 12391
+Update location instance with : Array
+(
+    [nid] => 12391
+    [created] => 1494359262
+    [lid] => 49757
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49757 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12391 AND lid != 49757 LIMIT 1 
+Clear row
+Nid: 12393 - last: 12392
+Update location instance with : Array
+(
+    [nid] => 12392
+    [created] => 1494359744
+    [lid] => 49759
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49759 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12392 AND lid != 49759 LIMIT 1 
+Clear row
+Nid: 12394 - last: 12393
+Update location instance with : Array
+(
+    [nid] => 12393
+    [created] => 1494360340
+    [lid] => 49761
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49761 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12393 AND lid != 49761 LIMIT 1 
+Clear row
+Nid: 12395 - last: 12394
+Update location instance with : Array
+(
+    [nid] => 12394
+    [created] => 1494360542
+    [lid] => 49763
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49763 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12394 AND lid != 49763 LIMIT 1 
+Clear row
+Nid: 12396 - last: 12395
+Update location instance with : Array
+(
+    [nid] => 12395
+    [created] => 1494360994
+    [lid] => 49765
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49765 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12395 AND lid != 49765 LIMIT 1 
+Clear row
+Nid: 12397 - last: 12396
+Update location instance with : Array
+(
+    [nid] => 12396
+    [created] => 1494435534
+    [lid] => 49767
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49767 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12396 AND lid != 49767 LIMIT 1 
+Clear row
+Nid: 12398 - last: 12397
+Update location instance with : Array
+(
+    [nid] => 12397
+    [created] => 1494436133
+    [lid] => 49769
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49769 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12397 AND lid != 49769 LIMIT 1 
+Clear row
+Nid: 12399 - last: 12398
+Update location instance with : Array
+(
+    [nid] => 12398
+    [created] => 1494518013
+    [lid] => 49771
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49771 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12398 AND lid != 49771 LIMIT 1 
+Clear row
+Nid: 12400 - last: 12399
+Update location instance with : Array
+(
+    [nid] => 12399
+    [created] => 1494593453
+    [lid] => 49773
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49773 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12399 AND lid != 49773 LIMIT 1 
+Clear row
+Nid: 12401 - last: 12400
+Update location instance with : Array
+(
+    [nid] => 12400
+    [created] => 1494597157
+    [lid] => 49775
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49775 LIMIT 1 
+ DELETE FROM location where  lid =  LIMIT 1 
+ DELETE FROM location_instance where nid =12400 AND lid != 49775 LIMIT 1 
+Clear row
+Nid: 12407 - last: 12401
+Clear row
+Nid: 12407 - last: 12407
+Match
+Nid: 12408 - last: 12407
+Update location instance with : Array
+(
+    [nid] => 12407
+    [created] => 1495467061
+    [lid] => 49778
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+    [source] => 1
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49778 LIMIT 1 
+ DELETE FROM location where  lid = 49777 LIMIT 1 
+ DELETE FROM location_instance where nid =12407 AND lid != 49778 LIMIT 1 
+Clear row
+Nid: 12408 - last: 12408
+Match
+Nid: 12409 - last: 12408
+Update location instance with : Array
+(
+    [nid] => 12408
+    [created] => 1495543747
+    [lid] => 49772
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+    [source] => 1
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49772 LIMIT 1 
+ DELETE FROM location where  lid = 49779 LIMIT 1 
+ DELETE FROM location_instance where nid =12408 AND lid != 49772 LIMIT 1 
+Clear row
+Nid: 12409 - last: 12409
+Match
+Nid: 12410 - last: 12409
+Update location instance with : Array
+(
+    [nid] => 12409
+    [created] => 1495752291
+    [lid] => 49781
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+    [source] => 1
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49781 LIMIT 1 
+ DELETE FROM location where  lid = 49780 LIMIT 1 
+ DELETE FROM location_instance where nid =12409 AND lid != 49781 LIMIT 1 
+Clear row
+Nid: 12410 - last: 12410
+Match
+Nid: 12411 - last: 12410
+Update location instance with : Array
+(
+    [nid] => 12410
+    [created] => 1495752497
+    [lid] => 49774
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+    [source] => 1
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49774 LIMIT 1 
+ DELETE FROM location where  lid = 49782 LIMIT 1 
+ DELETE FROM location_instance where nid =12410 AND lid != 49774 LIMIT 1 
+Clear row
+Nid: 12411 - last: 12411
+Match
+Nid: 12412 - last: 12411
+Update location instance with : Array
+(
+    [nid] => 12411
+    [created] => 1495752594
+    [lid] => 49784
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+    [source] => 1
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49784 LIMIT 1 
+ DELETE FROM location where  lid = 49783 LIMIT 1 
+ DELETE FROM location_instance where nid =12411 AND lid != 49784 LIMIT 1 
+Clear row
+Nid: 12412 - last: 12412
+Match
+Nid: 12413 - last: 12412
+Update location instance with : Array
+(
+    [nid] => 12412
+    [created] => 1495752687
+    [lid] => 49786
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+    [source] => 1
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49786 LIMIT 1 
+ DELETE FROM location where  lid = 49785 LIMIT 1 
+ DELETE FROM location_instance where nid =12412 AND lid != 49786 LIMIT 1 
+Clear row
+Nid: 12413 - last: 12413
+Match
+Update location instance with : Array
+(
+    [nid] => 12413
+    [created] => 1495752791
+    [lid] => 49788
+    [postal_code] => 67301
+    [latitude] => 37.090240
+    [longitude] => -95.712891
+    [source] => 1
+)
+
+Queries: UPDATE location SET postal_code=67301, latitude=37.090240, longitude=-95.712891 WHERE lid = 49788 LIMIT 1 
+ DELETE FROM location where  lid = 49787 LIMIT 1 
+ DELETE FROM location_instance where nid =12413 AND lid != 49788 LIMIT 1 
+Clear row
