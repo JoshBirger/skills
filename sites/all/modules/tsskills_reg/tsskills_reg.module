@@ -516,7 +516,7 @@ function tsskills_reg_mail($key, &$message, $params){
 		$message['subject'] = 'TSSkills Notification - New Employer Registered';
                 $message['body'] = array(
 			"Dear Admin,",
-			"User ".$params['username']." has registered as a new employer: ".$base_url.$base_path."users/". $params['username'] ,
+			"User ".$params['username']." has registered as a new employer.",
 			"Thanks,\nAuto TSSkills"
 			);
 
